@@ -8,4 +8,8 @@ public interface MemberMapper {
 	public void joinMember(@Param("id") String id, @Param("pw") String pw, @Param("email") String email);
 
 	public Member loginMember(@Param("id") String id, @Param("pw") String pw);
+	
+	public String searchMember(@Param("id") String id);
+	
+	public String searchEmail(@Param("email") String email);
 }

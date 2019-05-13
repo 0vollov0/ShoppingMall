@@ -9,4 +9,10 @@
   <select id="loginMember" resultType="com.ovollovo.shoppingmall.member.Member">
   	select * from member where id=#{id} and pw=#{pw}
   </select>
+  <select id="searchMember" resultType="String">
+  	select id from member where id=#{id}
+  </select>
+  <select id="searchEmail" resultType="String">
+  	select email from member where email=#{email}
+  </select>
 </mapper>

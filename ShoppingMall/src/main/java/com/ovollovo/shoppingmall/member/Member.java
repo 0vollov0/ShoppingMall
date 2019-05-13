@@ -4,6 +4,7 @@ public class Member {
 	private String id;
 	private String pw;
 	private String email;
+	private boolean admin;
 
 	public String getId() {
 		return id;
@@ -27,6 +28,14 @@ public class Member {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 
 	@Override
