@@ -8,12 +8,12 @@
 </head>
 <body>
 	<h1>Login</h1>
-	<form class="" action="index.html" method="post">
+	<form class="" action="${contextPath }/member/login" method="post">
 		<h3>
-			ID <input type="text" name="ID" value="">
+			ID <input type="text" name="id" value="">
 		</h3>
 		<h3>
-			PASSWORD <input type="password" name="PW" value="">
+			PASSWORD <input type="password" name="pw" value="">
 		</h3>
 		<input type="submit" name="" value="LOGIN">
 	</form>
