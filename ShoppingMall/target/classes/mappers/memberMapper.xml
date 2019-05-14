@@ -15,4 +15,16 @@
   <select id="searchEmail" resultType="String">
   	select email from member where email=#{email}
   </select>
+  <update id="createAuthkey">
+   update member set authkey = #{authkey} where id = #{id}
+  </update>
+  <update id="confirmAuthstatus">
+   update member set authstatus = 1 where id = #{id}
+  </update>
+  <select id="searchAuthstatus" resultType="boolean">
+  	select authstatus from member where id=#{id}
+  </select>
+  <select id="searchAuthkey" resultType="String">
+  	select authkey from member where id=#{id}
+  </select>
 </mapper>
