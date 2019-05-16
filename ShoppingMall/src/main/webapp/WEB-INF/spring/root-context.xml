@@ -31,7 +31,7 @@
       <property name="host" value="smtp.gmail.com" />
       <property name="port" value="587" />
       <property name="username" value="ovollov876@gmail.com" />
-      <property name="password" value="sin1901624" />
+      <property name="password" value="-" />
     
 
       <!-- email 요청시는 SMTP -->

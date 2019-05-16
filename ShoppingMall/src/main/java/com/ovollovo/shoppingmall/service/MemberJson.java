@@ -1,0 +1,56 @@
+package com.ovollovo.shoppingmall.service;
+
+import org.springframework.stereotype.Repository;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+@Repository
+public class MemberJson {
+	Gson gson = new Gson();
+	
+	public String getLoginResultJson(int key) {
+		JsonObject jsonObject = new JsonObject();
+		switch (key) {
+		case 0:
+			jsonObject.addProperty("result", 0);
+			jsonObject.addProperty("message", "로그인 성공");
+			break;
+		case 1:
+			jsonObject.addProperty("result", 1);
+			jsonObject.addProperty("message", "아이디 또는 비밀번호가 맞지 않습니다.");
+			break;
+		case 2:
+			jsonObject.addProperty("result", 2);
+			jsonObject.addProperty("message", "메일 인증이 필요한 회원입니다.");
+			break;
+
+		default:
+			break;
+		}
+		return gson.toJson(jsonObject);
+
+	}
+	
+	public String getJoinResultJson(int key) {
+		JsonObject jsonObject = new JsonObject();
+		switch (key) {
+		case 0:
+			jsonObject.addProperty("result", 0);
+			jsonObject.addProperty("message", "회원가입 성공");
+			break;
+		case 1:
+			jsonObject.addProperty("result", 1);
+			jsonObject.addProperty("message", "이미 존재하는 아이디 입니다.");
+			break;
+		case 2:
+			jsonObject.addProperty("result", 2);
+			jsonObject.addProperty("message", "이미 존재하는 Email 입니다.");
+			break;
+
+		default:
+			break;
+		}
+		return gson.toJson(jsonObject);
+	}
+}

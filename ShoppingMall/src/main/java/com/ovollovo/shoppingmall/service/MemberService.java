@@ -1,5 +1,7 @@
 package com.ovollovo.shoppingmall.service;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,9 @@ public class MemberService implements MemberServiceI {
 
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	@Autowired
+	private MemberJson memberJson;
 
 	/*
 	 * @Override
@@ -30,12 +35,14 @@ public class MemberService implements MemberServiceI {
 
 	@Override
 	@Transactional
-	public int joinMember(Member member) throws Exception {
+	public String joinMember(Member member) throws Exception {
 		if (duplicateIdCheck(member.getId())) {
-			return 1;
+			//return 1;
+			return memberJson.getJoinResultJson(1);
 		}
 		if (duplicateEmailCheck(member.getEmail())) {
-			return 2;
+			//return 2;
+			return memberJson.getJoinResultJson(2);
 		}
 		mapper.joinMember(member.getId(), member.getPw(), member.getEmail());
 
@@ -48,8 +55,8 @@ public class MemberService implements MemberServiceI {
 
 		MailHandler sendMail = new MailHandler(mailSender);
 
-		sendMail.setSubject("[Hoon's Board v2.0] 회원가입 이메일 인증");
-		sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>").append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
+		sendMail.setSubject("SHOPPING MALL 회원가입 인증");
+		sendMail.setText(new StringBuffer().append("<h1>SHOPPING MALL EMAIL 인증</h1>").append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
 				.append("<a href='http://localhost:8090/shoppingmall/member/joinConfirm?id=").append(member.getId())
 				.append("&email=").append(member.getEmail()).append("&authkey=").append(authkey)
 				.append("' target='_blenk'>이메일 인증 확인</a>").toString());
@@ -57,17 +64,21 @@ public class MemberService implements MemberServiceI {
 		sendMail.setTo(member.getEmail());
 		sendMail.send();
 
-		return 0;
+		return memberJson.getJoinResultJson(0);
 	}
 
 	@Override
-	public int loginMember(String id, String pw) {
+	public String loginMember(String id, String pw,HttpSession session) {
 		if (mapper.loginMember(id, pw) == null) {
-			return 1;
+			//return 1;
+			return memberJson.getLoginResultJson(1);
 		} else if (!getAuthstatus(id)) {
-			return 2;
+			//return 2;
+			return memberJson.getLoginResultJson(2);
 		}
-		return 0;
+		session.setAttribute("member", getMember(id, pw));
+		session.setMaxInactiveInterval(3600);
+		return memberJson.getLoginResultJson(0);
 	}
 
 	private boolean getAuthstatus(String id) {

@@ -4,6 +4,7 @@ public class Member {
 	private String id;
 	private String pw;
 	private String email;
+	private int point;
 	private String authkey;
 	private boolean authstatus;
 	private boolean admin;
@@ -30,6 +31,14 @@ public class Member {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public int getPoint() {
+		return point;
+	}
+
+	public void setPoint(int point) {
+		this.point = point;
 	}
 
 	public boolean isAdmin() {

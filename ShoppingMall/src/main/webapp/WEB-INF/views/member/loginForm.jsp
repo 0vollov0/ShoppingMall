@@ -5,13 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+	crossorigin="anonymous"></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-	crossorigin="anonymous"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
 	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
@@ -30,21 +30,28 @@
 <body>
 	<div class="container text-center margin">
 		<h1>SHOPPING MALL LOGIN</h1>
+		<!--  
 		<form class="" action="${contextPath }/member/login" method="post">
+		-->
+		<form id="loginForm" method="post">
 			<div class="row justify-content-center margin">
 				<div class="col-md-7 col-12 margin">
-					<input type="text" class="form-control"
-						placeholder="ID"
+					<input type="text" class="form-control" placeholder="ID"
 						aria-label="ID" aria-describedby="basic-addon2" name="id">
 				</div>
 				<div class="col-md-7 col-12 margin">
-					<input type="password" class="form-control"
-						placeholder="PASSWORD"
+					<input type="password" class="form-control" placeholder="PASSWORD"
 						aria-label="PASSWORD" aria-describedby="basic-addon2" name="pw">
 				</div>
+				<div
+					class="alert alert-danger alert-dismissible fade show col-md-7 col-12 margin"
+					role="alert"></div>
+				<div
+					class="alert alert-warning alert-dismissible fade show col-md-7 col-12 margin"
+					role="alert"></div>
 				<div class="col-md-7 col-12 margin">
-					<input type="submit" value="LOGIN" class="btn btn-outline-info"
-						style="width: 100%">
+					<input type="button" value="LOGIN" class="btn btn-outline-info"
+						style="width: 100%" onclick="login();">
 				</div>
 			</div>
 		</form>
@@ -58,4 +65,43 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	$('.alert').hide();
+	function login() {
+		$.ajax({
+			url : "${contextPath }/member/login",
+			method : "POST",
+			data : {
+				id : $("input[name=id]").val(),
+				pw : $("input[name=pw]").val()
+			},
+			type : "json"
+		}).done(function(resultData) {
+			$("input[name=id]").val("");
+			$("input[name=pw]").val("");
+			$('.alert').hide();
+			var resultJson = JSON.parse(resultData);
+			switch (resultJson.result) {
+			case 0:
+				window.location = "${contextPath}";
+				break;
+			case 1:
+				$(".alert-danger").text(resultJson.message);
+				$(".alert-danger").fadeIn();
+				break;
+			case 2:
+				$(".alert-warning").text(resultJson.message);
+				$(".alert-warning").fadeIn();
+				break;
+			default:
+				break;
+			}
+
+		}).fail(function() {
+			$(".alert-danger").text("서버 통신 오류");
+			$(".alert-danger").fadeIn();
+		}).always(function() {
+		});
+	}
+</script>
 </html>
