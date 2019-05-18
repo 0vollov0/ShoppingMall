@@ -4,7 +4,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://code.jquery.com/jquery-3.4.1.js"
 	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -21,6 +20,7 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="../resources/CSS/loading.css">
 <style media="screen">
 .margin {
 	margin-top: 20px;
@@ -38,26 +38,38 @@
 						aria-label="id" aria-describedby="basic-addon2" name="id">
 				</div>
 				<div class="col-md-7 col-12 margin">
-					<input type="text" class="form-control" placeholder="password"
+					<input type="password" class="form-control" placeholder="password"
 						aria-label="password" aria-describedby="basic-addon2" name="pw">
 				</div>
 				<div class="col-md-7 col-12 margin">
 					<input type="email" class="form-control"
-						id="exampleDropdownFormEmail1" placeholder="email@example.com"
+						placeholder="email@example.com"
 						name="email">
 				</div>
-				<div
-					class="alert alert-danger alert-dismissible fade show col-md-7 col-12 margin"
-					role="alert">
+				<div class="col-md-7 col-12 margin">
+					<div class="row">
+						<div class="col-5">
+							<div id="loading"></div>
+							<img id="captcha-image">
+						</div>
+						<div class="col-5">
+							<input type="email" class="form-control"
+						placeholder="captca key"
+						name="captcaKey">
+						</div>
+						<div class="col-2">
+							<button type="button" class="btn btn-outline-success" onclick="createCaptcha();" id="refresh-button">Refresh</button>
+						</div>
+					</div>
 				</div>
-				<div
-					class="alert alert-warning alert-dismissible fade show col-md-7 col-12 margin"
-					role="alert">
-				</div>
-				<div
-					class="alert alert-success alert-dismissible fade show col-md-7 col-12 margin"
-					role="alert">
-				</div>
+				<div class="alert alert-danger alert-dismissible fade show col-md-7 col-12 margin"
+					role="alert"></div>
+				<div class="alert alert-warning alert-dismissible fade show col-md-7 col-12 margin"
+					role="alert"></div>
+				<div class="alert alert-success alert-dismissible fade show col-md-7 col-12 margin"
+					role="alert"></div>
+				<div class="alert alert-info alert-dismissible fade show col-md-7 col-12 margin"
+					role="alert"></div>
 				<div class="col-md-7 col-12 margin">
 					<input type="button" value="JOIN" class="btn btn-outline-info"
 						style="width: 100%" onclick="join();">
@@ -75,7 +87,29 @@
 	</div>
 </body>
 <script type="text/javascript">
+	var imagesPath = "../resources/images/";
 	$('.alert').hide();
+	createCaptcha();
+	var captcha = new captcha();
+	
+	function captcha(){
+		this.captchaKey=null;
+		this.cpatchaImage=null;
+		
+		this.setCaptchaKey = function(captchaKey){
+			this.captchaKey = captchaKey;
+		};
+		this.getCaptchaKey = function(){
+			return this.captchaKey;
+		};
+		this.setCaptchaImage = function(cpatchaImage){
+			this.cpatchaImage = cpatchaImage;
+		};
+		this.getCaptchaImage = function(){
+			return this.cpatchaImage;
+		};
+	}	
+	
 	function join() {
 		$('.alert').hide();
 		var email = $('input[name=email]').val();
@@ -93,34 +127,75 @@
 			data : {
 				id : $("input[name=id]").val(),
 				pw : $("input[name=pw]").val(),
-				email : $("input[name=email]").val()
+				email : $("input[name=email]").val(),
+				userCaptchaKey : $("input[name=captcaKey]").val(),
+				captchaKey : captcha.getCaptchaKey()
 			},
 			type : "json"
 		}).done(function(resultData) {
 			$("input[name=id]").val("");
 			$("input[name=pw]").val("");
 			$("input[name=email]").val("");
-			var resultJson = JSON.parse(resultData);
-			switch (resultJson.result) {
+			$("input[name=captcaKey]").val("");
+			switch (resultData.result) {
 			case 0:
-				$(".alert-success").text(resultJson.message);
+				$(".alert-success").text(resultData.message);
 				$(".alert-success").fadeIn();
 				break;
 			case 1:
-				$(".alert-danger").text(resultJson.message);
+				$(".alert-danger").text(resultData.message);
 				$(".alert-danger").fadeIn();
 				break;
 			case 2:
-				$(".alert-warning").text(resultJson.message);
+				$(".alert-warning").text(resultData.message);
 				$(".alert-warning").fadeIn();
+				break;
+			case 3:
+				$(".alert-info").text(resultData.message);
+				$(".alert-info").fadeIn();
 				break;
 			default:
 				break;
 			}
-
+			createCaptcha();
 		}).fail(function() {
 			$(".alert-danger").text("서버 통신 오류");
 			$(".alert-danger").fadeIn();
+		}).always(function() {
+		});
+	}
+	function createCaptcha(){
+		$.ajax({
+			url : "${contextPath }/member/getCaptcha",
+			method : "GET"
+		}).done(function(resultData) {
+			captcha.setCaptchaKey(resultData.key);
+			captcha.setCaptchaImage(resultData.image);
+			//deleteCaptchaImage();
+			$('#refresh-button').attr('disabled','disabled');
+			$('#captcha-image').removeAttr('src');
+			$('#loading').attr('class','loader');
+			setTimeout(function(){
+				$('#loading').attr('class','');
+				$('#captcha-image').attr('src',imagesPath+resultData.image);
+				$('#refresh-button').removeAttr('disabled');
+			},5000);
+		}).fail(function() {
+		}).always(function() {
+		});
+	}
+	function deleteCaptchaImage(){
+		$.ajax({
+			url : "${contextPath }/member/deleteCaptcha",
+			method : "GET",
+			data : {
+				image : captcha.getCaptchaImage()
+			},
+			type : "json"
+		}).done(function() {
+			alert("완료");
+		}).fail(function() {
+			
 		}).always(function() {
 		});
 	}

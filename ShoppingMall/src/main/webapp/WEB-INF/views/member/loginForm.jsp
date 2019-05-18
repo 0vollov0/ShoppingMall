@@ -80,17 +80,17 @@
 			$("input[name=id]").val("");
 			$("input[name=pw]").val("");
 			$('.alert').hide();
-			var resultJson = JSON.parse(resultData);
-			switch (resultJson.result) {
+			//var resultJson = JSON.parse(resultData);
+			switch (resultData.result) {
 			case 0:
 				window.location = "${contextPath}";
 				break;
 			case 1:
-				$(".alert-danger").text(resultJson.message);
+				$(".alert-danger").text(resultData.message);
 				$(".alert-danger").fadeIn();
 				break;
 			case 2:
-				$(".alert-warning").text(resultJson.message);
+				$(".alert-warning").text(resultData.message);
 				$(".alert-warning").fadeIn();
 				break;
 			default:
