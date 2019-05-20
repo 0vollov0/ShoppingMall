@@ -27,4 +27,7 @@
   <select id="searchAuthkey" resultType="String">
   	select authkey from member where id=#{id}
   </select>
+  <update id="deleteAuthkey">
+  	update member set authkey = null where id = #{id}
+  </update>
 </mapper>

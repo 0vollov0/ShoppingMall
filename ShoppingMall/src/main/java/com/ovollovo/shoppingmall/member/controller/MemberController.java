@@ -1,13 +1,12 @@
 package com.ovollovo.shoppingmall.member.controller;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -41,7 +40,8 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/joinForm")
-	public String joinForm() {
+	public String joinForm(Model model) {
+		model.addAttribute("imagePath","C:\\Users\\OvollovO\\Documents\\GitHub\\ShoppingMall\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\ShoppingMall\\");
 		return "member/joinForm";
 	}
 
@@ -89,9 +89,6 @@ public class MemberController {
 	
 	@RequestMapping(value = "deleteCaptcha", method = RequestMethod.GET)
 	public @ResponseBody void deleteCaptcha(@RequestParam("image")String image) {
-		System.out.println("h");
-		System.out.println(image);
-		System.out.println("s");
 		memberService.deleteCaptchaImage(image);
 	}
 	

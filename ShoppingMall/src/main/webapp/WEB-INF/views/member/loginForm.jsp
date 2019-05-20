@@ -36,22 +36,17 @@
 		<form id="loginForm" method="post">
 			<div class="row justify-content-center margin">
 				<div class="col-md-7 col-12 margin">
-					<input type="text" class="form-control" placeholder="ID"
+					<input type="text" class="form-control text-center" placeholder="ID"
 						aria-label="ID" aria-describedby="basic-addon2" name="id">
 				</div>
 				<div class="col-md-7 col-12 margin">
-					<input type="password" class="form-control" placeholder="PASSWORD"
+					<input type="password" class="form-control text-center" placeholder="PASSWORD"
 						aria-label="PASSWORD" aria-describedby="basic-addon2" name="pw">
 				</div>
-				<div
-					class="alert alert-danger alert-dismissible fade show col-md-7 col-12 margin"
-					role="alert"></div>
-				<div
-					class="alert alert-warning alert-dismissible fade show col-md-7 col-12 margin"
-					role="alert"></div>
+				<div id="alert" class=""></div>
 				<div class="col-md-7 col-12 margin">
 					<input type="button" value="LOGIN" class="btn btn-outline-info"
-						style="width: 100%" onclick="login();">
+						style="width: 100%" onclick="login();"/>
 				</div>
 			</div>
 		</form>
@@ -86,12 +81,10 @@
 				window.location = "${contextPath}";
 				break;
 			case 1:
-				$(".alert-danger").text(resultData.message);
-				$(".alert-danger").fadeIn();
+				turnOnAlert('alert-danger',resultData.message);
 				break;
 			case 2:
-				$(".alert-warning").text(resultData.message);
-				$(".alert-warning").fadeIn();
+				turnOnAlert('alert-warning',resultData.message);
 				break;
 			default:
 				break;
@@ -102,6 +95,12 @@
 			$(".alert-danger").fadeIn();
 		}).always(function() {
 		});
+	}
+	function turnOnAlert(alertStyle,message){
+		$('#alert').hide();
+		$('#alert').attr('class','alert '+ alertStyle +' alert-dismissible fade show col-md-7 col-12 margin');
+		$("#alert").text(message);
+		$("#alert").fadeIn("slow");
 	}
 </script>
 </html>

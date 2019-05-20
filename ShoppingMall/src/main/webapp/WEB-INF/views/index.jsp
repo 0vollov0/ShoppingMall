@@ -10,8 +10,8 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
 	crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+<script src="https://code.jquery.com/jquery-3.4.1.js"
+	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
 	crossorigin="anonymous"></script>
 <script
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
@@ -24,42 +24,7 @@
 <title>INDEX</title>
 </head>
 <body>
-	<div class="">
-		<ul class="nav justify-content-center">
-			<c:choose>
-				<c:when test="${empty member}">
-					<li class="nav-item"><a class="nav-link"
-						href="${contextPath}/member/loginForm">로그인</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="${contextPath}/member/joinForm">회원가입</a></li>
-				</c:when>
-				<c:otherwise>
-					<c:choose>
-						<c:when test="${!member.admin }">
-							<li class="nav-item"><a class="nav-link" href="#">${member.id }님환영합니다.</a></li>
-							<li class="nav-item"><a class="nav-link"
-								href="${contextPath}/member/#">장바구니</a></li>
-							<li class="nav-item"><a class="nav-link"
-								href="${contextPath}/member/#">주문배송 조회</a></li>
-							<li class="nav-item"><a class="nav-link"
-								href="${contextPath}/member/logout">로그아웃</a></li>
-						</c:when>
-						<c:otherwise>
-							<li class="nav-item">${member.id }님환영합니다.</li>
-							<li class="nav-item"><a class="nav-link"
-								href="${contextPath}/#">상품관리</a></li>
-							<li class="nav-item"><a class="nav-link"
-								href="${contextPath}/#">배송관리</a></li>
-							<li class="nav-item"><a class="nav-link"
-								href="${contextPath}/#">회원관리</a></li>
-							<li class="nav-item"><a class="nav-link"
-								href="${contextPath}/member/logout">로그아웃</a></li>
-						</c:otherwise>
-					</c:choose>
-				</c:otherwise>
-			</c:choose>
-		</ul>
-	</div>
+	<jsp:include page="template/navMenu.jsp" flush="false"></jsp:include>
 	<div class="container text-center">
 		<div class="row">
 			<div class="col">

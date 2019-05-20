@@ -25,6 +25,11 @@
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
 	</bean>
 	<mybatis-spring:scan base-package="com.ovollovo.shoppingmall.member.dao"/>
+	<bean id="goodsMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.ovollovo.shoppingmall.goods.dao.GoodsMapper"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<mybatis-spring:scan base-package="com.ovollovo.shoppingmall.goods.dao"/>
 	
 	<!-- 메일 보내기 (SEND) -->
    	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
@@ -44,4 +49,9 @@
          </props>
       </property>
    	</bean>
+   	<!-- file upload
+   	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+   		<property name="maxUploadSize" value="10000000"></property>
+   	</bean>
+   	-->
 </beans>

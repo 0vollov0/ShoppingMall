@@ -138,6 +138,7 @@ public class MemberService implements MemberServiceI {
 			return 1;
 		}
 		mapper.confirmAuthstatus(member.getId());
+		mapper.deleteAuthkey(member.getId());
 		return 0;
 	}
 

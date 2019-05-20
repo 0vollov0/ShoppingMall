@@ -8,7 +8,6 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
@@ -20,9 +19,18 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
 	<context:component-scan base-package="com.ovollovo.shoppingmall" />
 	
+	<!-- 업로드 패스 설정 --> 
+	<beans:bean class="java.lang.String" id="uploadPath">
+		<beans:constructor-arg value="C:/Users/OvollovO/Documents/GitHub/ShoppingMall/ShoppingMall/src/main/webapp/" />
+	</beans:bean>
+
+	<!-- 일반 파일 업로드 경로 -->
+	<resources mapping="/goodsImages/**" location="resources/images/goodsImages" />
 	
+	<beans:bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+ 		<beans:property name="maxUploadSize" value="10485760"/>
+	</beans:bean>
 	
 </beans:beans>

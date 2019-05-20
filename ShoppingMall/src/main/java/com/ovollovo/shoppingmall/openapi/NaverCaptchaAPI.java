@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.Date;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Repository;
 
 import com.google.gson.Gson;
@@ -19,6 +21,9 @@ import com.google.gson.JsonParser;
 
 @Repository
 public class NaverCaptchaAPI {
+	
+	@Resource(name = "uploadPath")
+	private String uploadPath;
 	
 	public String getCaptchaKey() {
 		Gson gson = new Gson();
@@ -74,7 +79,7 @@ public class NaverCaptchaAPI {
                 byte[] bytes = new byte[1024];
                 // 랜덤한 이름으로  파일 생성
                 filename = Long.valueOf(new Date().getTime()).toString();
-                File f = new File("C:\\Users\\OvollovO\\Documents\\GitHub\\ShoppingMall\\ShoppingMall\\src\\main\\webapp\\resources\\images\\"+filename + ".jpg");
+                File f = new File("C:\\Users\\OvollovO\\Documents\\GitHub\\ShoppingMall\\ShoppingMall\\src\\main\\webapp\\resources\\images\\captchaImages\\"+filename + ".jpg");
                 f.createNewFile();
                 outputStream = new FileOutputStream(f);
                 while ((read =is.read(bytes)) != -1) {

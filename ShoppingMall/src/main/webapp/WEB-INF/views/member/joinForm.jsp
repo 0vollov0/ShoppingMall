@@ -34,17 +34,15 @@
 		<form id="joinForm" method="post">
 			<div class="row justify-content-center margin">
 				<div class="col-md-7 col-12 margin">
-					<input type="text" class="form-control" placeholder="id"
+					<input type="text" class="form-control text-center" placeholder="id"
 						aria-label="id" aria-describedby="basic-addon2" name="id">
 				</div>
 				<div class="col-md-7 col-12 margin">
-					<input type="password" class="form-control" placeholder="password"
+					<input type="password" class="form-control text-center" placeholder="password"
 						aria-label="password" aria-describedby="basic-addon2" name="pw">
 				</div>
 				<div class="col-md-7 col-12 margin">
-					<input type="email" class="form-control"
-						placeholder="email@example.com"
-						name="email">
+					<input type="email" class="form-control text-center" placeholder="email@example.com" name="email">
 				</div>
 				<div class="col-md-7 col-12 margin">
 					<div class="row">
@@ -53,23 +51,14 @@
 							<img id="captcha-image">
 						</div>
 						<div class="col-5">
-							<input type="email" class="form-control"
-						placeholder="captca key"
-						name="captcaKey">
+							<input type="text" class="form-control text-center" placeholder="captca key" name="captcaKey">
 						</div>
 						<div class="col-2">
 							<button type="button" class="btn btn-outline-success" onclick="createCaptcha();" id="refresh-button">Refresh</button>
 						</div>
 					</div>
 				</div>
-				<div class="alert alert-danger alert-dismissible fade show col-md-7 col-12 margin"
-					role="alert"></div>
-				<div class="alert alert-warning alert-dismissible fade show col-md-7 col-12 margin"
-					role="alert"></div>
-				<div class="alert alert-success alert-dismissible fade show col-md-7 col-12 margin"
-					role="alert"></div>
-				<div class="alert alert-info alert-dismissible fade show col-md-7 col-12 margin"
-					role="alert"></div>
+				<div id="alert" class=""></div>
 				<div class="col-md-7 col-12 margin">
 					<input type="button" value="JOIN" class="btn btn-outline-info"
 						style="width: 100%" onclick="join();">
@@ -87,7 +76,7 @@
 	</div>
 </body>
 <script type="text/javascript">
-	var imagesPath = "../resources/images/";
+	var imagesPath = "../resources/images/captchaImages/";
 	$('.alert').hide();
 	createCaptcha();
 	var captcha = new captcha();
@@ -116,8 +105,7 @@
 		var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
 
 		if (exptext.test(email) == false) {
-			$(".alert-warning").text("이메일 형식이 잘못되었습니다.");
-			$(".alert-warning").fadeIn();
+			turnOnAlert('alert-info','이메일 형식이 잘못되었습니다.');
 			return false;
 		}
 
@@ -139,20 +127,16 @@
 			$("input[name=captcaKey]").val("");
 			switch (resultData.result) {
 			case 0:
-				$(".alert-success").text(resultData.message);
-				$(".alert-success").fadeIn();
+				turnOnAlert('alert-success',resultData.message);
 				break;
 			case 1:
-				$(".alert-danger").text(resultData.message);
-				$(".alert-danger").fadeIn();
+				turnOnAlert('alert-danger',resultData.message);
 				break;
 			case 2:
-				$(".alert-warning").text(resultData.message);
-				$(".alert-warning").fadeIn();
+				turnOnAlert('alert-warning',resultData.message);
 				break;
 			case 3:
-				$(".alert-info").text(resultData.message);
-				$(".alert-info").fadeIn();
+				turnOnAlert('alert-info',resultData.message);
 				break;
 			default:
 				break;
@@ -163,6 +147,12 @@
 			$(".alert-danger").fadeIn();
 		}).always(function() {
 		});
+	}
+	function turnOnAlert(alertStyle,message){
+		$('#alert').hide();
+		$('#alert').attr('class','alert '+ alertStyle +' alert-dismissible fade show col-md-7 col-12 margin');
+		$("#alert").text(message);
+		$("#alert").fadeIn("slow");
 	}
 	function createCaptcha(){
 		$.ajax({

@@ -20,4 +20,6 @@ public interface MemberMapper {
 	public boolean searchAuthstatus(@Param("id") String id);
 	
 	public String searchAuthkey(@Param("id") String id); 
+	
+	public void deleteAuthkey(@Param("id") String id);
 }
