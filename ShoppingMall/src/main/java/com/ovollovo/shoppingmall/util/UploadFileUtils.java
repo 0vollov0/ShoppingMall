@@ -19,14 +19,14 @@ public class UploadFileUtils {
 
 		String newFileName = uid + "_" + fileName;
 		String imgPath = uploadPath + ymdPath;
-
+		//String imgPath = uploadPath;	
 		File target = new File(imgPath, newFileName);
 		FileCopyUtils.copy(fileData, target);
 
-		String thumbFileName = "s_" + newFileName;
+		String thumbFileName = "thumbnail" + newFileName;
 		File image = new File(imgPath + File.separator + newFileName);
 
-		File thumbnail = new File(imgPath + File.separator + "s" + File.separator + thumbFileName);
+		File thumbnail = new File(imgPath + File.separator + "thumbnail" + File.separator + thumbFileName);
 
 		if (image.exists()) {
 			thumbnail.getParentFile().mkdirs();
@@ -45,6 +45,14 @@ public class UploadFileUtils {
 		makeDir(uploadPath, yearPath, monthPath, datePath + "\\s");
 
 		return datePath;
+	}
+	
+	public static String getClassificationPath(String uploadPath,int classification_1,int classification_2) {
+		String firstPath = File.separator+Integer.toString(classification_1);
+		String SecondPath = firstPath+ File.separator +Integer.toString(classification_2);
+		makeDir(uploadPath, firstPath,SecondPath);
+		makeDir(uploadPath, firstPath,SecondPath+"\\thumbnail");
+		return SecondPath;
 	}
 
 	private static void makeDir(String uploadPath, String... paths) {

@@ -45,6 +45,7 @@ public class AdminController {
 		return "admin/registerForm";
 	}
 
+	/*
 	@RequestMapping(value = "/registerGoods", method = RequestMethod.POST)
 	public @ResponseBody JsonObject registerGoods(@ModelAttribute("goods") Goods goods, MultipartFile uploadfile) {
 		if (uploadfile == null) {
@@ -54,16 +55,21 @@ public class AdminController {
 		// System.out.println("filename"+uploadfile.getName());
 		return adminService.registerGoods(goods);
 	}
-
-	@RequestMapping(value = "/registerGood", method = RequestMethod.POST)
-	public String registerGoods(Model model, @ModelAttribute("goods") Goods goods, MultipartFile imageFile) {
+	*/
+	@RequestMapping(value = "/registerGoods", method = RequestMethod.POST)
+	public String registerGoods(HttpSession session,Model model, @ModelAttribute("goods") Goods goods, MultipartFile imageFile) {
+		if (adminService.checkAdmin(session) == false) {
+			return "redirect:/";
+		}
 		String imgUploadPath = uploadPath + File.separator + "resources/images/goodsImages";
-		String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
+		//String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
+		String classificationPath = UploadFileUtils.getClassificationPath(imgUploadPath, goods.getClassification_1(), goods.getClassification_2());
+
 		String fileName = null;
 
 		if (imageFile != null) {
 			try {
-				fileName = UploadFileUtils.fileUpload(imgUploadPath, imageFile.getOriginalFilename(), imageFile.getBytes(), ymdPath);
+				fileName = UploadFileUtils.fileUpload(imgUploadPath, imageFile.getOriginalFilename(), imageFile.getBytes(), classificationPath);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -71,8 +77,8 @@ public class AdminController {
 			fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
 		}
 		
-		goods.setThumbnail_image(File.separator + "resources\\images\\goodsImages" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);
-		
+		//goods.setThumbnail_image(File.separator + "resources\\images\\goodsImages" + classificationPath + File.separator + "thunmnail" + File.separator + "s_" + fileName);
+		goods.setThumbnail_image(File.separator + "resources\\images\\goodsImages" + classificationPath + File.separator + "thumbnail" + File.separator + "thumbnail_" + fileName);
 		model.addAttribute("resultData", adminService.registerGoods(goods));
 		
 		return "admin/registerForm";

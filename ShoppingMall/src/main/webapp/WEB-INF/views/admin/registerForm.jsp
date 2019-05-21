@@ -35,7 +35,7 @@
 				<h1>GOODS REGISTER FORM</h1>
 			</div>
 		</div>
-		<form id="registerForm" method="post" action="${contextPath }/admin/registerGood" enctype="multipart/form-data">
+		<form id="registerForm" method="post" action="${contextPath }/admin/registerGoods" enctype="multipart/form-data">
 			<div class="row justify-content-center margin">
 				<div class="col-md-7 col-12 margin">
 					<table class="table table-hover">
