@@ -23,7 +23,7 @@ public class UploadFileUtils {
 		File target = new File(imgPath, newFileName);
 		FileCopyUtils.copy(fileData, target);
 
-		String thumbFileName = "thumbnail" + newFileName;
+		String thumbFileName = "thumbnail_" + newFileName;
 		File image = new File(imgPath + File.separator + newFileName);
 
 		File thumbnail = new File(imgPath + File.separator + "thumbnail" + File.separator + thumbFileName);

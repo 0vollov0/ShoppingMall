@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -35,7 +35,7 @@
 				<h1>GOODS REGISTER FORM</h1>
 			</div>
 		</div>
-		<form id="registerForm" method="post" action="${contextPath }/admin/registerGoods" enctype="multipart/form-data">
+		<form id="registerForm" method="post" action="${contextPath }/admin/registerGoods" enctype="multipart/form-data" autocomplete="off">
 			<div class="row justify-content-center margin">
 				<div class="col-md-7 col-12 margin">
 					<table class="table table-hover">
@@ -58,21 +58,21 @@
 							</tr>
 							<tr>
 								<th scope="row">대분류</th>
-								<td><select class="custom-select text-center"
-									name="classification_1">
-										<option value="1">One</option>
-										<option value="2">Two</option>
-										<option value="3">Three</option>
-								</select></td>
+								<td>
+									<select class="custom-select text-center" name="classification_1">
+											<option value="100">무기</option>
+											<option value="200">방패</option>
+											<option value="300">투구</option>
+									</select>
+								</td>
 							</tr>
 							<tr>
 								<th scope="row">소분류</th>
-								<td><select class="custom-select text-center"
-									name="classification_2">
-										<option class="text-center" value="1">One</option>
-										<option class="text-center" value="2">Two</option>
-										<option class="text-center" value="3">Three</option>
-								</select></td>
+								<td>
+									<select class="custom-select text-center" name="classification_2">
+											
+									</select>
+								</td>
 							</tr>
 							<tr>
 								<th scope="row">상품가격</th>
@@ -108,10 +108,38 @@
 				</div>
 			</div>
 		</form>
-	</div>
-	<%=request.getRealPath("/")%>
+	</div>	
 </body>
 <script type="text/javascript">
+	$('select[name=classification_1]').val(100);
+	selectBoxTrriger();
+	$('select[name=classification_1]').change(function(){
+		selectBoxTrriger();
+	});
+	function selectBoxTrriger(){
+		$('select[name=classification_2] option').remove();
+		switch (Number.parseInt($('select[name=classification_1]').val())) {
+		case 100:
+			appendOption(1,'한손검');
+			appendOption(2,'두손검');
+			appendOption(3,'폴암');
+			break;
+		case 200:
+			appendOption(1,'나무방패');
+			break;
+		case 300:
+			appendOption(1,'철제투구');
+			appendOption(2,'뼈투구');
+			break;
+		default:
+			console.log('default');
+			break;
+		
+		}
+	}
+	function appendOption(value,text){
+		$('select[name=classification_2]').append('<option class="text-center" value='+value+'>'+text+'</option>');
+	}
 	var resultData = '${resultData}';
 	
 	if (resultData) {
@@ -150,6 +178,11 @@
 		}
 
 		if (!isNumber($('input[name=stock]').val())) {
+			return;
+		}
+		
+		if($("input[name=imageFile]").val() === ""){
+			turnOnAlert('alert-info',"상품 이미지를 등록해주세요.");
 			return;
 		}
 		

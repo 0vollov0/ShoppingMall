@@ -61,6 +61,7 @@ public class AdminController {
 		if (adminService.checkAdmin(session) == false) {
 			return "redirect:/";
 		}
+		System.out.println(goods.getDescription());
 		String imgUploadPath = uploadPath + File.separator + "resources/images/goodsImages";
 		//String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
 		String classificationPath = UploadFileUtils.getClassificationPath(imgUploadPath, goods.getClassification_1(), goods.getClassification_2());

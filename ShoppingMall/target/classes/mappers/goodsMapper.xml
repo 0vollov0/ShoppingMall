@@ -12,4 +12,7 @@
   <select id="searchCode" resultType="String">
   	select code from goods where code= #{code}
   </select>
+  <select id="searchNewGoods" resultType="com.ovollovo.shoppingmall.goods.Goods">
+  	select name,code,price,description,thumbnail_image,registered_time from goods order by registered_time desc limit 4
+  </select>
 </mapper>

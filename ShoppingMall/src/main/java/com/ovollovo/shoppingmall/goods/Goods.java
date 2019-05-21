@@ -1,5 +1,7 @@
 package com.ovollovo.shoppingmall.goods;
 
+import java.util.Date;
+
 public class Goods {	
 	private String name;
 	private String code;
@@ -9,6 +11,7 @@ public class Goods {
 	private int stock;
 	private String description;
 	private String thumbnail_image;
+	private Date registered_time;
 	
 	public String getName() {
 		return name;
@@ -57,6 +60,12 @@ public class Goods {
 	}
 	public void setThumbnail_image(String thumbnail_image) {
 		this.thumbnail_image = thumbnail_image;
+	}
+	public Date getRegistered_time() {
+		return registered_time;
+	}
+	public void setRegistered_time(Date registered_time) {
+		this.registered_time = registered_time;
 	}
 	@Override
 	public String toString() {

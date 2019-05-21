@@ -12,4 +12,6 @@ public interface GoodsMapper {
 	public Goods searchGoods(@Param("code") String code);
 	
 	public String searchCode(@Param("code") String code);
+	
+	public Goods[] searchNewGoods();
 }

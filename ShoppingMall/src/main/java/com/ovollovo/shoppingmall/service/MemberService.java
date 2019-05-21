@@ -13,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.ovollovo.shoppingmall.goods.Goods;
+import com.ovollovo.shoppingmall.goods.dao.GoodsMapper;
 import com.ovollovo.shoppingmall.member.Member;
 import com.ovollovo.shoppingmall.member.authentication.MailHandler;
 import com.ovollovo.shoppingmall.member.authentication.TempKey;
@@ -32,6 +34,9 @@ public class MemberService implements MemberServiceI {
 
 	@Autowired
 	private NaverCaptchaAPI captcha;
+	
+	@Autowired
+	private GoodsMapper goodsMapper;
 
 	/*
 	 * @Override
@@ -163,6 +168,11 @@ public class MemberService implements MemberServiceI {
 				
 			}System.out.println("¼º°ø");
 		}
+	}
+
+	@Override
+	public Goods[] getNewGoods() {
+		return goodsMapper.searchNewGoods();
 	}
 
 }

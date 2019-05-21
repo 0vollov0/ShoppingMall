@@ -32,7 +32,6 @@ public class AdminService implements AdminServiceI {
 
 	@Override
 	public JsonObject registerGoods(Goods goods) {
-		System.out.println("TEST:"+goods.getCode());
 		if (goodsMapper.searchCode(goods.getCode()) != null) {
 			return adminJson.getRegisterGoodsResultJson(1);
 		}
