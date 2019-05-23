@@ -1,5 +1,6 @@
 package com.ovollovo.shoppingmall.goods;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Goods {	
@@ -12,6 +13,8 @@ public class Goods {
 	private String description;
 	private String thumbnail_image;
 	private Date registered_time;
+	private String formatedTime;
+	
 	
 	public String getName() {
 		return name;
@@ -66,6 +69,15 @@ public class Goods {
 	}
 	public void setRegistered_time(Date registered_time) {
 		this.registered_time = registered_time;
+		setFormatedTime(this.registered_time);
+	}
+	
+	public String getFormatedTime() {
+		return formatedTime;
+	}
+	public void setFormatedTime(Date registered_time) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yy³â MM¿ù ddÀÏ");
+		this.formatedTime = dateFormat.format(this.registered_time);
 	}
 	@Override
 	public String toString() {

@@ -91,5 +91,4 @@ public class MemberController {
 	public @ResponseBody void deleteCaptcha(@RequestParam("image")String image) {
 		memberService.deleteCaptchaImage(image);
 	}
-	
 }

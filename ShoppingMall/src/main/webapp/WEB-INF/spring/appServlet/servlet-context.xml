@@ -33,4 +33,18 @@
  		<beans:property name="maxUploadSize" value="10485760"/>
 	</beans:bean>
 	
+	<!-- 인터셉터  -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/admin/registerForm"/>
+			<mapping path="/admin/registerGoods"/>
+			<mapping path="/member/logout"/>
+			<beans:bean class="com.ovollovo.shoppingmall.MemberLoginInterceptor"></beans:bean>
+		</interceptor>
+		<interceptor>
+			<mapping path="/admin/registerForm"/>
+			<mapping path="/admin/registerGoods"/>
+			<beans:bean class="com.ovollovo.shoppingmall.AdminInterceptor"></beans:bean>
+		</interceptor>
+	</interceptors>
 </beans:beans>

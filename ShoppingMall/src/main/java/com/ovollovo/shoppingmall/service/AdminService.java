@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonObject;
+import com.ovollovo.shoppingmall.goods.Category_1;
+import com.ovollovo.shoppingmall.goods.Category_2;
 import com.ovollovo.shoppingmall.goods.Goods;
 import com.ovollovo.shoppingmall.goods.dao.GoodsMapper;
 import com.ovollovo.shoppingmall.member.Member;

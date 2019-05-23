@@ -13,10 +13,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.JsonObject;
 import com.ovollovo.shoppingmall.goods.Goods;
 import com.ovollovo.shoppingmall.service.AdminService;
 import com.ovollovo.shoppingmall.util.UploadFileUtils;
@@ -38,10 +36,12 @@ public class AdminController {
 
 	@RequestMapping(value = "/registerForm")
 	public String registerForm(HttpSession session,ModelMap model) {
+		/*
 		if (adminService.checkAdmin(session) == false) {
 			return "redirect:/";
-		}
+		}*/
 		model.remove("resultData");
+		
 		return "admin/registerForm";
 	}
 
@@ -58,9 +58,10 @@ public class AdminController {
 	*/
 	@RequestMapping(value = "/registerGoods", method = RequestMethod.POST)
 	public String registerGoods(HttpSession session,Model model, @ModelAttribute("goods") Goods goods, MultipartFile imageFile) {
+		/*
 		if (adminService.checkAdmin(session) == false) {
 			return "redirect:/";
-		}
+		}*/
 		System.out.println(goods.getDescription());
 		String imgUploadPath = uploadPath + File.separator + "resources/images/goodsImages";
 		//String ymdPath = UploadFileUtils.calcPath(imgUploadPath);

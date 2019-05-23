@@ -120,16 +120,18 @@
 		$('select[name=classification_2] option').remove();
 		switch (Number.parseInt($('select[name=classification_1]').val())) {
 		case 100:
-			appendOption(1,'한손검');
-			appendOption(2,'두손검');
-			appendOption(3,'폴암');
+			appendOption(101,'한손검');
+			appendOption(102,'두손검');
+			appendOption(103,'도끼');
 			break;
 		case 200:
-			appendOption(1,'나무방패');
+			appendOption(201,'나무방패');
+			appendOption(202,'철제방패');
 			break;
 		case 300:
-			appendOption(1,'철제투구');
-			appendOption(2,'뼈투구');
+			appendOption(301,'철제투구');
+			appendOption(302,'가죽투구');
+			appendOption(303,'천모자');
 			break;
 		default:
 			console.log('default');

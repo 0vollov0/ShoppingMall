@@ -8,44 +8,6 @@
 <title></title>
 </head>
 <body>
-<!-- 
-	<div class="">
-		<ul class="nav justify-content-center">
-			<c:choose>
-				<c:when test="${empty member}">
-					<li class="nav-item"><a class="nav-link"
-						href="${contextPath}/member/loginForm">로그인</a></li>
-					<li class="nav-item"><a class="nav-link"
-						href="${contextPath}/member/joinForm">회원가입</a></li>
-				</c:when>
-				<c:otherwise>
-					<c:choose>
-						<c:when test="${!member.admin }">
-							<li class="nav-item"><a class="nav-link" href="#">${member.id }님환영합니다.</a></li>
-							<li class="nav-item"><a class="nav-link"
-								href="${contextPath}/member/#">장바구니</a></li>
-							<li class="nav-item"><a class="nav-link"
-								href="${contextPath}/member/#">주문배송 조회</a></li>
-							<li class="nav-item"><a class="nav-link"
-								href="${contextPath}/member/logout">로그아웃</a></li>
-						</c:when>
-						<c:otherwise>
-							<li class="nav-item" class="nav-link">${member.id }님환영합니다.</li>
-							<li class="nav-item"><a class="nav-link"
-								href="${contextPath}/admin/registerForm">상품등록</a></li>
-							<li class="nav-item"><a class="nav-link"
-								href="${contextPath}/#">배송관리</a></li>
-							<li class="nav-item"><a class="nav-link"
-								href="${contextPath}/#">회원관리</a></li>
-							<li class="nav-item"><a class="nav-link"
-								href="${contextPath}/member/logout">로그아웃</a></li>
-						</c:otherwise>
-					</c:choose>
-				</c:otherwise>
-			</c:choose>
-		</ul>
-	</div>
-	 -->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		  <a class="navbar-brand" href="${contextPath}">SHOPPING MALL</a>
 		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
