@@ -59,7 +59,7 @@
 							<tr>
 								<th scope="row">대분류</th>
 								<td>
-									<select class="custom-select text-center" name="classification_1">
+									<select class="custom-select text-center" name="category-first">
 											<option value="100">무기</option>
 											<option value="200">방패</option>
 											<option value="300">투구</option>
@@ -69,7 +69,7 @@
 							<tr>
 								<th scope="row">소분류</th>
 								<td>
-									<select class="custom-select text-center" name="classification_2">
+									<select class="custom-select text-center" name="category">
 											
 									</select>
 								</td>
@@ -111,14 +111,14 @@
 	</div>	
 </body>
 <script type="text/javascript">
-	$('select[name=classification_1]').val(100);
+	$('select[name=category-first]').val(100);
 	selectBoxTrriger();
-	$('select[name=classification_1]').change(function(){
+	$('select[name=category-first]').change(function(){
 		selectBoxTrriger();
 	});
 	function selectBoxTrriger(){
-		$('select[name=classification_2] option').remove();
-		switch (Number.parseInt($('select[name=classification_1]').val())) {
+		$('select[name=category] option').remove();
+		switch (Number.parseInt($('select[name=category-first]').val())) {
 		case 100:
 			appendOption(101,'한손검');
 			appendOption(102,'두손검');
@@ -140,7 +140,7 @@
 		}
 	}
 	function appendOption(value,text){
-		$('select[name=classification_2]').append('<option class="text-center" value='+value+'>'+text+'</option>');
+		$('select[name=category]').append('<option class="text-center" value='+value+'>'+text+'</option>');
 	}
 	var resultData = '${resultData}';
 	
@@ -208,8 +208,7 @@
 			data : {
 				name : $("input[name=name]").val(),
 				code : $("input[name=code]").val(),
-				classification_1 : $("select[name=classification_1]").val(),
-				classification_2 : $("select[name=classification_2]").val(),
+				category : $("select[name=category]").val(),
 				price : $("input[name=price]").val(),
 				stock : $("input[name=stock]").val(),
 				description : $("input[name=description]").val(),
@@ -247,8 +246,7 @@
 	function initTagVal() {
 		$('input').val("");
 		$('textarea').val("");
-		$('select[name=classification_1]').val('1')
-		$('select[name=classification_2]').val('1')
+		$('select').val('1')
 	}
 
 	function isNumber(value) {

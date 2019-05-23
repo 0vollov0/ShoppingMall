@@ -47,9 +47,9 @@ public class UploadFileUtils {
 		return datePath;
 	}
 	
-	public static String getClassificationPath(String uploadPath,int classification_1,int classification_2) {
-		String firstPath = File.separator+Integer.toString(classification_1);
-		String SecondPath = firstPath+ File.separator +Integer.toString(classification_2);
+	public static String getCategoryPath(String uploadPath,int category) {
+		String firstPath = File.separator+Integer.toString(category/100*100);
+		String SecondPath = firstPath+ File.separator +Integer.toString(category);
 		makeDir(uploadPath, firstPath,SecondPath);
 		makeDir(uploadPath, firstPath,SecondPath+"\\thumbnail");
 		return SecondPath;

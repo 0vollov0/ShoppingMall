@@ -15,11 +15,11 @@
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						무기</button>
 					<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-    					<a class="dropdown-item" href="${contextPath}/goods/goodsList?classification_1=100&n=1">무기</a>
+    					<a class="dropdown-item" href="${contextPath}/goods/goodsList?category=100&n=1">무기</a>
     					<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="${contextPath}/goods/goodsList?classification_1=100&classification_2=101&n=1">한손검</a> 
-						<a class="dropdown-item" href="${contextPath}/goods/goodsList?classification_1=100&classification_2=102&n=1">두손검</a>
-						<a class="dropdown-item" href="${contextPath}/goods/goodsList?classification_1=100&classification_2=103&n=1">도끼</a>
+						<a class="dropdown-item" href="${contextPath}/goods/goodsList?category=101&n=1">한손검</a> 
+						<a class="dropdown-item" href="${contextPath}/goods/goodsList?category=102&n=1">두손검</a>
+						<a class="dropdown-item" href="${contextPath}/goods/goodsList?category=103&n=1">도끼</a>
 					</div>
 				</div>
 			</div>
@@ -29,10 +29,10 @@
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						방패</button>
 					<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-						<a class="dropdown-item" href="${contextPath}/goods/goodsList?classification_1=200&n=1">방패</a>
+						<a class="dropdown-item" href="${contextPath}/goods/goodsList?category=200&n=1">방패</a>
     					<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="${contextPath}/goods/goodsList?classification_1=200&classification_2=201&n=1">나무방패</a>
-						<a class="dropdown-item" href="${contextPath}/goods/goodsList?classification_1=200&classification_2=202&n=1">철제방패</a> 
+						<a class="dropdown-item" href="${contextPath}/goods/goodsList?category=201&n=1">나무방패</a>
+						<a class="dropdown-item" href="${contextPath}/goods/goodsList?category=202&n=1">철제방패</a> 
 					</div>
 				</div>
 			</div>
@@ -42,11 +42,11 @@
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						투구</button>
 					<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-						<a class="dropdown-item" href="${contextPath}/goods/goodsList?classification=300&n=1">투구</a>
+						<a class="dropdown-item" href="${contextPath}/goods/goodsList?category=300&n=1">투구</a>
     					<div class="dropdown-divider"></div>
-						<a class="dropdown-item" href="${contextPath}/goods/goodsList?classification=301&n=1">철제투구</a>
-						<a class="dropdown-item" href="${contextPath}/goods/goodsList?classification=302&n=1">가죽투구</a>
-						<a class="dropdown-item" href="${contextPath}/goods/goodsList?classification=303&n=1">천모자</a>
+						<a class="dropdown-item" href="${contextPath}/goods/goodsList?category=301&n=1">철제투구</a>
+						<a class="dropdown-item" href="${contextPath}/goods/goodsList?category=302&n=1">가죽투구</a>
+						<a class="dropdown-item" href="${contextPath}/goods/goodsList?category=303&n=1">천모자</a>
 					</div>
 				</div>
 			</div>

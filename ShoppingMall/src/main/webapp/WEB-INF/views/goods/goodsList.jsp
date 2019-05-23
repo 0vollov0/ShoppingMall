@@ -59,13 +59,13 @@
 	<div class="container">
 		 <div class="row">
 		 	<div class="col-6">
-		 		<c:if test="${!empty prevNum}">	
-		 			<button type="button" class="btn btn-outline-success" onclick="">이전</button>
+		 		<c:if test="${!empty prev}">	
+		 			<a href="${contextPath}/goods/goodsList?category=${category }&n=${prev}"><button type="button" class="btn btn-outline-success" onclick="">이전</button></a>
 		 		</c:if>	
 		 	</div>
 		    <div class="col-6 text-right">
-		    	<c:if test="${!empty nextNum}">
-		    		<a href=""><button type="button" class="btn btn-outline-success">다음</button></a>		    		
+		    	<c:if test="${!empty next}">
+		    		<a href="${contextPath}/goods/goodsList?category=${category }&n=${next}"><button type="button" class="btn btn-outline-success">다음</button></a>		    		
 		    	</c:if>
 		    </div>
 	 	 </div>

@@ -65,13 +65,13 @@ public class AdminController {
 		System.out.println(goods.getDescription());
 		String imgUploadPath = uploadPath + File.separator + "resources/images/goodsImages";
 		//String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
-		String classificationPath = UploadFileUtils.getClassificationPath(imgUploadPath, goods.getClassification_1(), goods.getClassification_2());
+		String categoryPath = UploadFileUtils.getCategoryPath(imgUploadPath, goods.getCategory());
 
 		String fileName = null;
 
 		if (imageFile != null) {
 			try {
-				fileName = UploadFileUtils.fileUpload(imgUploadPath, imageFile.getOriginalFilename(), imageFile.getBytes(), classificationPath);
+				fileName = UploadFileUtils.fileUpload(imgUploadPath, imageFile.getOriginalFilename(), imageFile.getBytes(), categoryPath);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -79,8 +79,8 @@ public class AdminController {
 			fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
 		}
 		
-		//goods.setThumbnail_image(File.separator + "resources\\images\\goodsImages" + classificationPath + File.separator + "thunmnail" + File.separator + "s_" + fileName);
-		goods.setThumbnail_image(File.separator + "resources\\images\\goodsImages" + classificationPath + File.separator + "thumbnail" + File.separator + "thumbnail_" + fileName);
+		//goods.setThumbnail_image(File.separator + "resources\\images\\goodsImages" + categoryPath + File.separator + "thunmnail" + File.separator + "s_" + fileName);
+		goods.setThumbnail_image(File.separator + "resources\\images\\goodsImages" + categoryPath + File.separator + "thumbnail" + File.separator + "thumbnail_" + fileName);
 		model.addAttribute("resultData", adminService.registerGoods(goods));
 		
 		return "admin/registerForm";

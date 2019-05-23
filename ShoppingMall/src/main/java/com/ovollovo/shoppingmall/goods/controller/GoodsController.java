@@ -26,9 +26,7 @@ public class GoodsController {
 	}
 	
 	@RequestMapping(value = "/goodsList", method = RequestMethod.GET)
-	public String goodsList(Model model,@RequestParam("classification") int classification,@RequestParam("n") int n) {
-		System.out.println(classification);
-		int count;
+	public String goodsList(Model model,@RequestParam("category") int category,@RequestParam("n") int n) {
 		/*
 		if (request.getParameter("n") == null) {
 			return "/";
@@ -38,6 +36,26 @@ public class GoodsController {
 		if (n < 1) {
 			return "/";
 		}
+		Goods[] goods;
+		int count;
+		if (category % 100 == 0) {
+			goods = goodsService.getCategoryFirstGoods(category, n);
+			count =  goodsService.getCategoryFirstCount(category);
+		}else {
+			goods = goodsService.getCategorySecondGoods(category, n);
+			count = goodsService.getCategorySecondCount(category);
+			model.addAttribute("category_2",goodsService.getCategoryName(category));
+		}
+		System.out.println(count);
+		model.addAttribute("category_1",goodsService.getCategoryName(category/100*100));
+		model.addAttribute("category",category);
+		if (count > 4*n) {
+			model.addAttribute("next", n+1);
+		}
+		if (n > 1) {
+			model.addAttribute("prev", n-1);
+		}
+		model.addAttribute("goodsList", goods);
 		//classification_1 = request.getParameter("classification_1");
 		//classification_2 = request.getParameter("classification_2");
 		

@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonObject;
-import com.ovollovo.shoppingmall.goods.Category_1;
-import com.ovollovo.shoppingmall.goods.Category_2;
 import com.ovollovo.shoppingmall.goods.Goods;
 import com.ovollovo.shoppingmall.goods.dao.GoodsMapper;
 import com.ovollovo.shoppingmall.member.Member;
@@ -37,8 +35,7 @@ public class AdminService implements AdminServiceI {
 		if (goodsMapper.searchCode(goods.getCode()) != null) {
 			return adminJson.getRegisterGoodsResultJson(1);
 		}
-		goodsMapper.registerGoods(goods.getName(), goods.getCode(), goods.getClassification_1(),
-				goods.getClassification_2(), goods.getPrice(), goods.getStock(), goods.getDescription(), goods.getThumbnail_image());
+		goodsMapper.registerGoods(goods.getName(), goods.getCode(), goods.getCategory(),goods.getPrice(), goods.getStock(), goods.getDescription(), goods.getThumbnail_image());
 		
 		return adminJson.getRegisterGoodsResultJson(0);
 	}

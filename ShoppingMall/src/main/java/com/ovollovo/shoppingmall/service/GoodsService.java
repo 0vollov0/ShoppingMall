@@ -13,6 +13,36 @@ public class GoodsService implements GoodsServiceI {
 	private GoodsMapper goodsMapper;
 
 	@Override
+	public String getCategoryName(int category) {
+		return goodsMapper.searchCategoryName(category);
+	}
+
+	@Override
+	public Goods[] getCategoryFirstGoods(int category, int n) {
+		// TODO Auto-generated method stub
+		return goodsMapper.searchCategoryFirstGoods(category/100, 4*(n-1), 4*n);
+	}
+
+	@Override
+	public Goods[] getCategorySecondGoods(int category, int n) {
+		// TODO Auto-generated method stub
+		return goodsMapper.searchCategorySecondGoods(category, 4*(n-1), 4*n);
+	}
+
+	@Override
+	public int getCategoryFirstCount(int category) {
+		// TODO Auto-generated method stub
+		return goodsMapper.searchCategoryFirstCount(category/100);
+	}
+
+	@Override
+	public int getCategorySecondCount(int category) {
+		// TODO Auto-generated method stub
+		return goodsMapper.searchCategorySecondCount(category);
+	}
+
+	/*
+	@Override
 	public String getCategory_1Name(String code) {
 		return goodsMapper.searchCategory_1Names(Integer.parseInt(code));
 	}
@@ -40,7 +70,7 @@ public class GoodsService implements GoodsServiceI {
 	@Override
 	public int getClassification_2Count(String classification_2) {
 		return goodsMapper.searchClassification_2Count(Integer.parseInt(classification_2));
-	}
+	}*/
 
 
 }

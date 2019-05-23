@@ -1,6 +1,6 @@
 package com.ovollovo.shoppingmall.goods;
 
-public class Category_2 {
+public class Category {
 	private int code;
 	private String name;
 	
