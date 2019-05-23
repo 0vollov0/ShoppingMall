@@ -27,12 +27,6 @@ public class GoodsController {
 	
 	@RequestMapping(value = "/goodsList", method = RequestMethod.GET)
 	public String goodsList(Model model,@RequestParam("category") int category,@RequestParam("n") int n) {
-		/*
-		if (request.getParameter("n") == null) {
-			return "/";
-		}
-		int n = Integer.parseInt(request.getParameter("n"));
-		*/
 		if (n < 1) {
 			return "/";
 		}
@@ -56,34 +50,19 @@ public class GoodsController {
 			model.addAttribute("prev", n-1);
 		}
 		model.addAttribute("goodsList", goods);
-		//classification_1 = request.getParameter("classification_1");
-		//classification_2 = request.getParameter("classification_2");
-		
-		//if (classification_2 == null) {
-		/*
-		if(false) {
-			Goods[] goods = goodsService.getClassification_1Goods(classification_1,n);
-			count = goodsService.getClassification_1Count(classification_1);
-			if (count > 4*n) {
-				model.addAttribute("nextNum", n+1);
-			}
-			if (n > 1) {
-				model.addAttribute("prevNum", n-1);
-			}
-			model.addAttribute("goodsList", goods);
-		}else {
-			Goods[] goods = goodsService.getClassification_2Goods(classification_2,n);
-			count = goodsService.getClassification_2Count(classification_2);
-			if (count > 4*n) {
-				model.addAttribute("nextNum", n+1);
-			}
-			if (n > 1) {
-				model.addAttribute("prevNum", n-1);
-			}
-			model.addAttribute("goodsList", goods);
-			model.addAttribute("category_2", goodsService.getCategory_2Name(classification_2));
-		}*/
-		//model.addAttribute("category_1", goodsService.getCategory_1Name(classification_1));
 		return "goods/goodsList";
+	}
+	
+	@RequestMapping(value = "/goodsArticle", method = RequestMethod.GET)
+	public String goodsArticle(Model model,@RequestParam("code") String code) {
+		Goods goods = goodsService.getGoods(code);
+		if (goods == null) {
+			return "/";
+		}
+		int category = goodsService.getCategoryNumber(code);
+		model.addAttribute("category_1",goodsService.getCategoryName(category/100*100));
+		model.addAttribute("category_2",goodsService.getCategoryName(category));
+		model.addAttribute("goods", goods);
+		return "goods/goodsArticle";
 	}
 }

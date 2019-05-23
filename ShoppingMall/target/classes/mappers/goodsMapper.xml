@@ -14,28 +14,7 @@
   </select>
   <select id="searchNewGoods" resultType="com.ovollovo.shoppingmall.goods.Goods">
   	select name,code,price,description,thumbnail_image,registered_time from goods order by registered_time desc limit 4
-  </select>
-  <!-- 
-  <select id="searchCategory_1Names" resultType="String">
-  	select name from category_1 where code = #{code}
-  </select>
-  <select id="searchCategory_2Names" resultType="String">
-  	select name from category_2  where code = #{code}
-  </select>
-  <select id="searchClassification_1Goods" resultType="com.ovollovo.shoppingmall.goods.Goods">
-  	select * from goods where classification_1 = #{classification_1} order by registered_time desc limit #{n},#{m}
-  </select>
-  <select id="searchClassification_2Goods" resultType="com.ovollovo.shoppingmall.goods.Goods">
-  	select * from goods where classification_2 = #{classification_2} order by registered_time desc limit #{n},#{m}
-  </select>
-  <select id="searchClassification_1Count" resultType="int">
-  	select count(*) from goods where classification_1 = #{classification_1}
-  </select>
-  <select id="searchClassification_2Count" resultType="int">
-  	select count(*) from goods where classification_2 = #{classification_2}
-  </select>
-   -->
-   
+  </select>   
    <select id="searchCategoryName" resultType="String">
   	select name from category where code = #{category}
   </select>
@@ -50,5 +29,8 @@
   </select>
   <select id="searchCategorySecondCount" resultType="int">
   	select count(*) from goods where category = #{category}
+  </select>
+  <select id="searchCategoryNumber" resultType="int">
+  	select category from goods where code = #{code}
   </select>
 </mapper>

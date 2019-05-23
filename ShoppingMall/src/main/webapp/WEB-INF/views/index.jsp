@@ -59,8 +59,7 @@
 						<p class="card-text">
 							<small class="text-muted">${goods.formatedTime }</small>
 						</p>
-						<button type="button" class="btn btn-outline-success">장바구니</button>
-						<button type="button" class="btn btn-outline-success">구매하기</button>						
+						<a href="${contextPath}/goods/goodsArticle?code=${goods.code }"><button type="button" class="btn btn-outline-success">상세보기</button></a>						
 					</div>
 				</div>
 			</c:forEach>

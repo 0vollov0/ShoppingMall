@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
@@ -49,31 +49,24 @@
 							<p class="card-text">
 								<small class="text-muted">${goods.formatedTime }</small>
 							</p>
-							<button type="button" class="btn btn-outline-success">상세보기</button>
+							<a href="${contextPath}/goods/goodsArticle?code=${goods.code }"><button type="button" class="btn btn-outline-success">상세보기</button></a>
 						</div>
 					</div>
 				</div>
 			</c:forEach>
 		</div>
 	</div>
-	<div class="container">
-		 <div class="row">
-		 	<div class="col-6">
-		 		<c:if test="${!empty prev}">	
-		 			<a href="${contextPath}/goods/goodsList?category=${category }&n=${prev}"><button type="button" class="btn btn-outline-success" onclick="">이전</button></a>
-		 		</c:if>	
-		 	</div>
-		    <div class="col-6 text-right">
-		    	<c:if test="${!empty next}">
-		    		<a href="${contextPath}/goods/goodsList?category=${category }&n=${next}"><button type="button" class="btn btn-outline-success">다음</button></a>		    		
-		    	</c:if>
-		    </div>
-	 	 </div>
+	<div class="row">
+		 <div class="col-6 text-right">
+		 	<c:if test="${!empty prev}">	
+		 		<a href="${contextPath}/goods/goodsList?category=${category }&n=${prev}"><button type="button" class="btn btn-outline-success" onclick="">이전</button></a>
+		 	</c:if>	
+		 </div>
+		 <div class="col-6 text-left">
+		    <c:if test="${!empty next}">
+		    	<a href="${contextPath}/goods/goodsList?category=${category }&n=${next}"><button type="button" class="btn btn-outline-success">다음</button></a>		    		
+		    </c:if>
+		 </div>
 	 </div>
-	 <c:if test="${!empty goodsList}">
-	 	<c:forEach items="${goodsList }" begin="${fn:length(goodsList)-1}" end="${fn:length(goodsList)}" var="goods">
-	 		${goods.name }
-	 	</c:forEach>
-	 </c:if>
 </body>
 </html>

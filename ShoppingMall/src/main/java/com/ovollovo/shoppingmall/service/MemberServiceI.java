@@ -22,4 +22,8 @@ public interface MemberServiceI {
 	
 	public Goods[] getNewGoods();
 	
+	public JsonObject getShoppingBasketResultJson(int basketSize);
+	
+	public JsonObject getDeleteShoppingBasketResultJson(String code);
+	
 }

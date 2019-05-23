@@ -3,6 +3,8 @@ package com.ovollovo.shoppingmall.service;
 import com.ovollovo.shoppingmall.goods.Goods;
 
 public interface GoodsServiceI {
+	public Goods getGoods(String code);
+
 	public String getCategoryName(int category);
 
 	public Goods[] getCategoryFirstGoods(int category, int n);
@@ -12,4 +14,6 @@ public interface GoodsServiceI {
 	public int getCategoryFirstCount(int category);
 
 	public int getCategorySecondCount(int category);
+
+	public int getCategoryNumber(String code);
 }

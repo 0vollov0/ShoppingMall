@@ -29,7 +29,7 @@
 						<c:choose>
 							<c:when test="${!member.admin }">
 								<li class="nav-item"><a class="nav-link"
-									href="${contextPath}/member/#">장바구니</a></li>
+									href="${contextPath}/member/shoppingBasketList">장바구니 목록</a></li>
 								<li class="nav-item"><a class="nav-link"
 									href="${contextPath}/member/#">주문배송 조회</a></li>
 								<li class="nav-item dropdown">

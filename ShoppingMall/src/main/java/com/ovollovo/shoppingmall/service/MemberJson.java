@@ -72,4 +72,17 @@ public class MemberJson {
 		
 		return jsonObject;
 	}
+	
+	public JsonObject getShoppingBasketResultJson(int basketSize) {
+		JsonObject jsonObject = new JsonObject();
+		//jsonObject.addProperty("basketLength", basketSize);
+		jsonObject.addProperty("message", "장바구니에 "+basketSize+"개의 상품이 있습니다.");
+		return jsonObject;
+	}
+	
+	public JsonObject getDeleteShoppingBasketResultJson(String code) {
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("result", code);
+		return jsonObject;
+	}
 }

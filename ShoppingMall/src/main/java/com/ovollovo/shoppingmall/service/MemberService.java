@@ -175,4 +175,14 @@ public class MemberService implements MemberServiceI {
 		return goodsMapper.searchNewGoods();
 	}
 
+	@Override
+	public JsonObject getShoppingBasketResultJson(int basketSize) {
+		return memberJson.getShoppingBasketResultJson(basketSize);
+	}
+
+	@Override
+	public JsonObject getDeleteShoppingBasketResultJson(String code) {
+		return memberJson.getDeleteShoppingBasketResultJson(code);
+	}
+
 }
