@@ -53,6 +53,14 @@ public class GoodsController {
 		return "goods/goodsList";
 	}
 	
+	@RequestMapping(value = "/searchGoods", method = RequestMethod.GET)
+	public String searchGoods(Model model,@RequestParam("name") String name) {
+		model.addAttribute("category_1","검색 결과 :");
+		model.addAttribute("category_2",name);
+		model.addAttribute("goodsList", goodsService.getGoodsSearchResult(name));
+		return "goods/goodsList";
+	}
+	
 	@RequestMapping(value = "/goodsArticle", method = RequestMethod.GET)
 	public String goodsArticle(Model model,@RequestParam("code") String code) {
 		Goods goods = goodsService.getGoods(code);

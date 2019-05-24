@@ -50,4 +50,9 @@ public class GoodsService implements GoodsServiceI {
 	public int getCategoryNumber(String code) {
 		return goodsMapper.searchCategoryNumber(code);
 	}
+
+	@Override
+	public Goods[] getGoodsSearchResult(String name) {
+		return goodsMapper.searchGoodsByName(name);
+	}
 }

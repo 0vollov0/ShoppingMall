@@ -29,7 +29,12 @@
 		<property name="mapperInterface" value="com.ovollovo.shoppingmall.goods.dao.GoodsMapper"></property>
 		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
 	</bean>
-	<mybatis-spring:scan base-package="com.ovollovo.shoppingmall.goods.dao"/>
+	<mybatis-spring:scan base-package="com.ovollovo.shoppingmall.order.dao"/>
+	<bean id="orderMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.ovollovo.shoppingmall.order.dao.OrderMapper"></property>
+		<property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+	</bean>
+	<mybatis-spring:scan base-package="com.ovollovo.shoppingmall.order.dao"/>
 	
 	<!-- 메일 보내기 (SEND) -->
    	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -31,7 +31,7 @@
 								<li class="nav-item"><a class="nav-link"
 									href="${contextPath}/member/shoppingBasketList">장바구니 목록</a></li>
 								<li class="nav-item"><a class="nav-link"
-									href="${contextPath}/member/#">주문배송 조회</a></li>
+									href="${contextPath}/member/memberOrderList">주문배송 조회</a></li>
 								<li class="nav-item dropdown">
 									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		          						${member.id }님환영합니다.
@@ -45,7 +45,7 @@
 								<li class="nav-item"><a class="nav-link"
 									href="${contextPath}/admin/registerForm">상품등록</a></li>
 								<li class="nav-item"><a class="nav-link"
-									href="${contextPath}/#">배송관리</a></li>
+									href="${contextPath}/admin/adminOrderList">주문/배송관리</a></li>
 								<li class="nav-item"><a class="nav-link"
 									href="${contextPath}/#">회원관리</a></li>
 								<li class="nav-item dropdown">

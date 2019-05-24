@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ovollovo.shoppingmall.order.dao.OrderMapper">
+  <insert id="registerOrder" >
+  	insert into orders(userid,goodscode,goodscount,price,delivery_info) values(#{userid},#{goodscode},#{goodscount},#{price},#{delivery_info})
+  </insert>
+  <select id="searchOrderList" resultType="com.ovollovo.shoppingmall.order.Order">
+  	select * from orders
+  </select>
+  <select id="searchOrderListById" resultType="com.ovollovo.shoppingmall.order.Order">
+  	select * from orders where userid= #{userid}
+  </select>
+  <insert id="registerShippingInfo" >
+  	update orders set company_code = #{companyCode} ,invoice_number = #{invoiceNumber} where code = #{code}
+  </insert>
+</mapper>

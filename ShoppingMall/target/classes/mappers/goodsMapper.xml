@@ -33,4 +33,7 @@
   <select id="searchCategoryNumber" resultType="int">
   	select category from goods where code = #{code}
   </select>
+  <select id="searchGoodsByName" resultType="com.ovollovo.shoppingmall.goods.Goods">
+  	select * from goods where name like concat('%',#{name},'%')
+  </select>
 </mapper>

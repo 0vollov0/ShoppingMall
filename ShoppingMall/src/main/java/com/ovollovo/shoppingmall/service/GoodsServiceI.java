@@ -16,4 +16,6 @@ public interface GoodsServiceI {
 	public int getCategorySecondCount(int category);
 
 	public int getCategoryNumber(String code);
+	
+	public Goods[] getGoodsSearchResult(String name);
 }

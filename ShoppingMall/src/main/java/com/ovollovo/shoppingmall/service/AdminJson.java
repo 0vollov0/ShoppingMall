@@ -33,4 +33,12 @@ public class AdminJson {
 		}
 		return jsonObject;
 	}
+	
+	public JsonObject getRegisterShippingInfoResultJson(int code,String companyCode,String invoiceNumber) {
+		JsonObject jsonObject = new JsonObject();
+		jsonObject.addProperty("code", code);
+		jsonObject.addProperty("companyCode", companyCode);
+		jsonObject.addProperty("invoiceNumber", invoiceNumber);
+		return jsonObject;
+	}
 }

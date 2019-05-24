@@ -26,5 +26,7 @@ public interface GoodsMapper {
 	public int searchCategorySecondCount(@Param("category") int category);
 	
 	public int searchCategoryNumber(@Param("code") String code);
+	
+	public Goods[] searchGoodsByName(@Param("name") String name);
 
 }

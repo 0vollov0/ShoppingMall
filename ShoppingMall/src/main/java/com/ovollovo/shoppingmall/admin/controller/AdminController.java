@@ -13,10 +13,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.JsonObject;
 import com.ovollovo.shoppingmall.goods.Goods;
+import com.ovollovo.shoppingmall.service.AdminJson;
 import com.ovollovo.shoppingmall.service.AdminService;
+import com.ovollovo.shoppingmall.service.OrderService;
 import com.ovollovo.shoppingmall.util.UploadFileUtils;
 
 @Controller
@@ -25,6 +30,12 @@ public class AdminController {
 
 	@Autowired
 	AdminService adminService;
+	
+	@Autowired
+	private OrderService orderService;
+	
+	@Autowired
+	private AdminJson adminJson;
 
 	@Resource(name = "uploadPath")
 	private String uploadPath;
@@ -36,35 +47,15 @@ public class AdminController {
 
 	@RequestMapping(value = "/registerForm")
 	public String registerForm(HttpSession session,ModelMap model) {
-		/*
-		if (adminService.checkAdmin(session) == false) {
-			return "redirect:/";
-		}*/
 		model.remove("resultData");
 		
 		return "admin/registerForm";
 	}
 
-	/*
-	@RequestMapping(value = "/registerGoods", method = RequestMethod.POST)
-	public @ResponseBody JsonObject registerGoods(@ModelAttribute("goods") Goods goods, MultipartFile uploadfile) {
-		if (uploadfile == null) {
-			System.out.println("sex");
-		}
-		// System.out.println("originalfilename"+uploadfile.getOriginalFilename());
-		// System.out.println("filename"+uploadfile.getName());
-		return adminService.registerGoods(goods);
-	}
-	*/
 	@RequestMapping(value = "/registerGoods", method = RequestMethod.POST)
 	public String registerGoods(HttpSession session,Model model, @ModelAttribute("goods") Goods goods, MultipartFile imageFile) {
-		/*
-		if (adminService.checkAdmin(session) == false) {
-			return "redirect:/";
-		}*/
 		System.out.println(goods.getDescription());
 		String imgUploadPath = uploadPath + File.separator + "resources/images/goodsImages";
-		//String ymdPath = UploadFileUtils.calcPath(imgUploadPath);
 		String categoryPath = UploadFileUtils.getCategoryPath(imgUploadPath, goods.getCategory());
 
 		String fileName = null;
@@ -84,5 +75,17 @@ public class AdminController {
 		model.addAttribute("resultData", adminService.registerGoods(goods));
 		
 		return "admin/registerForm";
+	}
+	
+	@RequestMapping(value = "adminOrderList")
+	public String memberOrderList(Model model) {
+		model.addAttribute("orderList", orderService.getOrderList());
+		return "admin/adminOrderList";
+	}
+	
+	@RequestMapping(value = "/registerShippingInfo", method = RequestMethod.POST)
+	public @ResponseBody JsonObject registerShippingInfo(@RequestParam("code") int code,@RequestParam("companyCode") String companyCode,@RequestParam("invoiceNumber") String invoiceNumber) {
+		orderService.registerShippingInfo(code, companyCode, invoiceNumber);
+		return adminJson.getRegisterShippingInfoResultJson(code,companyCode, invoiceNumber);
 	}
 }

@@ -76,7 +76,7 @@ public class MemberJson {
 	public JsonObject getShoppingBasketResultJson(int basketSize) {
 		JsonObject jsonObject = new JsonObject();
 		//jsonObject.addProperty("basketLength", basketSize);
-		jsonObject.addProperty("message", "장바구니에 "+basketSize+"개의 상품이 있습니다.");
+		jsonObject.addProperty("message", "장바구니에 "+basketSize+" 종류의 상품이 있습니다.");
 		return jsonObject;
 	}
 	

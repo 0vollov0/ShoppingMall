@@ -1,6 +1,5 @@
 package com.ovollovo.shoppingmall.member.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonObject;
-import com.ovollovo.shoppingmall.goods.Goods;
 import com.ovollovo.shoppingmall.member.Member;
 import com.ovollovo.shoppingmall.member.ShoppingBasket;
 import com.ovollovo.shoppingmall.service.GoodsService;
 import com.ovollovo.shoppingmall.service.MemberService;
+import com.ovollovo.shoppingmall.service.OrderService;
 
 @Controller
 @RequestMapping("/member")
@@ -32,6 +31,9 @@ public class MemberController {
 	
 	@Autowired
 	private GoodsService goodsService;
+	
+	@Autowired
+	private OrderService orderService;
 
 	@ModelAttribute("contextPath")
 	public String getContextPath(HttpServletRequest request) {
@@ -106,25 +108,37 @@ public class MemberController {
 	public @ResponseBody JsonObject shoppingBasket(@RequestParam("code")String code,HttpSession session) {
 		Map<String, ShoppingBasket> shoppingBasketList = (Map<String, ShoppingBasket>) session.getAttribute("shoppingBasketList");
 		if (shoppingBasketList == null) {
-			System.out.print("new");
 			shoppingBasketList = new HashMap<String, ShoppingBasket>();
 		}
 		if (shoppingBasketList.containsKey(code)) {
-			System.out.print("upcont");
 			shoppingBasketList.get(code).upCount();
 		}else {
-			System.out.print("put");
 			shoppingBasketList.put(code, new ShoppingBasket(goodsService.getGoods(code)));
 		}
 		session.setAttribute("shoppingBasketList", shoppingBasketList);
 		return memberService.getShoppingBasketResultJson(shoppingBasketList.size());
 	}
+	
+	@RequestMapping(value = "basketUpDown", method = RequestMethod.POST)
+	public @ResponseBody JsonObject basketUpDown(@RequestParam("code")String code,@RequestParam("action") int action,HttpSession session) {
+		System.out.println(code+""+action);
+		Map<String, ShoppingBasket> shoppingBasketList = (Map<String, ShoppingBasket>) session.getAttribute("shoppingBasketList");
+		if (shoppingBasketList != null && shoppingBasketList.size() > 0) {
+			if (action == -1) {
+				shoppingBasketList.get(code).downCount();
+			}else if(action == 1) {
+				shoppingBasketList.get(code).upCount();
+			}
+			session.setAttribute("shoppingBasketList", shoppingBasketList);
+		}
+		JsonObject json = new JsonObject();
+		json.addProperty("id", code);
+		json.addProperty("value", shoppingBasketList.get(code).getCount());
+		return json;
+	}
+	
 	@RequestMapping(value = "shoppingBasketList", method = RequestMethod.GET)
 	public String shoppingBasket(Model model,HttpSession session) {
-		/*
-		ArrayList<Goods> shoppingBasketList = (ArrayList<Goods>) session.getAttribute("shoppingBasketList");
-		model.addAttribute("shoppingBasketList", shoppingBasketList);
-		*/
 		Map<String, ShoppingBasket> shoppingBasketList = (Map<String, ShoppingBasket>) session.getAttribute("shoppingBasketList");
 		model.addAttribute("shoppingBasketList", shoppingBasketList);
 		return "member/shoppingBasketList";
@@ -139,5 +153,12 @@ public class MemberController {
 		session.setAttribute("shoppingBasketList", shoppingBasketList);
 		
 		return memberService.getDeleteShoppingBasketResultJson(code);
+	}
+	
+	@RequestMapping(value = "memberOrderList")
+	public String memberOrderList(Model model,HttpSession session) {
+		Member member = (Member) session.getAttribute("member");
+		model.addAttribute("orderList", orderService.getOrderList(member.getId()));
+		return "member/memberOrderList";
 	}
 }
