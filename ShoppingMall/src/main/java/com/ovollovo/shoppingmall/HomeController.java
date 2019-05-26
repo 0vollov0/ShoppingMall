@@ -8,7 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.JsonObject;
+import com.ovollovo.shoppingmall.service.GoodsService;
 import com.ovollovo.shoppingmall.service.MemberService;
 
 /**
@@ -18,7 +22,10 @@ import com.ovollovo.shoppingmall.service.MemberService;
 public class HomeController {
 	
 	@Autowired
-	private MemberService memberService;
+	MemberService memberService;
+	
+	@Autowired
+	GoodsService goodsService;
 
 	@ModelAttribute("contextPath")
 	public String getContextPath(HttpServletRequest request) {
@@ -27,8 +34,11 @@ public class HomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
-		model.addAttribute("newGoods", memberService.getNewGoods());
+		model.addAttribute("newGoods", goodsService.getNewGoods(4));
+		model.addAttribute("bestGoods", goodsService.getBestGoods(4));
 		return "index";
 	}
+	
+	
 
 }

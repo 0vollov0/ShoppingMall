@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.ovollovo.shoppingmall.goods.dao.GoodsMapper;
 import com.ovollovo.shoppingmall.member.Member;
 import com.ovollovo.shoppingmall.member.ShoppingBasket;
 import com.ovollovo.shoppingmall.order.DeliveryInfo;
 import com.ovollovo.shoppingmall.order.Order;
+import com.ovollovo.shoppingmall.service.GoodsService;
 import com.ovollovo.shoppingmall.service.OrderService;
 
 @Controller
@@ -23,6 +25,9 @@ public class OrderController {
 	
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	GoodsService goodsService;
 
 	@ModelAttribute("contextPath")
 	public String getContextPath(HttpServletRequest request) {
@@ -44,9 +49,11 @@ public class OrderController {
 		String goodscount = "";
 		
         for (String key : shoppingBasketList.keySet()) {
+        	int sale_count = shoppingBasketList.get(key).getCount();
+        	goodsService.pushSaleCount(key, sale_count);
         	goodscode = goodscode + key +",";
-        	goodscount = goodscount + shoppingBasketList.get(key).getCount()+",";
-        	price = price + (shoppingBasketList.get(key).getCount()*shoppingBasketList.get(key).getGoods().getPrice());
+        	goodscount = goodscount + sale_count+",";
+        	price = price + (sale_count*shoppingBasketList.get(key).getGoods().getPrice());
 		}
         goodscode = goodscode.substring(0,goodscode.length()-1);
         goodscount = goodscount.substring(0,goodscount.length()-1);

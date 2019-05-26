@@ -32,14 +32,6 @@
 									href="${contextPath}/member/shoppingBasketList">장바구니 목록</a></li>
 								<li class="nav-item"><a class="nav-link"
 									href="${contextPath}/member/memberOrderList">주문배송 조회</a></li>
-								<li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		          						${member.id }님환영합니다.
-		        					</a>
-		        					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							          <a class="dropdown-item" href="${contextPath}/member/logout">로그아웃</a>
-							        </div>
-								</li>
 							</c:when>
 							<c:otherwise>
 								<li class="nav-item"><a class="nav-link"
@@ -48,16 +40,18 @@
 									href="${contextPath}/admin/adminOrderList">주문/배송관리</a></li>
 								<li class="nav-item"><a class="nav-link"
 									href="${contextPath}/#">회원관리</a></li>
-								<li class="nav-item dropdown">
-									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		          						${member.id }님환영합니다.
-		        					</a>
-		        					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							          <a class="dropdown-item" href="${contextPath}/member/logout">로그아웃</a>
-							        </div>
-								</li>
 							</c:otherwise>
 						</c:choose>
+						<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		          					${member.id }님환영합니다.
+		        				</a>
+		        			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+		        				<a class="dropdown-item" href="${contextPath}/member/modifyForm">비밀번호 변경</a>
+		        				<a class="dropdown-item" href="${contextPath}/member/logout">로그아웃</a>
+		        				<a class="dropdown-item" href="${contextPath}/member/withdrawal">회원탈퇴</a>
+							</div>
+						</li>
 					</c:otherwise>
 				</c:choose>
 				</ul>

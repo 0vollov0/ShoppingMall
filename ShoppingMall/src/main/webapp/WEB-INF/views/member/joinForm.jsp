@@ -26,7 +26,7 @@
 	margin-top: 20px;
 }
 </style>
-<title>Insert title here</title>
+<title>JoinForm</title>
 </head>
 <body>
 	<div class="container text-center margin">

@@ -13,10 +13,16 @@
   	select code from goods where code= #{code}
   </select>
   <select id="searchNewGoods" resultType="com.ovollovo.shoppingmall.goods.Goods">
-  	select name,code,price,description,thumbnail_image,registered_time from goods order by registered_time desc limit 4
+  	select * from goods order by registered_time desc limit #{count}
   </select>   
    <select id="searchCategoryName" resultType="String">
   	select name from category where code = #{category}
+  </select>
+  <select id="searchCategoryCode" resultType="int">
+  	select code from category where name = #{name}
+  </select>
+  <select id="searchCategory" resultType="com.ovollovo.shoppingmall.goods.Category">
+  	select * from category order by code asc
   </select>
   <select id="searchCategoryFirstGoods" resultType="com.ovollovo.shoppingmall.goods.Goods">
   	select * from goods where category like concat(#{category},'%%')  order by registered_time desc limit #{n},#{m}
@@ -36,4 +42,19 @@
   <select id="searchGoodsByName" resultType="com.ovollovo.shoppingmall.goods.Goods">
   	select * from goods where name like concat('%',#{name},'%')
   </select>
+  <update id="stackSaleCount">
+  	update goods set sale_count = sale_count + #{sale_count} where code = #{code}
+  </update>
+  <select id="searchBestGoods" resultType="com.ovollovo.shoppingmall.goods.Goods">
+  	select * from goods order by sale_count desc limit #{count}
+  </select>
+  <update id="modifyGoods">
+  	update goods set name = #{name},code = #{code},category =  #{category} ,price = #{price},stock = #{stock}, description = #{description} where code = #{wherecode}
+  </update> 
+  <update id="modifyGoodsImage">
+  	update goods set thumbnail_image = #{thumbnail_image} where code = #{code}
+  </update> 
+  <delete id="deleteGoods">
+  	delete from goods where code = #{code}
+  </delete>
 </mapper>

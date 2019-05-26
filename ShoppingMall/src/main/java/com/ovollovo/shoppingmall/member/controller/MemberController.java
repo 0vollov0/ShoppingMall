@@ -65,7 +65,6 @@ public class MemberController {
 		try {
 			jsonObject = memberService.joinMember(member,captchaKey,userCaptchaKey);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return jsonObject;
@@ -94,6 +93,16 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
+	@RequestMapping(value = "/modifyForm")
+	public String modifiedForm() {
+		return "member/modifyForm";
+	}
+	
+	@RequestMapping(value = "modify", method = RequestMethod.POST)
+	public @ResponseBody JsonObject modify(@RequestParam("id") String id,@RequestParam("pw") String pw,@RequestParam("newpw") String newpw) {
+		return memberService.modifyMember(id, pw, newpw);
+	}
+	
 	@RequestMapping(value = "getCaptcha", method = RequestMethod.GET)
 	public @ResponseBody JsonObject getCaptcha() {
 		return memberService.getCaptchaKeyNImage();
@@ -102,6 +111,14 @@ public class MemberController {
 	@RequestMapping(value = "deleteCaptcha", method = RequestMethod.GET)
 	public @ResponseBody void deleteCaptcha(@RequestParam("image")String image) {
 		memberService.deleteCaptchaImage(image);
+	}
+	
+	@RequestMapping(value = "/withdrawal")
+	public String withdrawal(HttpSession session) {
+		Member member = (Member) session.getAttribute("member");
+		session.invalidate();
+		memberService.deleteMember(member.getId());
+		return "redirect:/";
 	}
 	
 	@RequestMapping(value = "shoppingBasket", method = RequestMethod.POST)

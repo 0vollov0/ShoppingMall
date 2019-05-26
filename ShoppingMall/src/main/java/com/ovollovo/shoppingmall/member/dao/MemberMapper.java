@@ -22,4 +22,8 @@ public interface MemberMapper {
 	public String searchAuthkey(@Param("id") String id); 
 	
 	public void deleteAuthkey(@Param("id") String id);
+	
+	public void modifyMember(@Param("id") String id,@Param("pw") String pw,@Param("newpw") String newpw);
+	
+	public void deleteMember(@Param("id") String id);
 }

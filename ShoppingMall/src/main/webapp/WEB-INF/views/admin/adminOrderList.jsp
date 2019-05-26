@@ -112,9 +112,13 @@ $('#submit').click(function(){
       },
       type: "json"
     }).done(function(resultData) {
-      var htmlText = "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModalCenter' onclick='showShippingModal("+resultData.companyCode+","+resultData.invoiceNumber+");'>배송정보 확인</button>"
-      $('#'+resultData.code).html(htmlText);
-      $('#modal-close-button').click();
+    	if (resultData.status) {
+    		var htmlText = "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModalCenter' onclick='showShippingModal("+resultData.companyCode+","+resultData.invoiceNumber+");'>배송정보 확인</button>"
+    	    $('#'+resultData.code).html(htmlText);
+    		$('#modal-close-button').click();	
+		}else{
+			alert("입력 오류");
+		}     
     }).fail(function() {
       alert("통신 오류");
     }).always(function() {});

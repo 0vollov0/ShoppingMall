@@ -13,6 +13,7 @@ public class Goods {
 	private String thumbnail_image;
 	private Date registered_time;
 	private String formatedTime;
+	private int sale_count;
 
 	public String getName() {
 		return name;
@@ -86,6 +87,13 @@ public class Goods {
 	public void setFormatedTime(Date registered_time) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yy³â MM¿ù ddÀÏ");
 		this.formatedTime = dateFormat.format(this.registered_time);
+	}
+	public int getSale_count() {
+		return sale_count;
+	}
+
+	public void setSale_count(int sale_count) {
+		this.sale_count = sale_count;
 	}
 
 	@Override

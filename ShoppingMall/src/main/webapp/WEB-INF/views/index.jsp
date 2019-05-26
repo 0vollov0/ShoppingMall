@@ -46,8 +46,8 @@
 	</div>
 	<jsp:include page="template/goodsMenu.jsp" flush="false"></jsp:include>
 	
-	<div class="container text-center">
-		<h1 class="text-left">NEW</h1>
+	<div class="container text-center ">
+		<h1 class="text-left">NEW ITEMS</h1>
 		<div class="card-deck">
 			<c:forEach items="${newGoods }" var="goods">
 				<div class="card">
@@ -66,67 +66,24 @@
 	</div>
 
 	<div class="container text-center">
-		<h1 class="text-left">BEST</h1>
+		<h1 class="text-left">BEST ITEMS</h1>
 		<div class="card-deck">
-			<div class="card">
-				<img class="card-img-top" src="..." alt="Card image cap">
-				<div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">This is a longer card with supporting text
-						below as a natural lead-in to additional content. This content is
-						a little bit longer.</p>
-					<p class="card-text">
-						<small class="text-muted">Last updated 3 mins ago</small>
-					</p>
+			<c:forEach items="${bestGoods }" var="goods">
+				<div class="card">
+					<img class="card-img-top" src=".${goods.thumbnail_image }" alt="Card image cap">
+					<div class="card-body">
+						<h5 class="card-title">${goods.name }</h5>
+						<p class="card-text">${goods.price } 원</p>
+						<p class="card-text">
+							<small class="text-muted">${goods.formatedTime }</small>
+						</p>
+						<a href="${contextPath}/goods/goodsArticle?code=${goods.code }"><button type="button" class="btn btn-outline-success">상세보기</button></a>						
+					</div>
 				</div>
-			</div>
-			<div class="card">
-				<img class="card-img-top" src="..." alt="Card image cap">
-				<div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">This card has supporting text below as a
-						natural lead-in to additional content.</p>
-					<p class="card-text">
-						<small class="text-muted">Last updated 3 mins ago</small>
-					</p>
-				</div>
-			</div>
-			<div class="card">
-				<img class="card-img-top" src="..." alt="Card image cap">
-				<div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">This is a wider card with supporting text
-						below as a natural lead-in to additional content. This card has
-						even longer content than the first to show that equal height
-						action.</p>
-					<p class="card-text">
-						<small class="text-muted">Last updated 3 mins ago</small>
-					</p>
-				</div>
-			</div>
-			<div class="card">
-				<img class="card-img-top" src="..." alt="Card image cap">
-				<div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">This is a wider card with supporting text
-						below as a natural lead-in to additional content. This card has
-						even longer content than the first to show that equal height
-						action.</p>
-					<p class="card-text">
-						<small class="text-muted">Last updated 3 mins ago</small>
-					</p>
-				</div>
-			</div>
+			</c:forEach>
 		</div>
 	</div>
 	<footer>
-		<div class="">
-			<ul>
-				<li>이용약관</li>
-				<li>주소</li>
-				<li>대표</li>
-			</ul>
-		</div>
 	</footer>
 </body>
 </html>

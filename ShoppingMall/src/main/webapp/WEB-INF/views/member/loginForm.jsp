@@ -37,7 +37,7 @@
 			<div class="row justify-content-center margin">
 				<div class="col-md-7 col-12 margin">
 					<input type="text" class="form-control text-center" placeholder="ID"
-						aria-label="ID" aria-describedby="basic-addon2" name="id">
+						aria-label="ID" aria-describedby="basic-addon2" name="id" >
 				</div>
 				<div class="col-md-7 col-12 margin">
 					<input type="password" class="form-control text-center" placeholder="PASSWORD"
@@ -75,7 +75,6 @@
 			$("input[name=id]").val("");
 			$("input[name=pw]").val("");
 			$('.alert').hide();
-			//var resultJson = JSON.parse(resultData);
 			switch (resultData.result) {
 			case 0:
 				window.location = "${contextPath}";

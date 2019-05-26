@@ -68,11 +68,51 @@
           <button type="button" class="btn btn-outline-success" onclick="history.go(-1);">이전 페이지</button>
       </div>
       <div class="col-6 text-right">
-        <button type="button" class="btn btn-outline-success" onclick="shoppingBasket();">장바구니</button>
-        <button type="button" class="btn btn-outline-success">주문하기</button>
+      	<c:choose>
+      		<c:when test="${member.admin }">
+      			<form action="${contextPath }/admin/goodsModifyForm" method="POST">
+      				<input type="hidden" name="name" value="${goods.name }">
+      				<input type="hidden" name="code" value="${goods.code }">
+      				<input type="hidden" name="category_1" value="${category_1 }">
+      				<input type="hidden" name="category_2" value="${category_2 }">
+      				<input type="hidden" name="price" value="${goods.price }">
+      				<input type="hidden" name="stock" value="${goods.stock }">
+      				<input type="hidden" name="thumbnail_image" value="${goods.thumbnail_image }">
+      				<input type="hidden" name="description" value="${goods.description }">
+      				<input type="submit" class="btn btn-outline-info" value="수정">
+      			</form>
+	      		<!-- <a href="${contextPath }/admin/goodsModifyForm"><button type="button" class="btn btn-outline-info">수정</button></a> -->
+	        	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+				  삭제
+				</button>
+	      	</c:when>
+	      	<c:otherwise>
+	      		<button type="button" class="btn btn-outline-success" onclick="shoppingBasket();">장바구니</button>
+	        	<button type="button" class="btn btn-outline-success">주문하기</button>
+	      	</c:otherwise>
+	  	</c:choose>
       </div>
     </div>
   </div>
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">상품 삭제</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        	정말 상품을 삭제하시겠습니까?
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+	        <a href="${contextPath }/admin/deleteGoods?code=${goods.code}"><button type="button" class="btn btn-primary">삭제하기</button></a>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 </body>
 <script type="text/javascript">
 function shoppingBasket() {

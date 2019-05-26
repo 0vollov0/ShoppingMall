@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.ovollovo.shoppingmall.goods.Goods;
 import com.ovollovo.shoppingmall.service.GoodsService;
 
@@ -72,5 +75,10 @@ public class GoodsController {
 		model.addAttribute("category_2",goodsService.getCategoryName(category));
 		model.addAttribute("goods", goods);
 		return "goods/goodsArticle";
+	}
+	
+	@RequestMapping(value = "/getCategory", method = RequestMethod.GET)
+	public @ResponseBody JsonArray getCategory() {
+		return goodsService.getCategory();
 	}
 }

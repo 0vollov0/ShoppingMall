@@ -59,6 +59,23 @@ public class MemberJson {
 		return jsonObject;
 	}
 	
+	public JsonObject getModifyResultJson(int key) {
+		JsonObject jsonObject = new JsonObject();
+		switch (key) {
+		case 0:
+			jsonObject.addProperty("result", 0);
+			jsonObject.addProperty("message", "회원정보 수정 완료.");
+			break;
+		case 1:
+			jsonObject.addProperty("result", 1);
+			jsonObject.addProperty("message", "기존 비밀번호와 입력된 비밀번호가 불일치합니다.");
+			break;
+		default:
+			break;
+		}
+		return jsonObject;
+	}
+	
 	public JsonObject getCaptchaJson(Map<String, String> captchaMap) {
 		JsonObject jsonObject = new JsonObject();
 		jsonObject.addProperty("key", captchaMap.get("key"));

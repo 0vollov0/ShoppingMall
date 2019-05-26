@@ -30,4 +30,10 @@
   <update id="deleteAuthkey">
   	update member set authkey = null where id = #{id}
   </update>
+  <update id="modifyMember">
+  	update member set pw = #{newpw} where id = #{id} and pw = #{pw}
+  </update>
+  <delete id="deleteMember">
+  	delete from member where id = #{id}
+  </delete>
 </mapper>
