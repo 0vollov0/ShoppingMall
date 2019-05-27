@@ -21,6 +21,16 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
+<style type="text/css">
+	#count{
+		padding-left: 10px;
+		padding-right: 10px;
+		font-weight: bold;
+	}
+	.basket-img{
+		height: 50px;
+	}
+</style>
 <title>goodsList</title>
 </head>
 <body>
@@ -41,11 +51,12 @@
         <tbody>
         	<c:forEach items="${shoppingBasketList }" var="basket">
 	        	<tr id="${basket.value.goods.code}">
-	        		<td><img src="../${basket.value.goods.thumbnail_image }" height="50px"></td>
+	        		<td><img class="basket-img" src="../${basket.value.goods.thumbnail_image }"></td>
 	        		<td>${basket.value.goods.name }</td>
 	        		<td>${basket.value.goods.price }</td>
-	        		<td>${basket.value.goods.stock }</td>
-	        		<td><span class="minus">-</span><span>${basket.value.count }</span><span class="plus">+</span></td>
+	        		<td id="stock">${basket.value.goods.stock }</td>
+	        		<!--  <td><span class="minus"></span><span id="count">${basket.value.count }</span><span class="plus">+</span></td>-->
+	        		<td><button type="button" class="btn btn-outline-info minus">-</button><span id="count">${basket.value.count }</span><button type="button" class="btn btn-outline-info plus">+</button></td>
 	        		<td><button type="button" class="btn btn-outline-info" onclick="deleteGoods(${basket.value.goods.code});">삭제</button></td>
 	        	</tr>
 	        	<c:set var="totalPrice" value="${basket.value.count*basket.value.goods.price+totalPrice}"></c:set>
@@ -58,11 +69,11 @@
   	</div>
   	<div class="container text-center">
     <h3>배송지</h3>
-    <form action="${contextPath }/order/requestOrder" method="POST">
+    <form action="${contextPath }/order/requestOrder" method="POST" id="order-form">
     	<table class="table table-striped">
 	      <tbody>
 	        <tr>
-	          <th>주문자</th>
+	          <th>구매자</th>
 	          <td><input class="form-control text-center" type="text" name="buyer"></td>
 	          <th>수령인</th>
 	          <td><input class="form-control text-center" type="text" name="shippingRecipient"></td>
@@ -88,13 +99,18 @@
 	      <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
 	    </div>
 	    <div class="text-right">
-	    	<input type="submit" class="btn btn-outline-success" value="결제">
+	    	<!-- <input type="submit" class="btn btn-outline-success" value="결제">  -->
+	    	<button type="button" class="btn btn-outline-success" onclick="order();" >결제</button>
 	    </div>
     </form>
+    <div id="alert" class=""></div>
   	</div>
 </body>
 <script type="text/javascript">
 	$('.minus').click(function(){
+		if (Number.parseInt($(this).next().text()) <= 1) {
+			return;
+		}
 		$.ajax({
 			url : "${contextPath }/member/basketUpDown",
 			method : "POST",
@@ -115,6 +131,9 @@
 	});
 
 	$('.plus').click(function(){
+		if (Number.parseInt($(this).prev().text()) >= Number.parseInt($(this).parent().prev().text())) {
+			return;
+		}
 		$.ajax({
 			url : "${contextPath }/member/basketUpDown",
 			method : "POST",
@@ -132,15 +151,6 @@
 			$(".alert-danger").fadeIn();
 		}).always(function() {
 		});
-		/*
-		if (result == 0) {
-			var temp = $(this).prev().text();
-			temp++;
-			$(this).prev().text(temp);
-			console.log($(this).parent().prev().prev().text());
-			temmp = Number.parseInt($(this).parent().prev().prev().text());
-			$('#total').text(Number.parseInt($('#total').text())+temmp);
-		}*/
 	});
 	
 	function deleteGoods(goodsCode) {
@@ -161,6 +171,84 @@
 			$(".alert-danger").fadeIn();
 		}).always(function() {
 		});
+	}
+	/*
+	function order(){
+		
+		if ($('input[name=buyer]').val().length < 1) {
+			alert('구매자 이름을 입력하세요.');
+			return;
+		}
+		if ($('input[name=shippingRecipient]').val().length < 1) {
+			alert('수령인 이름을 입력하세요.');
+			return;
+		}
+		if ($('input[name=zipCode]').val().length < 1) {
+			alert('우편번호를 입력하세요.');
+			return;
+		}
+		if ($('input[name=address]').val().length < 1) {
+			alert('주소를 입력하세요.');
+			return;
+		}
+		if ($('input[name=detailAddress]').val().length < 1) {
+			alert('상세주소를 입력하세요.');
+			return;
+		}
+		$('#order-form').submit();
+		
+	}
+	*/
+	function order(){
+		$.ajax({
+			url : "${contextPath }/order/requestOrder",
+			method : "POST",
+			data : {
+				buyer : $("input[name=buyer]").val(),
+				shippingRecipient : $("input[name=shippingRecipient]").val(),
+				zipCode : $("input[name=zipCode]").val(),
+				address : $("input[name=address]").val(),
+				detailAddress :  $("input[name=detailAddress]").val(),
+				reference :  $("input[name=reference]").val()
+			},
+			type : "json"
+		}).done(function(resultData) {
+			switch (resultData.result) {
+			case 0:
+				window.location = "${contextPath}/member/memberOrderList"
+				break;
+			case 1:
+				turnOnAlert('alert-info',resultData.message);
+				break;
+			case 2:
+				turnOnAlert('alert-info',resultData.message);
+				break;
+			case 3:
+				turnOnAlert('alert-info',resultData.message);
+				break;
+			case 4:
+				turnOnAlert('alert-info',resultData.message);
+				break;
+			case 5:
+				turnOnAlert('alert-info',resultData.message);
+				break;
+			case 6:
+				turnOnAlert('alert-danger',resultData.message);
+				break;
+			default:
+				break;
+			}
+		}).fail(function() {
+			$(".alert-danger").text("서버 통신 오류");
+			$(".alert-danger").fadeIn();
+		}).always(function() {
+		});
+	}
+	function turnOnAlert(alertStyle,message){
+		$('#alert').hide();
+		$('#alert').attr('class','alert '+ alertStyle +' alert-dismissible fade show col-12 margin');
+		$("#alert").text(message);
+		$("#alert").fadeIn("slow");
 	}
 </script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>

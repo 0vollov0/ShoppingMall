@@ -37,7 +37,7 @@
 								<li class="nav-item"><a class="nav-link"
 									href="${contextPath}/admin/registerForm">상품등록</a></li>
 								<li class="nav-item"><a class="nav-link"
-									href="${contextPath}/admin/adminOrderList">주문/배송관리</a></li>
+									href="${contextPath}/admin/adminOrderList?page=1">주문/배송관리</a></li>
 								<li class="nav-item"><a class="nav-link"
 									href="${contextPath}/#">회원관리</a></li>
 							</c:otherwise>

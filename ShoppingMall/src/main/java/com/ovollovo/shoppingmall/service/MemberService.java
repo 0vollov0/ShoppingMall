@@ -156,8 +156,8 @@ public class MemberService implements MemberServiceI {
 	}
 
 	@Override
-	public JsonObject getShoppingBasketResultJson(int basketSize) {
-		return memberJson.getShoppingBasketResultJson(basketSize);
+	public JsonObject getShoppingBasketResultJson(String goodsName) {
+		return memberJson.getShoppingBasketResultJson(goodsName);
 	}
 
 	@Override

@@ -48,4 +48,22 @@ public class DeliveryInfo {
 		return "주문자 : " + buyer + ", 수령인 : " + shippingRecipient + ", 우편번호 : " + zipCode
 				+ ", 주소 : " + address + ", 상세주소 : " + detailAddress + ", 참고 항목 : " + reference;
 	}
+	public int getEmptyField() {
+		if (buyer.length() <= 1) {
+			return 1;
+		}
+		if (shippingRecipient.length() <= 1) {
+			return 2;
+		}
+		if (zipCode.length() <= 1) {
+			return 3;
+		}
+		if (address.length() <= 1) {
+			return 4;
+		}
+		if (detailAddress.length() <= 1) {
+			return 5;
+		}
+		return 0;
+	}
 }

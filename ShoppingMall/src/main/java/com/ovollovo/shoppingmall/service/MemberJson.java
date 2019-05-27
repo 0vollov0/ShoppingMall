@@ -90,10 +90,10 @@ public class MemberJson {
 		return jsonObject;
 	}
 	
-	public JsonObject getShoppingBasketResultJson(int basketSize) {
+	public JsonObject getShoppingBasketResultJson(String goodsName) {
 		JsonObject jsonObject = new JsonObject();
 		//jsonObject.addProperty("basketLength", basketSize);
-		jsonObject.addProperty("message", "장바구니에 "+basketSize+" 종류의 상품이 있습니다.");
+		jsonObject.addProperty("message", "장바구니에 "+goodsName+"상품을 담았습니다.");
 		return jsonObject;
 	}
 	

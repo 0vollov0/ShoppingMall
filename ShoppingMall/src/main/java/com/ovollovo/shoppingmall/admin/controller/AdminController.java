@@ -121,8 +121,25 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "adminOrderList")
-	public String memberOrderList(Model model) {
-		model.addAttribute("orderList", orderService.getOrderList());
+	public String memberOrderList(Model model,@RequestParam("page") int page) {
+		if (page <= 0) {
+			page = 1;
+		}
+		model.addAttribute("orderList", orderService.getOrderList(page));
+		int maxPage = orderService.getCurrentMaxPage(page);
+		int minPage;
+		if (maxPage%10 > 0) {
+			minPage = maxPage/10+1;
+		}else {
+			minPage = (maxPage-1)/10+1;
+		}
+		model.addAttribute("maxPage", maxPage);
+		model.addAttribute("minPage", minPage);
+		if (page > maxPage) {
+			model.addAttribute("currentPage", maxPage);
+		}else {
+			model.addAttribute("currentPage", page);
+		}
 		return "admin/adminOrderList";
 	}
 

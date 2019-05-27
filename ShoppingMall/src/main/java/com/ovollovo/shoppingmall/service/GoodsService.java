@@ -14,10 +14,9 @@ public class GoodsService implements GoodsServiceI {
 
 	@Autowired
 	private GoodsMapper goodsMapper;
-	
+
 	@Autowired
 	private GoodsJson goodsJson;
-	
 
 	@Override
 	public Goods getGoods(String code) {
@@ -28,17 +27,17 @@ public class GoodsService implements GoodsServiceI {
 	public String getCategoryName(int category) {
 		return goodsMapper.searchCategoryName(category);
 	}
-	
+
 	@Override
 	public int getCategoryCode(String category) {
 		return goodsMapper.searchCategoryCode(category);
 	}
-	
+
 	@Override
 	public JsonArray getCategory() {
-		return goodsJson.getCategoryJson( goodsMapper.searchCategory());
+		return goodsJson.getCategoryJson(goodsMapper.searchCategory());
 	}
-	
+
 	@Override
 	public Goods[] getCategoryFirstGoods(int category, int n) {
 		// TODO Auto-generated method stub
@@ -92,15 +91,16 @@ public class GoodsService implements GoodsServiceI {
 	@Override
 	public JsonObject modifyGoods(Goods goods, String wherecode) {
 		if (goodsMapper.searchGoods(wherecode) == null) {
-			return goodsJson.getModifyGoodsResultJson(1,goods.getCode());	
+			return goodsJson.getModifyGoodsResultJson(1, goods.getCode());
 		}
 		if (!goods.getCode().equals(wherecode)) {
 			if (goodsMapper.searchGoods(goods.getCode()) != null) {
-				return goodsJson.getModifyGoodsResultJson(2,goods.getCode());
+				return goodsJson.getModifyGoodsResultJson(2, goods.getCode());
 			}
 		}
-		goodsMapper.modifyGoods(goods.getName(), goods.getCode(), goods.getCategory(), goods.getPrice(), goods.getStock(), goods.getDescription(), wherecode);
-		return goodsJson.getModifyGoodsResultJson(0,goods.getCode());
+		goodsMapper.modifyGoods(goods.getName(), goods.getCode(), goods.getCategory(), goods.getPrice(),
+				goods.getStock(), goods.getDescription(), wherecode);
+		return goodsJson.getModifyGoodsResultJson(0, goods.getCode());
 	}
 
 	@Override
@@ -117,7 +117,10 @@ public class GoodsService implements GoodsServiceI {
 		goodsMapper.deleteGoods(code);
 	}
 
-	
+	@Override
+	public void decreaseStock(String code, int count) {
+		goodsMapper.decreaseStock(code, count);
 
+	}
 
 }

@@ -1,5 +1,7 @@
 package com.ovollovo.shoppingmall.member.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -78,18 +80,31 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "joinConfirm", method = RequestMethod.GET)
-	public String joinConfirm(@ModelAttribute("member") Member member) {
+	public String joinConfirm(@ModelAttribute("member") Member member,HttpServletRequest request,HttpServletResponse response) {
+		response.setContentType("text/html; charset=UTF-8");
+		String message = null;
 		switch (memberService.updateAuthstatus(member)) {
 		case 0:
-			System.out.println("메일인증 성공");
+			message = "메일인증 성공";
 			break;
 		case 1:
-			System.out.println("메일인증 실패");
+			message = "메일인증 실패";
 			break;
 		default:
 			break;
 		}
-
+		
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			
+			out.println("<script>alert('"+message+"');");
+			 
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		return "redirect:/";
 	}
 	
@@ -133,7 +148,7 @@ public class MemberController {
 			shoppingBasketList.put(code, new ShoppingBasket(goodsService.getGoods(code)));
 		}
 		session.setAttribute("shoppingBasketList", shoppingBasketList);
-		return memberService.getShoppingBasketResultJson(shoppingBasketList.size());
+		return memberService.getShoppingBasketResultJson(shoppingBasketList.get(code).getGoods().getName());
 	}
 	
 	@RequestMapping(value = "basketUpDown", method = RequestMethod.POST)

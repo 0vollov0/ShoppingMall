@@ -39,12 +39,24 @@
 			<mapping path="/admin/registerForm"/>
 			<mapping path="/admin/registerGoods"/>
 			<mapping path="/member/logout"/>
-			<beans:bean class="com.ovollovo.shoppingmall.MemberLoginInterceptor"></beans:bean>
+			<mapping path="/member/memberOrderList"/>
+			<mapping path="/member/modifyForm"/>
+			<mapping path="/member/shoppingBasketList"/>
+			<beans:bean class="com.ovollovo.shoppingmall.interceptor.MemberLoginInterceptor"></beans:bean>
+		</interceptor>
+		<interceptor>
+			<mapping path="/member/loginForm"/>
+			<mapping path="/member/login"/>
+			<mapping path="/member/joinForm"/>
+			<mapping path="/member/join"/>
+			<beans:bean class="com.ovollovo.shoppingmall.interceptor.LoginedInterceptor"></beans:bean>
 		</interceptor>
 		<interceptor>
 			<mapping path="/admin/registerForm"/>
 			<mapping path="/admin/registerGoods"/>
-			<beans:bean class="com.ovollovo.shoppingmall.AdminInterceptor"></beans:bean>
+			<mapping path="/admin/adminOrderList"/>
+			<mapping path="/admin/goodsModifyForm"/>
+			<beans:bean class="com.ovollovo.shoppingmall.interceptor.AdminInterceptor"></beans:bean>
 		</interceptor>
 	</interceptors>
 </beans:beans>

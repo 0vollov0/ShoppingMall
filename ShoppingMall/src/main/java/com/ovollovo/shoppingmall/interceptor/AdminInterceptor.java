@@ -1,6 +1,7 @@
-package com.ovollovo.shoppingmall;
+package com.ovollovo.shoppingmall.interceptor;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +23,11 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 		try {
-			response.sendRedirect(request.getContextPath()+"/");
+			response.setContentType("text/html; charset=UTF-8");
+			 
+			PrintWriter out = response.getWriter();
+			 
+			out.println("<script>alert('권한이 없습니다.'); location.href='"+request.getContextPath()+"';</script>");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

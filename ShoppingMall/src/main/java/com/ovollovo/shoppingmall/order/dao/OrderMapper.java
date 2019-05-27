@@ -9,10 +9,12 @@ public interface OrderMapper {
 			@Param("goodscount") String goodscount, @Param("price") int price,
 			@Param("delivery_info") String delivery_info);
 
-	public Order[] searchOrderList();
+	public Order[] searchOrderList(@Param("n") int n,@Param("m") int m);
 
 	public Order[] searchOrderListById(@Param("userid") String userid);
 	
 	public void registerShippingInfo(@Param("code") int code,@Param("companyCode") String companyCode,@Param("invoiceNumber") String invoiceNumber);
+	
+	public int getOrderListCount();
 
 }

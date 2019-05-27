@@ -43,5 +43,7 @@ public interface GoodsMapper {
 	public void modifyGoodsImage(@Param("code") String code,@Param("thumbnail_image") String thumbnail_image);
 	
 	public void deleteGoods(@Param("code") String code);
+	
+	public void decreaseStock(@Param("code") String code , @Param("count") int count);
 
 }

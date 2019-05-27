@@ -51,7 +51,7 @@
 		        					배송준비 중
 			        			</c:when>
 			        			<c:otherwise>
-			        				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="showShippingModal(${order.company_code },${order.invoice_number});">
+			        				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#shippingInfo" onclick="showShippingModal(${order.company_code },${order.invoice_number});">
 		    							배송정보 확인
 		    						</button>
 			        			</c:otherwise>
@@ -87,13 +87,14 @@ function showShippingModal(code,invoice) {
       shippingInfo = shippingInfo + "</p>";
       $('#shipping-info').html(shippingInfo);
       var trackingInfo = "";
-
-      for (var i = 0; i < resultData.trackingDetails.length; i++) {
-        trackingInfo =trackingInfo + "<tr>"
-        trackingInfo =trackingInfo + "<td>" + resultData.trackingDetails[i].timeString + "</td>";
-        trackingInfo =trackingInfo + "<td>" + resultData.trackingDetails[i].where + "</td>";
-        trackingInfo =trackingInfo + "<td>" + resultData.trackingDetails[i].kind + "</td>";
-        trackingInfo =trackingInfo + "</tr>"
+      if (resultData.status != false) {
+	      for (var i = 0; i < resultData.trackingDetails.length; i++) {
+	        trackingInfo =trackingInfo + "<tr>"
+	        trackingInfo =trackingInfo + "<td>" + resultData.trackingDetails[i].timeString + "</td>";
+	        trackingInfo =trackingInfo + "<td>" + resultData.trackingDetails[i].where + "</td>";
+	        trackingInfo =trackingInfo + "<td>" + resultData.trackingDetails[i].kind + "</td>";
+	        trackingInfo =trackingInfo + "</tr>"
+	      }
       }
       $('#tracking-info').html(trackingInfo);
 

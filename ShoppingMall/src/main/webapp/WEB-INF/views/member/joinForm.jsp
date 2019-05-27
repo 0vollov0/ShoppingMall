@@ -60,8 +60,7 @@
 				</div>
 				<div id="alert" class=""></div>
 				<div class="col-md-7 col-12 margin">
-					<input type="button" value="JOIN" class="btn btn-outline-info"
-						style="width: 100%" onclick="join();">
+					<input type="button" value="JOIN" class="btn btn-outline-info" style="width: 100%" onclick="join();" id="join-button">
 				</div>
 			</div>
 		</form>

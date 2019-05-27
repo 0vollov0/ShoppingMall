@@ -57,4 +57,7 @@
   <delete id="deleteGoods">
   	delete from goods where code = #{code}
   </delete>
+  <update id="decreaseStock">
+  	update goods set stock = stock - #{count} where code = #{code}
+  </update> 
 </mapper>

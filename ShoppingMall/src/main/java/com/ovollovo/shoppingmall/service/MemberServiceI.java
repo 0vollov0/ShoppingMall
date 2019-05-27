@@ -18,7 +18,7 @@ public interface MemberServiceI {
 
 	public void deleteCaptchaImage(String image);
 
-	public JsonObject getShoppingBasketResultJson(int basketSize);
+	public JsonObject getShoppingBasketResultJson(String goodsName );
 
 	public JsonObject getDeleteShoppingBasketResultJson(String code);
 

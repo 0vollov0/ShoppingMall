@@ -37,4 +37,6 @@ public interface GoodsServiceI {
 	public int modifyGoodsImage(String code, String thumbnail_image);
 	
 	public void deleteGoods(String code);
+	
+	public void decreaseStock(String code,int count);
 }

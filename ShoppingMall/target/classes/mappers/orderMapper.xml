@@ -7,7 +7,7 @@
   	insert into orders(userid,goodscode,goodscount,price,delivery_info) values(#{userid},#{goodscode},#{goodscount},#{price},#{delivery_info})
   </insert>
   <select id="searchOrderList" resultType="com.ovollovo.shoppingmall.order.Order">
-  	select * from orders
+  	select * from orders order by code desc limit #{n} , #{m}
   </select>
   <select id="searchOrderListById" resultType="com.ovollovo.shoppingmall.order.Order">
   	select * from orders where userid= #{userid}
@@ -15,4 +15,7 @@
   <insert id="registerShippingInfo" >
   	update orders set company_code = #{companyCode} ,invoice_number = #{invoiceNumber} where code = #{code}
   </insert>
+  <select id="getOrderListCount" resultType="int">
+  	select count(*) from orders
+  </select>
 </mapper>

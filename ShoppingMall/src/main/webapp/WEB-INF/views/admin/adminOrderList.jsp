@@ -26,6 +26,7 @@
 <body>
 	<jsp:include page="../template/navMenu.jsp" flush="false"></jsp:include>
 	<div class="container text-center">
+		<h1>Order List</h1>
 		<table class="table table-hover">
 		    <thead>
 		      <tr>
@@ -35,8 +36,9 @@
 		        <th scope="col">주문수량</th>
 		        <th scope="col">구매가격</th>
 		        <th scope="col">주문일시</th>
+		        <th scope="col">배송주소</th>
 		        <th scope="col">배송조회</th>
-		        <th scope="col">배송정보 입력</th>
+		        <th scope="col">배송정보 입력</th> 
 		      </tr>
 		    </thead>
 		    <tbody>
@@ -48,26 +50,45 @@
 		        		<td>${order.goodscount }</td>
 		        		<td>${order.price } 원</td>
 		        		<td>${order.formatedTime }</td>
+		        		<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="${order.code }">조회</button></td>
 		        		<td id="${order.code }">
 		        			<c:choose>
 		        				<c:when test="${empty order.company_code ||empty order.invoice_number}">
 		        					배송준비 중
 			        			</c:when>
 			        			<c:otherwise>
-			        				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" onclick="showShippingModal(${order.company_code },${order.invoice_number});">
+			        				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#shippingInfo" onclick="showShippingModal(${order.company_code },${order.invoice_number});">
 		    							배송정보 확인
 		    						</button>
 			        			</c:otherwise>
 		        			</c:choose>
 	    				</td>
-	    				<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="${order.code }">입력/수정</button></td>
+	    				<td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#invoiceModal" data-whatever="${order.code }">입력/수정</button></td>
 		        	</tr>
 		    	</c:forEach>
 		    </tbody>
 	  </table>
+	  <div class="container text-center">
+	  	<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+		  	<div class="btn-group col-12" role="group" aria-label="First group">
+		  		<button type="button" class="btn btn-secondary" onclick="viewListPage(${currentPage-1});">PREV</button>
+		  		<c:forEach var="i" begin="${minPage }" end="${maxPage }">
+		  			<c:choose>
+		  				<c:when test="${currentPage==i }">
+		  					<button type="button" class="btn btn-dark" onclick="viewListPage(${i})">${i }</button>
+		  				</c:when>
+		  				<c:otherwise>
+		  					<button type="button" class="btn btn-secondary" onclick="viewListPage(${i})">${i }</button>
+		  				</c:otherwise>
+		  			</c:choose>
+			  	</c:forEach>
+		    	<button type="button" class="btn btn-secondary" onclick="viewListPage(${currentPage+1});">NEXT</button>
+		  	</div>
+		</div>
+		</div>
 	</div>
 	<jsp:include page="../template/shippingModal.jsp" flush="false"></jsp:include>
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="invoiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -83,7 +104,15 @@
             <input type="hidden" name="code" value="">
             <div class="form-group">
               <label for="recipient-name" class="col-form-label">택배회사 코드:</label>
-              <input type="text" class="form-control" name="companyCode">
+              <!--  <input type="text" class="form-control" name="companyCode"> -->
+              <select name="companyCode" class="form-control">
+              	<option value="04" selected="selected">CJ대한통운</option>
+              	<option value="06">로젠택배</option>
+              	<option value="05">한진택배</option>
+              	<option value="23">경동택배</option>
+              	<option value="01">우체국택배</option>
+              	<option value="08">롯데택배</option>
+              </select>
             </div>
             <div class="form-group">
               <label for="message-text" class="col-form-label">운송장 번호:</label>
@@ -101,29 +130,29 @@
   </div>
 </body>
 <script type="text/javascript">
+function viewListPage(page){
+	window.location = "${contextPath }/admin/adminOrderList?page="+page;
+}
+
 $('#submit').click(function(){
     $.ajax({
       url: "${contextPath}/admin/registerShippingInfo",
       method: "POST",
       data: {
         code: $("input[name=code]").val(),
-        companyCode: $("input[name=companyCode]").val(),
+        companyCode: $("select[name=companyCode]").val(),
         invoiceNumber: $("input[name=invoiceNumber]").val()
       },
       type: "json"
     }).done(function(resultData) {
-    	if (resultData.status) {
-    		var htmlText = "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModalCenter' onclick='showShippingModal("+resultData.companyCode+","+resultData.invoiceNumber+");'>배송정보 확인</button>"
-    	    $('#'+resultData.code).html(htmlText);
-    		$('#modal-close-button').click();	
-		}else{
-			alert("입력 오류");
-		}     
+    	var htmlText = "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#shippingInfo' onclick='showShippingModal("+resultData.companyCode+","+resultData.invoiceNumber+");'>배송정보 확인</button>"
+    	$('#'+resultData.code).html(htmlText);
+    	$('#modal-close-button').click();	
     }).fail(function() {
       alert("통신 오류");
     }).always(function() {});
   });
-$('#exampleModal').on('show.bs.modal', function (event) {
+$('#invoiceModal').on('show.bs.modal', function (event) {
 	  var button = $(event.relatedTarget)
 	  var recipient = button.data('whatever')
 	  $('h1').text(recipient);
@@ -143,6 +172,7 @@ function showShippingModal(code,invoice) {
       },
       type: "json"
     }).done(function(resultData) {
+    	
       var shippingInfo = "";
       shippingInfo = shippingInfo + "<p>";
       shippingInfo = shippingInfo + "보내는 사람 : " + resultData.senderName + "<br>";
@@ -151,14 +181,15 @@ function showShippingModal(code,invoice) {
       shippingInfo = shippingInfo + "</p>";
       $('#shipping-info').html(shippingInfo);
       var trackingInfo = "";
-
-      for (var i = 0; i < resultData.trackingDetails.length; i++) {
-        trackingInfo =trackingInfo + "<tr>"
-        trackingInfo =trackingInfo + "<td>" + resultData.trackingDetails[i].timeString + "</td>";
-        trackingInfo =trackingInfo + "<td>" + resultData.trackingDetails[i].where + "</td>";
-        trackingInfo =trackingInfo + "<td>" + resultData.trackingDetails[i].kind + "</td>";
-        trackingInfo =trackingInfo + "</tr>"
-      }
+	  if (resultData.status != false) {
+		  for (var i = 0; i < resultData.trackingDetails.length; i++) {
+		        trackingInfo =trackingInfo + "<tr>"
+		        trackingInfo =trackingInfo + "<td>" + resultData.trackingDetails[i].timeString + "</td>";
+		        trackingInfo =trackingInfo + "<td>" + resultData.trackingDetails[i].where + "</td>";
+		        trackingInfo =trackingInfo + "<td>" + resultData.trackingDetails[i].kind + "</td>";
+		        trackingInfo =trackingInfo + "</tr>"
+		      }	
+	  }		
       $('#tracking-info').html(trackingInfo);
 
     }).fail(function() {

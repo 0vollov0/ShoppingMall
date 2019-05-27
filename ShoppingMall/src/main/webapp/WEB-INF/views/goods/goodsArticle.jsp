@@ -81,14 +81,13 @@
       				<input type="hidden" name="description" value="${goods.description }">
       				<input type="submit" class="btn btn-outline-info" value="수정">
       			</form>
-	      		<!-- <a href="${contextPath }/admin/goodsModifyForm"><button type="button" class="btn btn-outline-info">수정</button></a> -->
 	        	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
 				  삭제
 				</button>
 	      	</c:when>
 	      	<c:otherwise>
 	      		<button type="button" class="btn btn-outline-success" onclick="shoppingBasket();">장바구니</button>
-	        	<button type="button" class="btn btn-outline-success">주문하기</button>
+	        	<button type="button" class="btn btn-outline-success" onclick="order();">주문하기</button>
 	      	</c:otherwise>
 	  	</c:choose>
       </div>
@@ -123,6 +122,20 @@ function shoppingBasket() {
 		type : "json"
 	}).done(function(resultData) {
 		alert(resultData.message);	
+	}).fail(function() {
+		$(".alert-danger").text("서버 통신 오류");
+		$(".alert-danger").fadeIn();
+	}).always(function() {
+	});
+}
+function order(){
+	$.ajax({
+		url : "${contextPath }/member/shoppingBasket",
+		method : "POST",
+		data : { code : '${goods.code }'},
+		type : "json"
+	}).done(function(resultData) {
+		window.location = "${contextPath }/member/shoppingBasketList";
 	}).fail(function() {
 		$(".alert-danger").text("서버 통신 오류");
 		$(".alert-danger").fadeIn();
