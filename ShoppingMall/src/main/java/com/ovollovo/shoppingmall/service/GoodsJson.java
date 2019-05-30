@@ -2,21 +2,18 @@ package com.ovollovo.shoppingmall.service;
 
 import org.springframework.stereotype.Repository;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.ovollovo.shoppingmall.goods.Category;
 
 @Repository
 public class GoodsJson {
-	Gson gson = new Gson();
-
 	public JsonObject getModifyGoodsResultJson(int key,String code) {
 		JsonObject jsonObject = new JsonObject();
 		switch (key) {
 		case 0:
 			jsonObject.addProperty("result", 0);
-			jsonObject.addProperty("code", code);
+			jsonObject.addProperty("message", "성공적으로 수정 되었습니다.");
 			break;
 		case 1:
 			jsonObject.addProperty("result", 1);

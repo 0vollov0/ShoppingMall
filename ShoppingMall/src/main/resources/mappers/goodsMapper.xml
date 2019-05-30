@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ovollovo.shoppingmall.goods.dao.GoodsMapper">
   <insert id="registerGoods" >
-  	insert into goods values(#{name},#{code},#{category},#{price},#{stock},#{description},#{thumbnail_image}, default)
+  	insert into goods values(#{name},#{code},#{category},#{price},#{stock},#{description},#{thumbnail_image}, default, default)
   </insert>
   <select id="searchGoods" resultType="com.ovollovo.shoppingmall.goods.Goods">
   	select * from goods where code= #{code}
@@ -40,7 +40,10 @@
   	select category from goods where code = #{code}
   </select>
   <select id="searchGoodsByName" resultType="com.ovollovo.shoppingmall.goods.Goods">
-  	select * from goods where name like concat('%',#{name},'%')
+  	select * from goods where name like concat('%',#{name},'%') limit #{n} , #{m}
+  </select>
+  <select id="searchGoodsByNameCount" resultType="int">
+  	select count(*) from goods where name like concat('%',#{name},'%')
   </select>
   <update id="stackSaleCount">
   	update goods set sale_count = sale_count + #{sale_count} where code = #{code}

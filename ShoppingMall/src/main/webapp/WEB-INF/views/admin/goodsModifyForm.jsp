@@ -20,15 +20,11 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
-<style media="screen">
-.margin {
-	margin-top: 20px;
-}
-</style>
+<link rel="stylesheet" href="../resources/CSS/custom.css">
 <title>modify form</title>
 </head>
 <body>
-	<jsp:include page="../template/navMenu.jsp" flush="false"></jsp:include>
+	<jsp:include page="../template/navBar.jsp" flush="false"></jsp:include>
 	<div class="container text-center">
 		<div class="row">
 			<div class="col">
@@ -63,6 +59,9 @@
 											<option value="100">무기</option>
 											<option value="200">방패</option>
 											<option value="300">투구</option>
+											<option value="400">갑옷</option>
+											<option value="500">신발</option>
+											<option value="600">장갑</option>
 									</select>
 								</td>
 							</tr>
@@ -70,19 +69,16 @@
 								<th scope="row">소분류</th>
 								<td>
 									<select class="custom-select text-center" name="category">
-											
 									</select>
 								</td>
 							</tr>
 							<tr>
 								<th scope="row">상품가격</th>
-								<td><input type="text" class="form-control text-center"
-									aria-describedby="basic-addon2" name="price" value="${goods.price }"></td>
+								<td><input type="text" class="form-control text-center" aria-describedby="basic-addon2" name="price" value="${goods.price }"></td>
 							</tr>
 							<tr>
 								<th scope="row">재고</th>
-								<td><input type="text" class="form-control text-center"
-									aria-describedby="basic-addon2" name="stock" value="${goods.stock }"></td>
+								<td><input type="text" class="form-control text-center" aria-describedby="basic-addon2" name="stock" value="${goods.stock }"></td>
 							</tr>
 							<tr>
 								<th scope="row">상품설명</th>
@@ -91,8 +87,9 @@
 							</tr>
 							<tr>
 								<th scope="row">썸네일</th>
-								<td><input type="file" class="form-control text-center"
-									aria-describedby="basic-addon2" name="imageFile" ></td>
+								<td>
+									<input type="file" class="form-control text-center" aria-describedby="basic-addon2" name="imageFile" >
+								</td>
 							</tr>
 							<tr>
 								<th scope="row">업로드된 이미지</th>
@@ -102,131 +99,21 @@
 					</table>
 				</div>
 				<div id="alert" class=""></div>
-				<div class="col-md-7 col-12 margin text-right">
-					<button type="button" class="btn btn-outline-success" onclick="modifyGoods();">상품수정</button>
-					
+				<div class="col-md-7 col-12 margin text-center">
+					<button type="button" class="btn btn-outline-success" onclick="modify();">상품수정</button>
 				</div>
 			</div>
 			<input type="hidden" value="${goods.code }" name="wherecode">
 		</form>
+	</div>
+	<div>
+		<input type="hidden" value="${contextPath }" id="contextPath">
+		<input type="hidden" value="${category_1 }" id="category_1">
+		<input type="hidden" value="${category_2 }" id="category_2">
+		<input type="hidden" value="${resultData}" id="resultData">
+		<input type="hidden" value="${message}" id="message">
 	</div>	
 </body>
-<script type="text/javascript">
-	var resultData = '${resultData}';
-	
-	if (resultData) {
-		resultData = JSON.parse(resultData);
-		switch (resultData.result) {
-		case 0:
-			window.location = "${contextPath}/goods/goodsArticle?code="+resultData.code;
-			break;
-		case 1:
-			turnOnAlert('alert-danger',resultData.message);;
-			break;
-		case 2:
-			turnOnAlert('alert-warning',resultData.message);
-			break;
-		default:
-			break;
-		}
-	}
-	$('select[name=category-first]').val("${category_1}");
-	$('select[name=category-first]').change(function(){
-		selectBoxTrriger();
-	});
-	$('select[name=category-first]').change();
-	$('select[name=category]').val("${category_2}");
-	
-	function selectBoxTrriger(){
-		$('select[name=category] option').remove();
-		switch (Number.parseInt($('select[name=category-first]').val())) {
-		case 100:
-			appendOption(101,'한손검');
-			appendOption(102,'두손검');
-			appendOption(103,'도끼');
-			break;
-		case 200:
-			appendOption(201,'나무방패');
-			appendOption(202,'철제방패');
-			break;
-		case 300:
-			appendOption(301,'철제투구');
-			appendOption(302,'가죽투구');
-			appendOption(303,'천모자');
-			break;
-		default:
-			console.log('default');
-			break;
-		
-		}
-	}
-	function appendOption(value,text){
-		$('select[name=category]').append('<option class="text-center" value='+value+'>'+text+'</option>');
-	}
-	var resultData = '${resultData}';
-	
-	if (resultData) {
-		resultData = JSON.parse(resultData);
-		switch (resultData.result) {
-		case 0:
-			initTagVal();
-			turnOnAlert('alert-success',resultData.message);
-			break;
-		case 1:
-			turnOnAlert('alert-danger',resultData.message);;
-			break;
-		case 2:
-			turnOnAlert('alert-warning',resultData.message);
-			break;
-		case 3:
-			turnOnAlert('alert-info',resultData.message);
-			break;
-		default:
-			break;
-		}
-	}
-	
-	function turnOnAlert(alertStyle,message){
-		$('#alert').hide();
-		$('#alert').attr('class','alert '+ alertStyle +' alert-dismissible fade show col-md-7 col-12 margin');
-		$("#alert").text(message);
-		$("#alert").fadeIn("slow");
-	}
-
-	function modifyGoods() {
-		$('.alert').hide();
-		
-		if (!isNumber($('input[name=price]').val())) {
-			return;
-		}
-
-		if (!isNumber($('input[name=stock]').val())) {
-			return;
-		}
-		$("#modifyForm").submit();
-	}
-
-	function isNumber(value) {
-		if (!$.isNumeric(value)) {
-			turnOnAlert('alert-info',"상품가격과 재고값에 올바른 [정수&양수]값을 입력해주세요.");
-			return false;
-		}
-
-		if (!Number.isInteger(Number.parseInt(value))) {
-			turnOnAlert('alert-info',"상품가격과 재고값에 올바른 [정수&양수]값을 입력해주세요.");
-			return false;
-		}
-
-		return true;
-	}
-	$("input[name=imageFile]").change(function() {
-		if (this.files && this.files[0]) {
-			var reader = new FileReader;
-			reader.onload = function(data) {
-				$("#uploaded-img").attr("src", data.target.result).width(300);
-			}
-			reader.readAsDataURL(this.files[0]);
-		}
-	});
-</script>
+<script type="text/javascript" src="../resources/JS/admin/categoryOption.js"></script>
+<script type="text/javascript" src="../resources/JS/admin/goodsModifyForm.js"></script>
 </html>

@@ -1,10 +1,7 @@
 package com.ovollovo.shoppingmall.admin.controller;
 
-import java.io.File;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,11 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.JsonObject;
 import com.ovollovo.shoppingmall.goods.Goods;
-import com.ovollovo.shoppingmall.service.AdminJson;
 import com.ovollovo.shoppingmall.service.AdminService;
 import com.ovollovo.shoppingmall.service.GoodsService;
 import com.ovollovo.shoppingmall.service.OrderService;
-import com.ovollovo.shoppingmall.util.UploadFileUtils;
 
 @Controller
 @RequestMapping("/admin")
@@ -34,9 +29,6 @@ public class AdminController {
 
 	@Autowired
 	private OrderService orderService;
-
-	@Autowired
-	private AdminJson adminJson;
 
 	@Autowired
 	private GoodsService goodsService;
@@ -57,8 +49,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/goodsModifyForm", method = RequestMethod.POST)
-	public String goodsModifyForm(ModelMap model, @ModelAttribute("goods") Goods goods,
-			@RequestParam("category_1") String category_1, @RequestParam("category_2") String category_2) {
+	public String goodsModifyForm(ModelMap model, @ModelAttribute("goods") Goods goods,@RequestParam("category_1") String category_1, @RequestParam("category_2") String category_2) {
 		model.remove("resultData");
 		model.addAttribute("goods", goods);
 		model.addAttribute("category_1", goodsService.getCategoryCode(category_1));
@@ -68,56 +59,25 @@ public class AdminController {
 
 	@RequestMapping(value = "/registerGoods", method = RequestMethod.POST)
 	public String registerGoods(Model model, @ModelAttribute("goods") Goods goods, MultipartFile imageFile) {
-		String imgUploadPath = uploadPath + File.separator + "resources/images/goodsImages";
-		String categoryPath = UploadFileUtils.getCategoryPath(imgUploadPath, goods.getCategory());
-
-		String fileName = null;
-
-		if (imageFile != null) {
-			try {
-				fileName = UploadFileUtils.fileUpload(imgUploadPath, imageFile.getOriginalFilename(),
-						imageFile.getBytes(), categoryPath);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else {
-			fileName = uploadPath + File.separator + "images" + File.separator + "none.png";
-		}
-		goods.setThumbnail_image(File.separator + "resources\\images\\goodsImages" + categoryPath + File.separator
-				+ "thumbnail" + File.separator + "thumbnail_" + fileName);
-		model.addAttribute("resultData", adminService.registerGoods(goods));
+		model.addAttribute("resultData", adminService.registerGoods(goods,imageFile));
 
 		return "admin/registerForm";
 	}
-
 	@RequestMapping(value = "/modifyGoods", method = RequestMethod.POST)
-	public String modifyGoods(Model model, @ModelAttribute("goods") Goods goods,
-			@RequestParam("wherecode") String wherecode, MultipartFile imageFile) {
-
-		String imgUploadPath = uploadPath + File.separator + "resources/images/goodsImages";
-		String categoryPath = UploadFileUtils.getCategoryPath(imgUploadPath, goods.getCategory());
-
-		String fileName = null;
-
-		if (imageFile != null && imageFile.getOriginalFilename().length() > 1) {
-			try {
-				fileName = UploadFileUtils.fileUpload(imgUploadPath, imageFile.getOriginalFilename(),
-						imageFile.getBytes(), categoryPath);
-				goodsService.modifyGoodsImage(wherecode, File.separator + "resources\\images\\goodsImages"
-						+ categoryPath + File.separator + "thumbnail" + File.separator + "thumbnail_" + fileName);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		model.addAttribute("resultData", goodsService.modifyGoods(goods, wherecode));
-
+	public String modifyGoods(Model model, @ModelAttribute("goods") Goods goods,@RequestParam("wherecode") String wherecode, MultipartFile imageFile) {
+		adminService.modifyGoods(goods, wherecode, imageFile);
+		model.addAttribute("message", "상품 수정 성공");
 		return "admin/goodsModifyForm";
 	}
+	@RequestMapping(value = "/getModifyGoodsFormResult", method = RequestMethod.POST)
+	public @ResponseBody JsonObject getModifyGoodsFormResult(@RequestParam("code") String code,@RequestParam("wherecode") String wherecode) {
+		return adminService.modifyGoodsResult(code, wherecode);
+	};
 	
 	@RequestMapping(value = "/deleteGoods")
 	public String deleteGoods(@RequestParam("code") String code) {
-		goodsService.deleteGoods(code);
-		return "index";
+		adminService.deleteGoods(code);
+		return "redirect:/";
 	}
 
 	@RequestMapping(value = "adminOrderList")
@@ -141,12 +101,5 @@ public class AdminController {
 			model.addAttribute("currentPage", page);
 		}
 		return "admin/adminOrderList";
-	}
-
-	@RequestMapping(value = "/registerShippingInfo", method = RequestMethod.POST)
-	public @ResponseBody JsonObject registerShippingInfo(@RequestParam("code") int code,
-			@RequestParam("companyCode") String companyCode, @RequestParam("invoiceNumber") String invoiceNumber) {
-		orderService.registerShippingInfo(code, companyCode, invoiceNumber);
-		return adminJson.getRegisterShippingInfoResultJson(code, companyCode, invoiceNumber);
 	}
 }

@@ -20,6 +20,7 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
+<link rel="stylesheet" href="../resources/CSS/custom.css">	
 <style media="screen">
 .margin {
 	margin-top: 20px;
@@ -28,6 +29,7 @@
 <title>MODIFY FORM</title>
 </head>
 <body>
+	<jsp:include page="../template/navBar.jsp" flush="false"></jsp:include>
 	<div class="container text-center margin">
 		<h1>MODIFY MEMBER</h1>
 		<form id="loginForm" method="post">
@@ -54,45 +56,9 @@
 			</div>
 		</div>
 	</div>
+	<div>
+		<input type="hidden" value="${contextPath }" id="contextPath">
+	</div>
 </body>
-<script type="text/javascript">
-	$('.alert').hide();
-	function modify() {
-		$.ajax({
-			url : "${contextPath }/member/modify",
-			method : "POST",
-			data : {
-				id : $("input[name=id]").val(),
-				pw : $("input[name=pw]").val(),
-				newpw : $("input[name=newpw]").val(),
-			},
-			type : "json"
-		}).done(function(resultData) {
-			$("input[name=pw]").val("");
-			$("input[name=newpw]").val("");
-			$('.alert').hide();
-			switch (resultData.result) {
-			case 0:
-				turnOnAlert('alert-success',resultData.message);
-				break;
-			case 1:
-				turnOnAlert('alert-warning',resultData.message);
-				break;
-			default:
-				break;
-			}
-
-		}).fail(function() {
-			$(".alert-danger").text("서버 통신 오류");
-			$(".alert-danger").fadeIn();
-		}).always(function() {
-		});
-	}
-	function turnOnAlert(alertStyle,message){
-		$('#alert').hide();
-		$('#alert').attr('class','alert '+ alertStyle +' alert-dismissible fade show col-md-7 col-12 margin');
-		$("#alert").text(message);
-		$("#alert").fadeIn("slow");
-	}
-</script>
+<script type="text/javascript" src="../resources/JS/member/modifyForm.js"></script>
 </html>

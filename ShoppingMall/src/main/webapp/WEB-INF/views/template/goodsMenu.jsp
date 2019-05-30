@@ -7,10 +7,12 @@
 <title>MENU</title>
 </head>
 <body>
-<div class="container text-center">
+	<hr>
+	<div class="container text-center">
 		<div id="menu-button" class="row">
 		</div>
 	</div>
+	<hr>
 </body>
 <script type="text/javascript">
 	$.ajax({
@@ -20,9 +22,9 @@
 		var buttonHtml = new Array();
 		resultData.forEach(function(data) {
 			  if (data.code % 100 == 0 ) {
-				  buttonHtml.push("<div class='col-xl-2 col-sm-4 col-4 '><div class='btn-group' role='group'><button id='' type='button' class='btn dropdown-toggle'data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+data.name+"</button><div class='dropdown-menu' aria-labelledby='btnGroupDrop1'><a class='dropdown-item' href='${contextPath}/goods/goodsList?category="+data.code+"&n=1'>"+data.name+"</a><div class='dropdown-divider'></div>");
+				  buttonHtml.push("<div class='col-xl-2 col-sm-4 col-4 '><div class='btn-group' role='group'><button type='button' class='btn dropdown-toggle'data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>"+data.name+"</button><div class='dropdown-menu' aria-labelledby='btnGroupDrop1'><a class='dropdown-item' href='${contextPath}/goods/goodsList?category="+data.code+"&page=1'>"+data.name+"</a><div class='dropdown-divider'></div>");
 			  }else{
-				  buttonHtml[Number.parseInt(data.code/100)-1] +=  "<a class='dropdown-item' href='${contextPath}/goods/goodsList?category="+data.code+"&n=1'>"+data.name+"</a>";
+				  buttonHtml[Number.parseInt(data.code/100)-1] +=  "<a class='dropdown-item' href='${contextPath}/goods/goodsList?category="+data.code+"&page=1'>"+data.name+"</a>";
 			  }
 		});
 		

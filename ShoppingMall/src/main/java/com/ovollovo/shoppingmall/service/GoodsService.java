@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.ovollovo.shoppingmall.goods.Category;
 import com.ovollovo.shoppingmall.goods.Goods;
 import com.ovollovo.shoppingmall.goods.dao.GoodsMapper;
 
@@ -49,6 +47,21 @@ public class GoodsService implements GoodsServiceI {
 		// TODO Auto-generated method stub
 		return goodsMapper.searchCategorySecondGoods(category, 4 * (n - 1), 4 * n);
 	}
+	
+	@Override
+	public Goods[] getGoodsList(int category, int page) {
+		int LastPage= getGoodsListLastPage(category);
+		if (page > LastPage ) {
+			if (category%100 == 0) {
+				return goodsMapper.searchCategoryFirstGoods(category / 100, 4 * (LastPage - 1), 4);
+			}
+			return goodsMapper.searchCategorySecondGoods(category, 4 * (LastPage - 1),4);
+		}
+		if (category%100 == 0) {
+			return goodsMapper.searchCategoryFirstGoods(category / 100, 4 * (page - 1), 4);
+		}
+		return goodsMapper.searchCategorySecondGoods(category, 4 * (page - 1), 4);
+	}
 
 	@Override
 	public int getCategoryFirstCount(int category) {
@@ -68,8 +81,12 @@ public class GoodsService implements GoodsServiceI {
 	}
 
 	@Override
-	public Goods[] getGoodsSearchResult(String name) {
-		return goodsMapper.searchGoodsByName(name);
+	public Goods[] getGoodsSearchResult(String name,int page) {
+		int LastPage= getSearchResultLastPage(name);
+		if (page > LastPage ) {
+			return goodsMapper.searchGoodsByName(name, 4 * (LastPage - 1),4);
+		}
+		return goodsMapper.searchGoodsByName(name, 4*(page-1),4);
 	}
 
 	@Override
@@ -89,38 +106,57 @@ public class GoodsService implements GoodsServiceI {
 	}
 
 	@Override
-	public JsonObject modifyGoods(Goods goods, String wherecode) {
-		if (goodsMapper.searchGoods(wherecode) == null) {
-			return goodsJson.getModifyGoodsResultJson(1, goods.getCode());
-		}
-		if (!goods.getCode().equals(wherecode)) {
-			if (goodsMapper.searchGoods(goods.getCode()) != null) {
-				return goodsJson.getModifyGoodsResultJson(2, goods.getCode());
-			}
-		}
-		goodsMapper.modifyGoods(goods.getName(), goods.getCode(), goods.getCategory(), goods.getPrice(),
-				goods.getStock(), goods.getDescription(), wherecode);
-		return goodsJson.getModifyGoodsResultJson(0, goods.getCode());
-	}
-
-	@Override
-	public int modifyGoodsImage(String code, String thumbnail_image) {
-		if (goodsMapper.searchGoods(code) == null) {
-			return 1;
-		}
-		goodsMapper.modifyGoodsImage(code, thumbnail_image);
-		return 0;
-	}
-
-	@Override
-	public void deleteGoods(String code) {
-		goodsMapper.deleteGoods(code);
-	}
-
-	@Override
 	public void decreaseStock(String code, int count) {
 		goodsMapper.decreaseStock(code, count);
 
 	}
+	
+	public int getGoodsListLastPage(int category) {
+		int lastPage;
+		int goodsCount;
+		if (category % 100 == 0) {
+			goodsCount = goodsMapper.searchCategoryFirstCount(category / 100);
+		}else {
+			goodsCount = goodsMapper.searchCategorySecondCount(category);
+		}
+		lastPage = goodsCount/4;
+		if (goodsCount%4 > 0) {
+			lastPage++;
+		}
+		if (lastPage == 0) {
+			lastPage = 1;
+		}
+		return lastPage;
+	}
+	
+	public  int getSearchResultLastPage(String name) {
+		int lastPage;
+		int goodsCount = goodsMapper.searchGoodsByNameCount(name);				
+		lastPage = goodsCount/4;
+		if (goodsCount%4 > 0) {
+			lastPage++;
+		}
+		if (lastPage == 0) {
+			lastPage = 1;
+		}
+		return lastPage;
+	}
 
+	@Override
+	public int getCurrentMaxPage(int category,int page) {
+		int LastPage = getGoodsListLastPage(category);
+		if (((page-1)/10+1)*10 > LastPage) {
+			return LastPage;
+		}
+		return ((page-1)/10+1)*10 ;
+	}
+
+	@Override
+	public int getCurrentMaxPage(String name, int page) {
+		int LastPage = getSearchResultLastPage(name);
+		if (((page-1)/10+1)*10 > LastPage) {
+			return LastPage;
+		}
+		return ((page-1)/10+1)*10 ;
+	}
 }

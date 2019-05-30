@@ -12,25 +12,26 @@ public class UploadFileUtils {
 	static final int THUMB_WIDTH = 300;
 	static final int THUMB_HEIGHT = 300;
 
-	public static String fileUpload(String uploadPath, String fileName, byte[] fileData, String ymdPath)
+	public static String fileUpload(String uploadPath, String fileName, byte[] fileData, String category)
 			throws Exception {
 
 		UUID uid = UUID.randomUUID();
 
 		String newFileName = uid + "_" + fileName;
-		String imgPath = uploadPath + ymdPath;
+		String imgPath = uploadPath + category;
 		//String imgPath = uploadPath;	
 		File target = new File(imgPath, newFileName);
 		FileCopyUtils.copy(fileData, target);
 
-		String thumbFileName = "thumbnail_" + newFileName;
+		//String thumbFileName = "thumbnail_" + newFileName;
 		File image = new File(imgPath + File.separator + newFileName);
-
-		File thumbnail = new File(imgPath + File.separator + "thumbnail" + File.separator + thumbFileName);
+		
+		//File thumbnail = new File(imgPath + File.separator + "thumbnail" + File.separator + thumbFileName);
 
 		if (image.exists()) {
-			thumbnail.getParentFile().mkdirs();
-			Thumbnails.of(image).size(THUMB_WIDTH, THUMB_HEIGHT).toFile(thumbnail);
+			//thumbnail.getParentFile().mkdirs();
+			//Thumbnails.of(image).size(THUMB_WIDTH, THUMB_HEIGHT).toFile(thumbnail);
+			Thumbnails.of(image).size(THUMB_WIDTH, THUMB_HEIGHT).toFile(target);
 		}
 		return newFileName;
 	}
@@ -51,7 +52,7 @@ public class UploadFileUtils {
 		String firstPath = File.separator+Integer.toString(category/100*100);
 		String SecondPath = firstPath+ File.separator +Integer.toString(category);
 		makeDir(uploadPath, firstPath,SecondPath);
-		makeDir(uploadPath, firstPath,SecondPath+"\\thumbnail");
+		//makeDir(uploadPath, firstPath,SecondPath+"\\thumbnail");
 		return SecondPath;
 	}
 

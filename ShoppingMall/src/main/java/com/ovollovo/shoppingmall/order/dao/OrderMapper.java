@@ -11,10 +11,14 @@ public interface OrderMapper {
 
 	public Order[] searchOrderList(@Param("n") int n,@Param("m") int m);
 
-	public Order[] searchOrderListById(@Param("userid") String userid);
+	public Order[] searchOrderListById(@Param("userid") String userid,@Param("n") int n,@Param("m") int m);
 	
 	public void registerShippingInfo(@Param("code") int code,@Param("companyCode") String companyCode,@Param("invoiceNumber") String invoiceNumber);
 	
 	public int getOrderListCount();
+	
+	public int getOrderListCountById(@Param("userid")String userid);
+	
+	public String searchDeliveryInfo(@Param("code") int code);
 
 }

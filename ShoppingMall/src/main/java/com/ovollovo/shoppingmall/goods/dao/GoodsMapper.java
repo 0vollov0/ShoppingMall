@@ -32,7 +32,9 @@ public interface GoodsMapper {
 
 	public int searchCategoryNumber(@Param("code") String code);
 
-	public Goods[] searchGoodsByName(@Param("name") String name);
+	public Goods[] searchGoodsByName(@Param("name") String name, @Param("n") int n, @Param("m") int m);
+	
+	public int searchGoodsByNameCount(@Param("name") String name);
 
 	public void stackSaleCount(@Param("code") String code, @Param("sale_count") int sale_count);
 

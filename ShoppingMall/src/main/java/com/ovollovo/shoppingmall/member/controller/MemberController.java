@@ -55,7 +55,6 @@ public class MemberController {
 
 	@RequestMapping(value = "/joinForm")
 	public String joinForm(Model model) {
-		model.addAttribute("imagePath","C:\\Users\\OvollovO\\Documents\\GitHub\\ShoppingMall\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\ShoppingMall\\");
 		return "member/joinForm";
 	}
 
@@ -188,9 +187,30 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "memberOrderList")
-	public String memberOrderList(Model model,HttpSession session) {
+	public String memberOrderList(Model model,HttpSession session,@RequestParam("page") int page) {
+		if (page <= 0) {
+			page = 1;
+		}
 		Member member = (Member) session.getAttribute("member");
-		model.addAttribute("orderList", orderService.getOrderList(member.getId()));
+		model.addAttribute("orderList", orderService.getOrderList(member.getId(), page));
+		if (page <= 0) {
+			page = 1;
+		}
+		model.addAttribute("orderList", orderService.getOrderList(page));
+		int maxPage = orderService.getCurrentMaxPage(page);
+		int minPage;
+		if (maxPage%10 > 0) {
+			minPage = maxPage/10+1;
+		}else {
+			minPage = (maxPage-1)/10+1;
+		}
+		model.addAttribute("maxPage", maxPage);
+		model.addAttribute("minPage", minPage);
+		if (page > maxPage) {
+			model.addAttribute("currentPage", maxPage);
+		}else {
+			model.addAttribute("currentPage", page);
+		}
 		return "member/memberOrderList";
 	}
 }

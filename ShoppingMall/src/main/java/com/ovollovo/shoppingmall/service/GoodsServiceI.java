@@ -1,8 +1,6 @@
 package com.ovollovo.shoppingmall.service;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.ovollovo.shoppingmall.goods.Category;
 import com.ovollovo.shoppingmall.goods.Goods;
 
 public interface GoodsServiceI {
@@ -17,6 +15,8 @@ public interface GoodsServiceI {
 	public Goods[] getCategoryFirstGoods(int category, int n);
 
 	public Goods[] getCategorySecondGoods(int category, int n);
+	
+	public Goods[] getGoodsList(int category,int page);
 
 	public int getCategoryFirstCount(int category);
 
@@ -24,7 +24,7 @@ public interface GoodsServiceI {
 
 	public int getCategoryNumber(String code);
 	
-	public Goods[] getGoodsSearchResult(String name);
+	public Goods[] getGoodsSearchResult(String name,int page);
 	
 	public void pushSaleCount(String code,int sale_count);
 	
@@ -32,11 +32,9 @@ public interface GoodsServiceI {
 	
 	public Goods[] getNewGoods(int count);
 	
-	public JsonObject modifyGoods(Goods goods,String wherecode);
-	
-	public int modifyGoodsImage(String code, String thumbnail_image);
-	
-	public void deleteGoods(String code);
-	
 	public void decreaseStock(String code,int count);
+	
+	public int getCurrentMaxPage(int category,int page);
+	
+	public int getCurrentMaxPage(String name,int page);
 }

@@ -21,51 +21,55 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
-<title>goodsList</title>
+<link rel="stylesheet" href="../resources/CSS/custom.css">
+<title>goodsArticle</title>
 </head>
 <body>
-	<jsp:include page="../template/navMenu.jsp" flush="false"></jsp:include>
+	<jsp:include page="../template/navBar.jsp" flush="false"></jsp:include>
 	<div class="container text-center">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th colspan="4">상품설명</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th>상품명 :</th>
-          <td>${goods.name }</td>
-          <th>상품코드 :</th>
-          <td>${goods.code }</td>
-        </tr>
-        <tr>
-          <th>카테고리 :</th>
-          <td colspan="3"><small class="text-muted">${category_1 }</small> - ${category_2 }</td>
-        </tr>
-        <tr>
-          <th>등록일 :</th>
-          <td colspan="3">${goods.formatedTime }</td>
-        </tr>
-        <tr>
-          <th>가격 :</th>
-          <td>${goods.price } 원</td>
-          <th>재고 :</th>
-          <td>${goods.stock }</td>
-        </tr>
-        <tr>
-          <td colspan="4">
-            <p>
-              <img src="../${goods.thumbnail_image }">
-            </p>
-            <p>${goods.description }</p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+		<h1>GOODS ARTICLE</h1>
+	    <table class="table table-striped">
+	      <thead>
+	        <tr>
+	          <th colspan="4">상품설명</th>
+	        </tr>
+	      </thead>
+	      <tbody>
+	        <tr>
+	          <th>상품명 :</th>
+	          <td>${goods.name }</td>
+	          <th>상품코드 :</th>
+	          <td>${goods.code }</td>
+	        </tr>
+	        <tr>
+	          	<th>카테고리 :</th>
+	          	<td><small class="text-muted">${category_1 }</small> - ${category_2 }</td>
+	          	<th>등록일 :</th>
+	          	<td>${goods.formatedTime }</td>
+	        </tr>
+	        <tr>
+	        	<th>판매량 :</th>
+	          	<td>${goods.sale_count }</td>
+	          	<th>재고 :</th>
+	          	<td>${goods.stock }</td>
+	        </tr>
+	        <tr>
+	          	<th>가격 :</th>
+	          	<td colspan="3">${goods.price } 원</td>	          
+	        </tr>
+	        <tr>
+	          <td colspan="4">
+	            <p>
+	              <img src="../${goods.thumbnail_image }">
+	            </p>
+	            <p>${goods.description }</p>
+	          </td>
+	        </tr>
+	      </tbody>
+	    </table>
     <div class="row">
       <div class="col-6 text-left">
-          <button type="button" class="btn btn-outline-success" onclick="history.go(-1);">이전 페이지</button>
+          <button type="button" class="btn btn-outline-dark" onclick="history.go(-1);">이전 페이지</button>
       </div>
       <div class="col-6 text-right">
       	<c:choose>
@@ -79,21 +83,21 @@
       				<input type="hidden" name="stock" value="${goods.stock }">
       				<input type="hidden" name="thumbnail_image" value="${goods.thumbnail_image }">
       				<input type="hidden" name="description" value="${goods.description }">
-      				<input type="submit" class="btn btn-outline-info" value="수정">
-      			</form>
-	        	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-				  삭제
-				</button>
+      				<input type="submit" class="btn btn-outline-success" value="수정">
+      				<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteGoodsModal">
+					  삭제
+					</button>
+      			</form>	        	
 	      	</c:when>
 	      	<c:otherwise>
-	      		<button type="button" class="btn btn-outline-success" onclick="shoppingBasket();">장바구니</button>
+	      		<button type="button" class="btn btn-outline-primary" onclick="shoppingBasket();">장바구니</button>
 	        	<button type="button" class="btn btn-outline-success" onclick="order();">주문하기</button>
 	      	</c:otherwise>
 	  	</c:choose>
       </div>
     </div>
   </div>
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="deleteGoodsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -107,40 +111,15 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-	        <a href="${contextPath }/admin/deleteGoods?code=${goods.code}"><button type="button" class="btn btn-primary">삭제하기</button></a>
+	        <a href="${contextPath }/admin/deleteGoods?code=${goods.code}"><button type="button" class="btn btn-danger">삭제하기</button></a>
 	      </div>
 	    </div>
 	  </div>
 	</div>
+	<div>
+		<input type="hidden" value="${contextPath }" id="contextPath">
+		<input type="hidden" value="${goods.code }" id="goodsCode">
+	</div>
 </body>
-<script type="text/javascript">
-function shoppingBasket() {
-	$.ajax({
-		url : "${contextPath }/member/shoppingBasket",
-		method : "POST",
-		data : { code : '${goods.code }'},
-		type : "json"
-	}).done(function(resultData) {
-		alert(resultData.message);	
-	}).fail(function() {
-		$(".alert-danger").text("서버 통신 오류");
-		$(".alert-danger").fadeIn();
-	}).always(function() {
-	});
-}
-function order(){
-	$.ajax({
-		url : "${contextPath }/member/shoppingBasket",
-		method : "POST",
-		data : { code : '${goods.code }'},
-		type : "json"
-	}).done(function(resultData) {
-		window.location = "${contextPath }/member/shoppingBasketList";
-	}).fail(function() {
-		$(".alert-danger").text("서버 통신 오류");
-		$(".alert-danger").fadeIn();
-	}).always(function() {
-	});
-}
-</script>
+<script type="text/javascript" src="../resources/JS/goods.js"></script>
 </html>

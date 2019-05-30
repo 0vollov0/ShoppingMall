@@ -20,86 +20,42 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
-<style media="screen">
-.margin {
-	margin-top: 20px;
-}
-</style>
+<link rel="stylesheet" href="../resources/CSS/custom.css">
 <title>LOGIN FORM</title>
 </head>
 <body>
-	<div class="container text-center margin">
+	<jsp:include page="../template/navBar.jsp" flush="false"></jsp:include>
+	<div class="container text-center custom-form">
 		<h1>SHOPPING MALL LOGIN</h1>
-		<!--  
-		<form class="" action="${contextPath }/member/login" method="post">
-		-->
 		<form id="loginForm" method="post">
-			<div class="row justify-content-center margin">
-				<div class="col-md-7 col-12 margin">
-					<input type="text" class="form-control text-center" placeholder="ID"
-						aria-label="ID" aria-describedby="basic-addon2" name="id" >
+			<div class="row justify-content-center ">
+				<div class="col-md-7 col-12 ">
+					<input type="text" class="form-control text-center" placeholder="ID" aria-label="ID" aria-describedby="basic-addon2" name="id" >
 				</div>
-				<div class="col-md-7 col-12 margin">
-					<input type="password" class="form-control text-center" placeholder="PASSWORD"
-						aria-label="PASSWORD" aria-describedby="basic-addon2" name="pw">
+				<div class="col-md-7 col-12 ">
+					<input type="password" class="form-control text-center" placeholder="PASSWORD" aria-label="PASSWORD" aria-describedby="basic-addon2" name="pw">
 				</div>
 				<div id="alert" class=""></div>
-				<div class="col-md-7 col-12 margin">
-					<input type="button" value="LOGIN" class="btn btn-outline-info"
-						style="width: 100%" onclick="login();"/>
+				<div class="col-md-7 col-12 ">
+					<input type="button" value="LOGIN" class="btn btn-outline-info" style="width: 100%" onclick="login();"/>
 				</div>
 			</div>
 		</form>
 		<div class="row justify-content-center">
-			<div class="col-md-7 col-12 margin">
+			<div class="col-md-7 col-12 ">
 				<a href="${contextPath }/member/joinForm">JOIN US</a>
 			</div>
-			<div class="col-md-7 col-12 margin">
+			<div class="col-md-7 col-12 ">
 				<a href="${contextPath }/">SHOPPING MALL</a>
 			</div>
 		</div>
 	</div>
+	<div>
+		<input type="hidden" value="${contextPath }" id="contextPath">
+	</div>
 </body>
+<script type="text/javascript" src="../resources/JS/member/loginForm.js"></script>
 <script type="text/javascript">
 	$('.alert').hide();
-	function login() {
-		$.ajax({
-			url : "${contextPath }/member/login",
-			method : "POST",
-			data : {
-				id : $("input[name=id]").val(),
-				pw : $("input[name=pw]").val()
-			},
-			type : "json"
-		}).done(function(resultData) {
-			$("input[name=id]").val("");
-			$("input[name=pw]").val("");
-			$('.alert').hide();
-			switch (resultData.result) {
-			case 0:
-				window.location = "${contextPath}";
-				break;
-			case 1:
-				turnOnAlert('alert-danger',resultData.message);
-				break;
-			case 2:
-				turnOnAlert('alert-warning',resultData.message);
-				break;
-			default:
-				break;
-			}
-
-		}).fail(function() {
-			$(".alert-danger").text("서버 통신 오류");
-			$(".alert-danger").fadeIn();
-		}).always(function() {
-		});
-	}
-	function turnOnAlert(alertStyle,message){
-		$('#alert').hide();
-		$('#alert').attr('class','alert '+ alertStyle +' alert-dismissible fade show col-md-7 col-12 margin');
-		$("#alert").text(message);
-		$("#alert").fadeIn("slow");
-	}
 </script>
 </html>

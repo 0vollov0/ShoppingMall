@@ -10,12 +10,18 @@
   	select * from orders order by code desc limit #{n} , #{m}
   </select>
   <select id="searchOrderListById" resultType="com.ovollovo.shoppingmall.order.Order">
-  	select * from orders where userid= #{userid}
+  	select * from orders where userid= #{userid} order by code desc limit #{n} , #{m}
   </select>
   <insert id="registerShippingInfo" >
   	update orders set company_code = #{companyCode} ,invoice_number = #{invoiceNumber} where code = #{code}
   </insert>
   <select id="getOrderListCount" resultType="int">
   	select count(*) from orders
+  </select>
+  <select id="getOrderListCountById" resultType="int">
+  	select count(*) from orders where userid = #{userid}
+  </select>
+  <select id="searchDeliveryInfo" resultType="String">
+  	select delivery_info from orders where code = #{code}
   </select>
 </mapper>

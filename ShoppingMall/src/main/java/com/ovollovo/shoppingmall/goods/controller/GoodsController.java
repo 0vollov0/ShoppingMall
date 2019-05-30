@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.ovollovo.shoppingmall.goods.Goods;
 import com.ovollovo.shoppingmall.service.GoodsService;
 
@@ -29,38 +28,56 @@ public class GoodsController {
 	}
 	
 	@RequestMapping(value = "/goodsList", method = RequestMethod.GET)
-	public String goodsList(Model model,@RequestParam("category") int category,@RequestParam("n") int n) {
-		if (n < 1) {
-			return "/";
+	public String goodsList(Model model,@RequestParam("category") int category,@RequestParam("page") int page) {
+		if (page <= 0) {
+			page = 1;
 		}
-		Goods[] goods;
-		int count;
-		if (category % 100 == 0) {
-			goods = goodsService.getCategoryFirstGoods(category, n);
-			count =  goodsService.getCategoryFirstCount(category);
+		int maxPage = goodsService.getCurrentMaxPage(category,page);
+		int minPage;
+		if (maxPage%10 > 0) {
+			minPage = maxPage/10+1;
 		}else {
-			goods = goodsService.getCategorySecondGoods(category, n);
-			count = goodsService.getCategorySecondCount(category);
+			minPage = (maxPage-1)/10+1;
+		}
+		model.addAttribute("maxPage", maxPage);
+		model.addAttribute("minPage", minPage);
+		if (page > maxPage) {
+			model.addAttribute("currentPage", maxPage);
+		}else {
+			model.addAttribute("currentPage", page);
+		}
+		if (category % 100 != 0) {
 			model.addAttribute("category_2",goodsService.getCategoryName(category));
 		}
-		System.out.println(count);
 		model.addAttribute("category_1",goodsService.getCategoryName(category/100*100));
+		model.addAttribute("goodsList", goodsService.getGoodsList(category, page));
 		model.addAttribute("category",category);
-		if (count > 4*n) {
-			model.addAttribute("next", n+1);
-		}
-		if (n > 1) {
-			model.addAttribute("prev", n-1);
-		}
-		model.addAttribute("goodsList", goods);
 		return "goods/goodsList";
 	}
 	
 	@RequestMapping(value = "/searchGoods", method = RequestMethod.GET)
-	public String searchGoods(Model model,@RequestParam("name") String name) {
+	public String searchGoods(Model model,@RequestParam("name") String name,@RequestParam("page") int page) {
+		if (page <= 0) {
+			page = 1;
+		}
+		int maxPage = goodsService.getCurrentMaxPage(name,page);
+		int minPage;
+		if (maxPage%10 > 0) {
+			minPage = maxPage/10+1;
+		}else {
+			minPage = (maxPage-1)/10+1;
+		}
+		model.addAttribute("maxPage", maxPage);
+		model.addAttribute("minPage", minPage);
+		if (page > maxPage) {
+			model.addAttribute("currentPage", maxPage);
+		}else {
+			model.addAttribute("currentPage", page);
+		}
 		model.addAttribute("category_1","검색 결과 :");
 		model.addAttribute("category_2",name);
-		model.addAttribute("goodsList", goodsService.getGoodsSearchResult(name));
+		model.addAttribute("goodsList", goodsService.getGoodsSearchResult(name,page));
+		model.addAttribute("search", "searchGoods");
 		return "goods/goodsList";
 	}
 	
@@ -68,7 +85,7 @@ public class GoodsController {
 	public String goodsArticle(Model model,@RequestParam("code") String code) {
 		Goods goods = goodsService.getGoods(code);
 		if (goods == null) {
-			return "/";
+			return "redirect:/";
 		}
 		int category = goodsService.getCategoryNumber(code);
 		model.addAttribute("category_1",goodsService.getCategoryName(category/100*100));

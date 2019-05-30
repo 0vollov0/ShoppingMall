@@ -21,69 +21,67 @@
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="resources/CSS/custom.css">
 <title>INDEX</title>
 </head>
 <body>
-	<jsp:include page="template/navMenu.jsp" flush="false"></jsp:include>
+	<jsp:include page="template/navBar.jsp" flush="false"></jsp:include>
 	<div class="container text-center">
-		<div class="row">
-			<div class="col">
-				<h1>SHOPPING MALL</h1>
-			</div>
-		</div>
-		<form action="${contextPath}/goods/searchGoods" method="get">
-			<div class="row">
-				<div class="col">
-					<div class="input-group mb-3">
-						<input type="text" class="form-control text-center" name="name">
-						<div class="input-group-append">
-							<input class="btn btn-outline-secondary" type="submit" value="검색" />
-						</div>
-					</div>
-				</div>
-			</div>
-		</form>
+		<h1>SHOPPING MALL</h1>
+		<jsp:include page="template/searchBox.jsp" flush="false"></jsp:include>
 	</div>
 	<jsp:include page="template/goodsMenu.jsp" flush="false"></jsp:include>
 	
 	<div class="container text-center ">
 		<h1 class="text-left">NEW ITEMS</h1>
-		<div class="card-deck">
+			<div class="row">
 			<c:forEach items="${newGoods }" var="goods">
-				<div class="card">
-					<img class="card-img-top" src=".${goods.thumbnail_image }" alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title">${goods.name }</h5>
-						<p class="card-text">${goods.price } 원</p>
-						<p class="card-text">
-							<small class="text-muted">${goods.formatedTime }</small>
-						</p>
-						<a href="${contextPath}/goods/goodsArticle?code=${goods.code }"><button type="button" class="btn btn-outline-success">상세보기</button></a>						
+				<div class="col-md-6 col-xl-3">
+					<div class="card">
+						<img class="card-img-top" src=".${goods.thumbnail_image }" alt="Card image cap">
+						<div class="card-body">
+							<span class="badge badge-pill badge-warning">NEW</span>
+							<h5 class="card-title">${goods.name }</h5>
+							<p class="card-text">${goods.price } 원</p>
+							<p class="card-text">
+								<small class="text-muted">${goods.formatedTime }</small>
+							</p>
+							<a href="${contextPath}/goods/goodsArticle?code=${goods.code }"><button type="button" class="btn btn-outline-danger">상세보기</button></a>						
+						</div>
 					</div>
 				</div>
 			</c:forEach>
 		</div>
 	</div>
 
-	<div class="container text-center">
+	<div class="container text-center custom-margin-bottom">
 		<h1 class="text-left">BEST ITEMS</h1>
-		<div class="card-deck">
+		<div class="row">
 			<c:forEach items="${bestGoods }" var="goods">
-				<div class="card">
-					<img class="card-img-top" src=".${goods.thumbnail_image }" alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title">${goods.name }</h5>
-						<p class="card-text">${goods.price } 원</p>
-						<p class="card-text">
-							<small class="text-muted">${goods.formatedTime }</small>
-						</p>
-						<a href="${contextPath}/goods/goodsArticle?code=${goods.code }"><button type="button" class="btn btn-outline-success">상세보기</button></a>						
+				<div class="col-md-6 col-xl-3">
+					<div class="card">
+						<img class="card-img-top" src=".${goods.thumbnail_image }" alt="Card image cap">
+						<div class="card-body">
+							<span class="badge badge-pill badge-danger">BEST</span>
+							<h5 class="card-title">${goods.name }</h5>
+							<p class="card-text">${goods.price } 원</p>
+							<p class="card-text">
+								<small class="text-muted">${goods.formatedTime }</small>
+							</p>
+							<a href="${contextPath}/goods/goodsArticle?code=${goods.code }"><button type="button" class="btn btn-outline-danger">상세보기</button></a>						
+						</div>
 					</div>
 				</div>
 			</c:forEach>
 		</div>
 	</div>
-	<footer>
-	</footer>
+	<div>
+		<input type="hidden" value="${message }" id="message">
+	</div>>
 </body>
+<script type="text/javascript">
+	if ($('#message').val() == true) {
+		alert($('#message').val());
+	}
+</script>
 </html>

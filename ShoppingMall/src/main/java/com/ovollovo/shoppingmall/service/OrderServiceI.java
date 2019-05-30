@@ -1,5 +1,6 @@
 package com.ovollovo.shoppingmall.service;
 
+import com.google.gson.JsonObject;
 import com.ovollovo.shoppingmall.order.Order;
 
 public interface OrderServiceI {
@@ -7,9 +8,11 @@ public interface OrderServiceI {
 	
 	public Order[] getOrderList(int page);
 	
-	public Order[] getOrderList(String userid);
+	public Order[] getOrderList(String userid,int page);
 	
 	public int getCurrentMaxPage(int page);
 	
-	public void registerShippingInfo(int code,String companyCode,String invoiceNumber);
+	public JsonObject registerShippingInfo(int code,String companyCode,String invoiceNumber);
+	
+	public JsonObject getDeliveryInfo(int code);
 }

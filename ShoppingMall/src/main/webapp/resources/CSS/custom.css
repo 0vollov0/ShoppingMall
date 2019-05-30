@@ -1,3 +1,55 @@
-.custom-margin {
+@import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+KR&display=swap');
+
+body{
+	font-family: 'Noto Serif KR', serif;
+}
+ 
+h1 {
+     font-family: 'Nanum Pen Script', cursive;
+     margin-top: 20px;
+     margin-bottom: 20px;
+}
+
+a {
+     font-family: 'Nanum Pen Script', cursive;
+     font-size : 150%;
+}
+
+.container{
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
+.custom-form div{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.custom-margin-top {
 	margin-top: 20px;
+}
+
+.custom-margin-bottom {
+	margin-bottom: 20px;
+}
+
+.custom-middle-font{
+	font-size : 200%;
+	font-family: 'Nanum Pen Script', cursive;
+	margin-right: 20px;
+}
+
+.custom-big-font{
+	font-size : 300%;
+	font-family: 'Nanum Pen Script', cursive;
+}
+
+#count{
+		padding-left: 10px;
+		padding-right: 10px;
+		font-weight: bold;
+	}
+.basket-img{
+	height: 50px;
 }
