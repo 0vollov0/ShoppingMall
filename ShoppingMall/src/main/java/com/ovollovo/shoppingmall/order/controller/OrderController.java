@@ -42,7 +42,7 @@ public class OrderController {
 	
 	@RequestMapping(value = "requestOrder", method = RequestMethod.POST)
 	public @ResponseBody JsonObject order(@ModelAttribute("deliveryInfo") DeliveryInfo deliveryInfo,HttpSession session) {
-		Map<String, ShoppingBasket> shoppingBasketList = (Map<String, ShoppingBasket>) session.getAttribute("shoppingBasketList");
+		/*Map<String, ShoppingBasket> shoppingBasketList = (Map<String, ShoppingBasket>) session.getAttribute("shoppingBasketList");
 		Member member = (Member) session.getAttribute("member");
 		int price=0;
 		if (shoppingBasketList == null || shoppingBasketList.size() <= 0) {
@@ -57,6 +57,7 @@ public class OrderController {
 		if (emptyField != 0) {
 			return orderJson.getOrderResultJson(emptyField);
 		}
+		
 		String goodscode = "";
 		String goodscount = "";
 		
@@ -78,8 +79,10 @@ public class OrderController {
         order.setGoodscount(goodscount);
         order.setPrice(price);
         orderService.registerOrder(order);
-        session.removeAttribute("shoppingBasketList");
-        return orderJson.getOrderResultJson(0);
+        session.removeAttribute("shoppingBasketList");*/
+		
+        //return orderJson.getOrderResultJson(0);
+		return orderService.registerOrder(session, deliveryInfo);
 	}
 	
 	@RequestMapping(value = "/registerShippingInfo", method = RequestMethod.POST)

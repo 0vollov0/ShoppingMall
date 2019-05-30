@@ -47,9 +47,8 @@
 	        		<td>${basket.value.goods.name }</td>
 	        		<td>${basket.value.goods.price }</td>
 	        		<td id="stock">${basket.value.goods.stock }</td>
-	        		<!--  <td><span class="minus"></span><span id="count">${basket.value.count }</span><span class="plus">+</span></td>-->
 	        		<td><button type="button" class="btn btn-outline-info minus">-</button><span id="count">${basket.value.count }</span><button type="button" class="btn btn-outline-info plus">+</button></td>
-	        		<td><button type="button" class="btn btn-outline-info" onclick="deleteGoods(${basket.value.goods.code});">삭제</button></td>
+	        		<td><button type="button" class="btn btn-outline-danger" onclick="deleteGoods('${basket.value.goods.code}');">삭제</button></td>
 	        	</tr>
 	        	<c:set var="totalPrice" value="${basket.value.count*basket.value.goods.price+totalPrice}"></c:set>
         	</c:forEach>

@@ -119,7 +119,8 @@
 	<div>
 		<input type="hidden" value="${contextPath }" id="contextPath">
 		<input type="hidden" value="${goods.code }" id="goodsCode">
+		<input type="hidden" value="${goods.stock }" id="goodsStock">
 	</div>
 </body>
-<script type="text/javascript" src="../resources/JS/goods.js"></script>
+<script type="text/javascript" src="../resources/JS/goods/goodsArticle.js"></script>
 </html>

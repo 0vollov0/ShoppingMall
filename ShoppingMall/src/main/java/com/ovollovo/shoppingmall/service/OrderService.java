@@ -1,9 +1,16 @@
 package com.ovollovo.shoppingmall.service;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonObject;
+import com.ovollovo.shoppingmall.member.Member;
+import com.ovollovo.shoppingmall.member.ShoppingBasket;
+import com.ovollovo.shoppingmall.order.DeliveryInfo;
 import com.ovollovo.shoppingmall.order.Order;
 import com.ovollovo.shoppingmall.order.dao.OrderMapper;
 
@@ -16,9 +23,57 @@ public class OrderService implements OrderServiceI {
 	@Autowired
 	private OrderJson orderJson;
 	
+	@Autowired
+	private GoodsService goodsService;
+	
 	@Override
 	public void registerOrder(Order order) {
 		orderMapper.registerOrder(order.getUserid(), order.getGoodscode(), order.getGoodscount(), order.getPrice(), order.getDelivery_info());
+	}
+	
+	@Override
+	public JsonObject registerOrder(HttpSession session,DeliveryInfo deliveryInfo) {
+		Map<String, ShoppingBasket> shoppingBasketList = (Map<String, ShoppingBasket>) session.getAttribute("shoppingBasketList");
+		Member member = (Member) session.getAttribute("member");
+		int price=0;
+		if (shoppingBasketList == null || shoppingBasketList.size() <= 0) {
+			return orderJson.getOrderResultJson(6);
+		}
+		if (member == null) {
+			return orderJson.getOrderResultJson(7);
+		}
+		
+		int emptyField = deliveryInfo.getEmptyField();
+		System.out.println(deliveryInfo);
+		if (emptyField != 0) {
+			return orderJson.getOrderResultJson(emptyField);
+		}
+		
+		String goodscode = "";
+		String goodscount = "";
+		
+		for (String key : shoppingBasketList.keySet()) {
+        	int sale_count = shoppingBasketList.get(key).getCount();
+        	goodsService.pushSaleCount(key, sale_count);
+        	goodsService.decreaseStock(key, sale_count);
+        	goodscode = goodscode + key +",";
+        	goodscount = goodscount + sale_count+",";
+        	price = price + (sale_count*shoppingBasketList.get(key).getGoods().getPrice());
+		}
+        goodscode = goodscode.substring(0,goodscode.length()-1);
+        goodscount = goodscount.substring(0,goodscount.length()-1);
+        
+        /*
+        Order order = new Order();
+        order.setUserid(member.getId());
+        order.setDelivery_info(deliveryInfo);
+        order.setGoodscode(goodscode);
+        order.setGoodscount(goodscount);
+        order.setPrice(price);
+        */
+        orderMapper.registerOrder(member.getId(), goodscode, goodscount, price, deliveryInfo.toString());
+        session.removeAttribute("shoppingBasketList");
+		return orderJson.getOrderResultJson(0);
 	}
 
 	@Override

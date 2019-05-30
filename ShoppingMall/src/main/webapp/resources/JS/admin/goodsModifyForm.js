@@ -126,11 +126,11 @@
 	}
 	
 	function checkForm() {
-		if ($('input[name=name]').val().legnth <= 0) {
+		if ($('input[name=name]').val().length <= 0) {
 			turnOnAlert('alert-info',"상품이름을 입력해주세요.");
 			return false;
 		}
-		if ($('input[name=code]').val().legnth <= 0) {
+		if ($('input[name=code]').val().length <= 0) {
 			turnOnAlert('alert-info',"상품코드를 입력해주세요.");
 			return false;
 		}
@@ -138,7 +138,8 @@
 			turnOnAlert('alert-info',"상품분류를 지정해주세요.");
 			return false;
 		}
-		if (!$.isNumeric($('input[name=price]').val()) || !Number.isInteger($('input[name=price]').val())) {
+		if (!$.isNumeric($('input[name=price]').val()) || !$.isNumeric($('input[name=stock]').val())) {
+			console.log("s");
 			turnOnAlert('alert-info',"상품가격과 재고값에 올바른 [정수&양수]값을 입력해주세요.");
 			return false;
 		}

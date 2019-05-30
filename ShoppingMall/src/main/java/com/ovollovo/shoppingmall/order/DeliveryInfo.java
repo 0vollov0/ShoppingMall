@@ -45,7 +45,7 @@ public class DeliveryInfo {
 	}
 	@Override
 	public String toString() {
-		return "주문자 : " + buyer + ", 수령인 : " + shippingRecipient + ", 우편번호 : " + zipCode
+		return "구매자 : " + buyer + ", 수령인 : " + shippingRecipient + ", 우편번호 : " + zipCode
 				+ ", 주소 : " + address + ", 상세주소 : " + detailAddress + ", 참고 항목 : " + reference;
 	}
 	public int getEmptyField() {

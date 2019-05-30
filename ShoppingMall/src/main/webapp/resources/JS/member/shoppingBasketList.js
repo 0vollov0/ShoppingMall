@@ -80,7 +80,7 @@ function order(){
 	}).done(function(resultData) {
 		switch (resultData.result) {
 		case 0:
-			window.location = $('#contextPath').val()+"/member/memberOrderList"
+			window.location = $('#contextPath').val()+"/member/memberOrderList?page=1"
 			break;
 		case 1:
 			turnOnOrderAlert('alert-info',resultData.message);

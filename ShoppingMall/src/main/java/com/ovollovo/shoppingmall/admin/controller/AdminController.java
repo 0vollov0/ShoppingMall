@@ -45,7 +45,7 @@ public class AdminController {
 	public String registerForm(ModelMap model) {
 		model.remove("resultData");
 
-		return "admin/registerForm";
+		return "admin/goodsRegisterForm";
 	}
 
 	@RequestMapping(value = "/goodsModifyForm", method = RequestMethod.POST)
@@ -61,7 +61,7 @@ public class AdminController {
 	public String registerGoods(Model model, @ModelAttribute("goods") Goods goods, MultipartFile imageFile) {
 		model.addAttribute("resultData", adminService.registerGoods(goods,imageFile));
 
-		return "admin/registerForm";
+		return "admin/goodsRegisterForm";
 	}
 	@RequestMapping(value = "/modifyGoods", method = RequestMethod.POST)
 	public String modifyGoods(Model model, @ModelAttribute("goods") Goods goods,@RequestParam("wherecode") String wherecode, MultipartFile imageFile) {

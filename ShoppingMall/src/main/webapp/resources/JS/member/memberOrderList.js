@@ -1,3 +1,24 @@
+function showDeliveryModal(orderCode){
+	  $.ajax({
+	      url: $('#contextPath').val()+"/order/getDeliveryInfo",
+	      method: "POST",
+	      data: {code: orderCode},
+	      type: "json"
+	    }).done(function(resultData) {
+	    	$('#deliveryContent').children().eq(1).text(orderCode);
+	    	var deliveryhtml = "";
+	    	deliveryhtml += "<h4>"+resultData.buyer+"</h4>";
+	    	deliveryhtml += "<h4>"+resultData.shippingRecipient+"</h4>";
+	    	deliveryhtml += "<h4>"+resultData.zipCode+"</h4>";
+	    	deliveryhtml += "<h4>"+resultData.address+"</h4>";
+	    	deliveryhtml += "<h4>"+resultData.detailAddress+"</h4>";
+	    	deliveryhtml += "<h4>"+resultData.reference+"</h4>";
+	    	$('#deliveryContent').children().eq(2).html(deliveryhtml);
+	    }).fail(function() {
+	      alert("통신 오류");
+	    }).always(function() {});
+}
+
 function showShippingModal(code,invoice) {
 	if (code < 10) {
 		code = "0"+code;

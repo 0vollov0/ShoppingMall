@@ -69,14 +69,19 @@
 	<jsp:include page="../template/pageButtonList.jsp" flush="false"></jsp:include>
 	<jsp:include page="../template/shippingModal.jsp" flush="false"></jsp:include>
 	<jsp:include page="../template/deliveryModal.jsp" flush="false"></jsp:include>
+	<div>
+		<input type="hidden" value="${contextPath}" name="contextPath">
+	</div>
 </body>
 <script type="text/javascript">
+/*
 function viewListPage(page){
 	window.location = "${contextPath }/member/memberOrderList?page="+page;
-}
+}*/
+/*
 function showDeliveryModal(orderCode){
 	  $.ajax({
-	      url: "${contextPath}/order/getDeliveryInfo",
+	      url: $('#contextPath').val()+"/order/getDeliveryInfo",
 	      method: "POST",
 	      data: {code: orderCode},
 	      type: "json"
@@ -93,7 +98,7 @@ function showDeliveryModal(orderCode){
 	    }).fail(function() {
 	      alert("통신 오류");
 	    }).always(function() {});
-}
+}*/
 </script>
 <script type="text/javascript" src="../resources/JS/member/memberOrderList.js"></script>
 </html>

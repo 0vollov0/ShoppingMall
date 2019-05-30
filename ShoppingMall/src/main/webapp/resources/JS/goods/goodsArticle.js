@@ -1,12 +1,3 @@
-function viewListPage(page){
-	console.log($('#search').val());
-	if ($('#search').val()) {
-		window.location = $('#contextPath').val()+"/goods/searchGoods?name="+$('#searchName').val()+"&page="+page;
-	}else{
-		window.location = $('#contextPath').val()+"/goods/goodsList?category="+$('#currentCategory').val()+"&page="+page;
-	}
-}
-
 function shoppingBasket() {
 	if (isEmptyStock()) {
 		alert('재고가 없습니다.');
@@ -45,7 +36,7 @@ function order(){
 }
 
 function isEmptyStock(){
-	if ($('#stock').val() <= 0) {
+	if (Number.parseInt($('#goodsStock').val())<= 0) {
 		return true;
 	}
 	return false;

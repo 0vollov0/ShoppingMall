@@ -69,5 +69,5 @@
 		<input type="hidden" value="${category_2 }" id="category_2">
 	</div>
 </body>
-<script type="text/javascript" src="../resources/JS/goods.js"></script>
+<script type="text/javascript" src="../resources/JS/goods/goodsList.js"></script>
 </html>
