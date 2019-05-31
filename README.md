@@ -60,19 +60,19 @@ NaverCaptchaAPI
 
 링크 접속 시 controller에 의해 DB의 키값과 링크 키값을 비교해 인증을 완료합니다. 
 
-#### 이미지 업로드
+### 이미지 업로드
 
 registerForm 에서 보내온 파일을 commons-fileupload 을 이용해 서버에서 파일을 전송받습니다.
 
 전송된 파일을 이미지 파일로 변환시키고 thumbnailator 를 이용 이미지 파일을 서버 단에서 크기를 조정합니다. 
 ※(파일 용량 줄이기)
 
-#### 주소 찾기
+### 주소 찾기
 
 ![addressAPI](readmeImage/addressAPI.PNG)
 
 
-#### 운송 정보
+### 운송 정보
 
 ![invoice](readmeImage/invoice_1.PNG)
 
