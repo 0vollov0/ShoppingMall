@@ -48,8 +48,7 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public @ResponseBody JsonObject login(@RequestParam("id") String id, @RequestParam("pw") String pw, HttpSession session,
-			HttpServletResponse response) {
+	public @ResponseBody JsonObject login(@RequestParam("id") String id, @RequestParam("pw") String pw, HttpSession session,HttpServletResponse response) {
 		return memberService.loginMember(id, pw,session);
 	}
 
@@ -79,7 +78,7 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "joinConfirm", method = RequestMethod.GET)
-	public String joinConfirm(@ModelAttribute("member") Member member,HttpServletRequest request,HttpServletResponse response) {
+	public void joinConfirm(Model model,@ModelAttribute("member") Member member,HttpServletRequest request,HttpServletResponse response) {
 		response.setContentType("text/html; charset=UTF-8");
 		String message = null;
 		switch (memberService.updateAuthstatus(member)) {
@@ -97,14 +96,12 @@ public class MemberController {
 		try {
 			out = response.getWriter();
 			
-			out.println("<script>alert('"+message+"');");
+			out.println("<script>alert('"+message+"'); location.href='"+request.getContextPath()+"/'</script>");
 			 
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		return "redirect:/";
 	}
 	
 	@RequestMapping(value = "/modifyForm")
@@ -196,8 +193,8 @@ public class MemberController {
 		if (page <= 0) {
 			page = 1;
 		}
-		model.addAttribute("orderList", orderService.getOrderList(page));
-		int maxPage = orderService.getCurrentMaxPage(page);
+
+		int maxPage = orderService.getCurrentMaxPage(page,member.getId());
 		int minPage;
 		if (maxPage%10 > 0) {
 			minPage = maxPage/10+1;

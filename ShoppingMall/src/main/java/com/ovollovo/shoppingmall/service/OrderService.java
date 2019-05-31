@@ -28,7 +28,7 @@ public class OrderService implements OrderServiceI {
 	
 	@Override
 	public void registerOrder(Order order) {
-		orderMapper.registerOrder(order.getUserid(), order.getGoodscode(), order.getGoodscount(), order.getPrice(), order.getDelivery_info());
+		orderMapper.registerOrder(order.getUserid(), order.getGoodscode(), order.getGoodscount(),order.getGoodsname() ,order.getPrice(), order.getDelivery_info());
 	}
 	
 	@Override
@@ -51,27 +51,22 @@ public class OrderService implements OrderServiceI {
 		
 		String goodscode = "";
 		String goodscount = "";
+		String goodsname = "";
 		
 		for (String key : shoppingBasketList.keySet()) {
         	int sale_count = shoppingBasketList.get(key).getCount();
+        	String name = shoppingBasketList.get(key).getGoods().getName();
         	goodsService.pushSaleCount(key, sale_count);
         	goodsService.decreaseStock(key, sale_count);
         	goodscode = goodscode + key +",";
         	goodscount = goodscount + sale_count+",";
+        	goodsname += name + ",";
         	price = price + (sale_count*shoppingBasketList.get(key).getGoods().getPrice());
 		}
         goodscode = goodscode.substring(0,goodscode.length()-1);
         goodscount = goodscount.substring(0,goodscount.length()-1);
-        
-        /*
-        Order order = new Order();
-        order.setUserid(member.getId());
-        order.setDelivery_info(deliveryInfo);
-        order.setGoodscode(goodscode);
-        order.setGoodscount(goodscount);
-        order.setPrice(price);
-        */
-        orderMapper.registerOrder(member.getId(), goodscode, goodscount, price, deliveryInfo.toString());
+        goodsname = goodsname.substring(0,goodsname.length() - 1);
+        orderMapper.registerOrder(member.getId(), goodscode, goodscount,goodsname ,price, deliveryInfo.toString());
         session.removeAttribute("shoppingBasketList");
 		return orderJson.getOrderResultJson(0);
 	}
@@ -95,8 +90,8 @@ public class OrderService implements OrderServiceI {
 	}
 	
 	@Override
-	public int getCurrentMaxPage(int page) {
-		int LastPage = getOrderListLastPage(null);
+	public int getCurrentMaxPage(int page,String userid) {
+		int LastPage = getOrderListLastPage(userid);
 		if (((page-1)/10+1)*10 > LastPage) {
 			return LastPage;
 		}

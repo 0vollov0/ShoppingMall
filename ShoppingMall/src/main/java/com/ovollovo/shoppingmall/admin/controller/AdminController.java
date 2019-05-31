@@ -86,7 +86,7 @@ public class AdminController {
 			page = 1;
 		}
 		model.addAttribute("orderList", orderService.getOrderList(page));
-		int maxPage = orderService.getCurrentMaxPage(page);
+		int maxPage = orderService.getCurrentMaxPage(page,null);
 		int minPage;
 		if (maxPage%10 > 0) {
 			minPage = maxPage/10+1;

@@ -6,8 +6,7 @@ import com.ovollovo.shoppingmall.order.Order;
 
 public interface OrderMapper {
 	public void registerOrder(@Param("userid") String userid, @Param("goodscode") String goodscode,
-			@Param("goodscount") String goodscount, @Param("price") int price,
-			@Param("delivery_info") String delivery_info);
+			@Param("goodscount") String goodscount,@Param("goodsname") String goodsname, @Param("price") int price,@Param("delivery_info") String delivery_info);
 
 	public Order[] searchOrderList(@Param("n") int n,@Param("m") int m);
 
@@ -20,5 +19,7 @@ public interface OrderMapper {
 	public int getOrderListCountById(@Param("userid")String userid);
 	
 	public String searchDeliveryInfo(@Param("code") int code);
+	
+	public void deleteOrderList(@Param("userid")String userid);
 
 }

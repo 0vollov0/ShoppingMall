@@ -18,11 +18,15 @@ import com.ovollovo.shoppingmall.member.authentication.MailHandler;
 import com.ovollovo.shoppingmall.member.authentication.TempKey;
 import com.ovollovo.shoppingmall.member.dao.MemberMapper;
 import com.ovollovo.shoppingmall.openapi.NaverCaptchaAPI;
+import com.ovollovo.shoppingmall.order.dao.OrderMapper;
 
 @Service
 public class MemberService implements MemberServiceI {
 	@Autowired
 	private MemberMapper memberMmapper;
+	
+	@Autowired
+	private OrderMapper orderMapper; 
 
 	@Autowired
 	private JavaMailSender mailSender;
@@ -72,10 +76,8 @@ public class MemberService implements MemberServiceI {
 	@Override
 	public JsonObject loginMember(String id, String pw, HttpSession session) {
 		if (memberMmapper.loginMember(id, pw) == null) {
-			// return 1;
 			return memberJson.getLoginResultJson(1);
 		} else if (!getAuthstatus(id)) {
-			// return 2;
 			return memberJson.getLoginResultJson(2);
 		}
 		session.setAttribute("member", getMember(id, pw));
@@ -177,6 +179,7 @@ public class MemberService implements MemberServiceI {
 
 	@Override
 	public void deleteMember(String id) {
+		orderMapper.deleteOrderList(id);
 		memberMmapper.deleteMember(id);
 	}
 

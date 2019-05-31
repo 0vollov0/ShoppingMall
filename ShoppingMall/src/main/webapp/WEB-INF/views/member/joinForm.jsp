@@ -28,7 +28,7 @@
 	<jsp:include page="../template/navBar.jsp" flush="false"></jsp:include>
 	<div class="container text-center custom-form">
 		<h1>SHOPPING MALL JOIN FORM</h1>
-		<form id="joinForm" method="post">
+		<form id="joinForm" method="post" autocomplete="off">
 			<div class="row justify-content-center ">
 				<div class="col-md-7 col-12 ">
 					<input type="text" class="form-control text-center" placeholder="id"

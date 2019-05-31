@@ -33,7 +33,7 @@
 		      <tr>
 		      	<th scope="col">주문번호</th>
 		      	<th scope="col">구매자</th>
-		        <th scope="col">상품코드</th>
+		        <th scope="col">구매상품</th>
 		        <th scope="col">주문수량</th>
 		        <th scope="col">구매가격</th>
 		        <th scope="col">주문일시</th>
@@ -47,11 +47,11 @@
 		    		<tr>
 		    			<td>${order.code }</td>
 		    			<td>${order.userid }</td>
-		        		<td>${order.goodscode }</td>
+		        		<td><button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#basicModal" data-whatever="${order.code }" onclick="showOrderGoodsInfo(${order.code  },'${order.goodsname}','${order.goodscode}')">조회</button></td>
 		        		<td>${order.goodscount }</td>
 		        		<td>${order.price } 원</td>
 		        		<td>${order.formatedTime }</td>
-		        		<td><button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#deliveryInfo" data-whatever="${order.code }" onclick="showDeliveryModal(${order.code});">조회</button></td>
+		        		<td><button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#basicModal" data-whatever="${order.code }" onclick="showDeliveryModal(${order.code});">조회</button></td>
 		        		<td id="${order.code }">
 		        			<c:choose>
 		        				<c:when test="${empty order.company_code ||empty order.invoice_number}">
@@ -72,7 +72,7 @@
 	</div>
 	<jsp:include page="../template/pageButtonList.jsp" flush="false"></jsp:include>
 	<jsp:include page="../template/shippingModal.jsp" flush="false"></jsp:include>
-	<jsp:include page="../template/deliveryModal.jsp" flush="false"></jsp:include>
+	<jsp:include page="../template/basicModal.jsp" flush="false"></jsp:include>
 	<div class="modal fade" id="invoiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	    <div class="modal-dialog" role="document">
 	      <div class="modal-content">
@@ -105,7 +105,7 @@
 	
 	          </div>
 	          <div class="modal-footer">
-	            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modal-close-button">닫기</button>
+	            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="invoiceModalClose">닫기</button>
 	            <button type="button" class="btn btn-primary" id="submit">입력</button>
 	          </div>
 	        </form>

@@ -15,7 +15,7 @@ public interface OrderServiceI {
 	
 	public Order[] getOrderList(String userid,int page);
 	
-	public int getCurrentMaxPage(int page);
+	public int getCurrentMaxPage(int page,String userid);
 	
 	public JsonObject registerShippingInfo(int code,String companyCode,String invoiceNumber);
 	

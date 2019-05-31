@@ -27,7 +27,7 @@
 	<jsp:include page="../template/navBar.jsp" flush="false"></jsp:include>
 	<div class="container text-center custom-form">
 		<h1>SHOPPING MALL LOGIN</h1>
-		<form id="loginForm" method="post">
+		<form id="loginForm" method="post" autocomplete="off">
 			<div class="row justify-content-center ">
 				<div class="col-md-7 col-12 ">
 					<input type="text" class="form-control text-center" placeholder="ID" aria-label="ID" aria-describedby="basic-addon2" name="id" >

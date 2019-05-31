@@ -7,6 +7,7 @@ public class Order {
 	private int code;
 	private String userid;
 	private String goodscode;
+	private String goodsname;
 	private String goodscount;
 	private int price;
 	private String delivery_info;
@@ -37,6 +38,13 @@ public class Order {
 
 	public void setGoodscode(String goodscode) {
 		this.goodscode = goodscode;
+	}
+	public String getGoodsname() {
+		return goodsname;
+	}
+
+	public void setGoodsname(String goodsname) {
+		this.goodsname = goodsname;
 	}
 
 	public String getGoodscount() {
