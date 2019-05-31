@@ -1,6 +1,9 @@
 # ShoppingMall
 Web ShoppingMall 입니다.
 
+## 시연 영상 보러가기(이미지를 클릭해주세요.)
+[![Video Label](https://i.vimeocdn.com/video/787519050_640x360.jpg)](https://vimeo.com/339478547)
+
 ## 기술 스택
 * HTML
 * CSS(BootStrap 4)
@@ -24,9 +27,6 @@ Web ShoppingMall 입니다.
 #### DataBase
 
 ![database](readmeImage/shoppingmallDB_diagram.PNG)
-
-## 시연 영상 보러가기(이미지를 클릭해주세요.)
-[![Video Label](https://i.vimeocdn.com/video/787519050_640x360.jpg)](https://vimeo.com/339478547)
 
 ## 프로그램 설명
 
