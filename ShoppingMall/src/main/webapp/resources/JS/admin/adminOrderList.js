@@ -20,6 +20,10 @@ $('#submit').click(function(){
       alert("통신 오류");
     }).always(function() {});
   });
+function writeOrderCode(orderCode){
+	$('#invoiceOrderCode').text(orderCode);
+}
+
 $('#invoiceModal').on('show.bs.modal', function (event) {
 	  var button = $(event.relatedTarget)
 	  var recipient = button.data('whatever')

@@ -64,7 +64,7 @@
 			        			</c:otherwise>
 		        			</c:choose>
 	    				</td>
-	    				<td><button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#invoiceModal" data-whatever="${order.code }">입력/수정</button></td>
+	    				<td><button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#invoiceModal" data-whatever="${order.code }" onclick="writeOrderCode(${order.code})">입력/수정</button></td>
 		        	</tr>
 		    	</c:forEach>
 		    </tbody>
@@ -85,7 +85,7 @@
 	        <form>
 	          <div class="modal-body">
 	            <p>주문번호 :</p>
-	            <h1></h1>
+	            <h1 id="invoiceOrderCode"></h1>
 	            <input type="hidden" name="code" value="">
 	            <div class="form-group">
 	              <label for="recipient-name" class="col-form-label">택배회사 코드:</label>
