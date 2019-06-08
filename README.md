@@ -11,7 +11,10 @@ Web ShoppingMall 입니다.
 * Ajax
 * java/jsp
 * Spring Framework
-* MySql(MyBatis)
+* MySql(MyBatis) 8.5
+
+### Server
+* apache tomcat 8.5
 
 ### library
 * javax.mail 1.4.7
@@ -59,6 +62,19 @@ NaverCaptchaAPI
 서버는 회원가입과 동시에 회원이 가입한 메일에 링크와 함께 키값을 발급합니다.
 
 링크 접속 시 controller에 의해 DB의 키값과 링크 키값을 비교해 인증을 완료합니다. 
+
+##### ※주의※
+
+[root-context.xml](ShoppingMall/src/main/webapp/WEB-INF/spring/root-context.xml)
+```
+<!-- 메일 보내기 (SEND) -->
+<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+      <property name="host" value="smtp.gmail.com" />
+      <property name="port" value="587" />
+      <property name="username" value="-" />
+      <property name="password" value="-" />
+```
+property username, password의 메일 정보를 입력해주셔야 합니다. 
 
 ### 이미지 업로드
 
